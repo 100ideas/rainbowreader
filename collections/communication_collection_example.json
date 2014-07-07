@@ -1,0 +1,8 @@
+rainbowClientInstance: {
+  lastModified: date,
+  userBarcode: '',
+  dishBarcode: '',
+  dishPhotoReady: bool,
+  pictureURL: '',
+  colonyData: ''
+}
