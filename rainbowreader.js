@@ -1,72 +1,65 @@
 //// TODO replace global functions with require-like functionality
 ////
 //// hitlist:
-//// takeAndAnalyzePhoto
+//// takePhoto
+//// runOpenCFU
 //// postColonyData
 
+// Holds the id of the mongo document which holds the state between server and client.
+// Is a string once the server creates the document, but Templates will not react at
+// all if it is '' or undefined
 workstationSession = {};
 
 if (Meteor.isClient) {
-
+  // get the state document id from the server
   Meteor.call('createWorkstationSession', function(error, result) {
      workstationSession = result;
   });
 
+  // Helper for retrieving state.  There should only be one.
   function getSessionDocument() {
     return WorkstationSessions.findOne(workstationSession);
   }
-   
+  
+  ///////////////////////////////////////////////////////////////////////////////
+  // STATE MACHINE / WORKFLOW template functions
+  // These are evaluated by the html to see what we should be showing when.
+  // Probably only one should evaluate to true at a time.
+
+  // starting state, so return true by default
   Template.hello.showScanBarcodes = function () {
     var doc = getSessionDocument();
     if (!doc) return true;
     return !doc.dishBarcode || !doc.userBarcode;
   }
 
+  // once we have scanned both barcodes, show instructions for taking photograph
   Template.hello.showTakePhoto = function () {
     var doc = getSessionDocument();
     if (!doc) return false;
     return doc.userBarcode && doc.dishBarcode && !doc.photoURL;
   }
 
-  Template.hello.showDishImage = function () {
+  // show the image and colony animations
+  Template.hello.showDishPhoto = function () {
     var doc = getSessionDocument();
     if (!doc) return false;
     return doc.photoURL;
   };
 
+  ///////////////////////////////////////////////////////////////////////////////
+  // EVENT HANDLERS
+
   Template.hello.events({
+    // TODO how is this function hooked up to the Take Photo button?
+    // take a photograph and analyze it on the server;
+    // we will receive colonyData through {{colonyData}} handlebars
     'click input': function () {
-      Meteor.call('takeAndAnalyzePhoto', getSessionDocument().dishBarcode, function(error, result) {
-        console.log('taap result:' + result);
-      });
+      Meteor.call('takeAndAnalyzePhoto', getSessionDocument().dishBarcode,
+        function(error, result) {});
     }
   });
 }
-
-/*  sessionCursor.observe({
-    changed: function(doc, oldDoc) {
-      // state machine based on session document fields
-      
-      // User has scanned both their ticket and the petri dish.
-      // Show the instructions for taking a picture of the dish.
-      if (doc.userBarcode && doc.dishBarcode && !doc.dishPhotoReady) {
-        console.log(doc.userBarcode);
-      }
-      // show waiting screen while dish is photographed
-      else if (doc.dishPhotoReady && !doc.pictureURL) {
-
-      }
-      // show petri dish photo
-      else if (doc.pictureURL && !doc.colonyData) {
-
-      }
-      // colonyData has arrived; show reticle animation
-      else { 
-
-      }
-    }
-  });*/
-
 
 if (Meteor.isServer) {
   Meteor.startup(function () {
@@ -75,7 +68,9 @@ if (Meteor.isServer) {
 
   Meteor.methods({
     createWorkstationSession: function() {
-      console.log('create ws');
+      // create a single mongo document to hold state between server and client
+      console.log('create session');
+      WorkstationSessions.remove({});   //clear previous session documents
       workstationSession = WorkstationSessions.insert({dateCreated: Date.now()});
       return workstationSession;
     },
@@ -83,17 +78,21 @@ if (Meteor.isServer) {
     takeAndAnalyzePhoto: function(dishBarcode) {
       takePhoto(dishBarcode, Meteor.bindEnvironment(function(photoPath) {
 
-        //// TODO change this to a path relative 
-        //// to /public/ for use by the client
-        var photoURL = 'small.jpg';//photoPath;
+        // convert '~/rainbowreader/public/photos/photo1.jpg'
+        // to 'photos/photo1.jpg'
+        var ixPhotos = photoPath.indexOf('photos/');
+        if (ixPhotos === -1) {
+          console.log('error parsing photo path into URL: ' + photoPath);
+          return;
+        }
+        var photoURL = photoPath.slice(ixPhotos);
 
         WorkstationSessions.update(
           {dishBarcode: dishBarcode},
           {$set: {photoURL: photoURL}}
         );
 
-        var colonyData = runOpenCFU(photoPath, Meteor.bindEnvironment(function(colonyData) {
-          console.log('runOpenCFU callback');
+        runOpenCFU(photoPath, Meteor.bindEnvironment(function(colonyData) {
           WorkstationSessions.update(
             {dishBarcode: dishBarcode},
             {$set: {colonyData: colonyData}}
@@ -106,27 +105,3 @@ if (Meteor.isServer) {
     }
   });
 }
-
-/*
-  var sessionCursor = WorkstationSessions.find(null, {});
-  sessionCursor.observe({
-    changed: function(doc, oldDoc) {
-      // state machine based on session document fields
-      if (doc.dishPhotoReady) {
-        // take a picture
-        var photoFilename = takePicture(doc.dishBarcode);
-
-        // run openCFU
-        var colonyData = runOpenCFU(photoFilename);
-
-        // convert '~/rainbowreader/public/photos/photo1.jpg'
-        // to 'http://localhost:3000/photos/photo1.jpg'
-        var ixPhotos = photoFilename.indexOf('/photos');
-        if (ixPhotos === -1) {
-          console.log('error parsing photo path into URL: ' + photoFilename);
-          return;
-        }
-        doc.pictureURL = 'http://localhost:3000' + photoFilename.slice(ixPhotos);
-      }
-    }
-  });*/

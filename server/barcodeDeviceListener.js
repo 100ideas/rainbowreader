@@ -14,20 +14,24 @@ fs.open(scannerPath, 'r', Meteor.bindEnvironment(function(err, fd) {
       if(err) throw err;
       console.log('bytesRead: ' + bytesRead);
 
-      //ignore barcodes if there isn't a browser session
-      if (workstationSession) {
+      // Ignore barcodes if there isn't a browser session.  WARNING: workstationSession is {}
+      // if there isn't a browser session because of weirdness in Meteor. 
+      if (Object.keys(workstationSession).length === 0) {
         try { 
           var barcode = readBarcodeSNAPI(buffer);
 
-          //update the session; choose the field based on the type of barcode
-          var property = determineBarcodeType(barcode);
+          // update the session; choose the property name based on the type of barcode
+          var name = determineBarcodeType(barcode);
           var field = {};
-          field[property] = barcode;
+          field[name] = barcode;
           WorkstationSessions.update(workstationSession, {$set: field});
         } catch(ex) {
           console.log('exception reading barcode: ' + ex);
         }
       }
+
+      // fs.read is asynchronous, so our callback must be recursive to read a subsequent buffer.
+      // Thank $deity node.js supports tail recursion.
       startRead();
     }));
   }

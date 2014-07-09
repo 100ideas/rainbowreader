@@ -22,8 +22,8 @@ var csv_to_json = function(csv_data) {
 
 
 
-// run opencfu as separate process on the image (already exists on this machine)
-// asynchronous!
+// Run opencfu as separate process on a local image file.
+// The callback takes a single argument, which is a JSON array.
 runOpenCFU = function(filename, callback) {
 
   if (typeof callback !== 'function') {
@@ -39,13 +39,14 @@ runOpenCFU = function(filename, callback) {
   var child = exec(cmd, function (error, stdout, stderr) {
     if (error || stderr) {
       console.log("shit went down in the openCFU..." + stderr );
+      // TODO use dummy data for now
       var colonyData = fs.readFileSync(backupFilePath).toString();
-      callback(colonyData);
+      callback(JSON.parse(colonyData));
     }
     else {
       csv().from.string(stdout, {comment: '#'}).to.array( function(data) {
-        var ocfu_calls = csv_to_json(data);
-        callback(JSON.stringify(ocfu_calls));
+        var colonyJSON = csv_to_json(data);
+        callback(colonyJSON);
       });
     }
   });
