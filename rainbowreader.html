@@ -8,6 +8,13 @@
 
 <template name="hello">
   <h1>Hello World!</h1>
-  {{greeting}}
-  <input type="button" value="Click" />
+  {{#if showScanBarcodes}}
+    Scan barcodes on your ticket and the petri dish.
+  {{/if}}
+  {{#if showTakePhoto}}
+    <input type="button" value="Take Photo" />
+  {{/if}}
+  {{#if showDishImage}}
+    <img src="small.jpg">
+  {{/if}}
 </template>

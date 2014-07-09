@@ -1,14 +1,21 @@
-var request = Npm.require('request');
-var fs = Npm.require('fs');
+var request = Meteor.require('request');
+var Stream = Meteor.require('stream');
+var fs = Meteor.require('fs');
 
 var serverAddress = 'http://localhost:3000';
 
-function postColonyData(dishBarcode, jsonFilename, imageFilename) {
-  postDishJson(dishBarcode, jsonFilename);
+postColonyData = function(dishBarcode, colonyData, imageFilename) {
+  postDishJson(dishBarcode, colonyData);
   postDishImage(dishBarcode, imageFilename);
 }
  
-var postDishJson = function(dishBarcode, jsonFilename) {  
+function postDishJson(dishBarcode, colonyData) {
+  //wrap the colonyData string in a stream
+  var colonyDataStream = new Stream();
+  colonyDataStream.pipe = function(dest) {
+    dest.write(colonyData);
+  }
+
   var colonyOptions = {
     url: serverAddress + '/uploadColonyData',
     headers: { barcode: dishBarcode }
@@ -16,24 +23,23 @@ var postDishJson = function(dishBarcode, jsonFilename) {
 
   //create a post request, and if it fails, push a function onto a list to retry later
   var req = request.post(colonyOptions, function(error, resp, body) {
-    console.log('postDishJson response:\n' + body);
     if(error) {
       postsToRetry.push(function() {
-        postDishJson(dishBarcode, jsonFilename);
+        postDishJson(dishBarcode, colonyData);
       });
     }
   });
-
-  //send the file through the request
-  fs.createReadStream(jsonFilename).pipe(req);
+  
+  //send the data through the request
+  colonyDataStream.pipe(req);
+  //fs.createReadStream(jsonFilename).pipe(req);
 }
 
-var filenameFromPath = function(path) {
+function filenameFromPath(path) {
   return path.substring(1+path.lastIndexOf('/'));
 }
 
-var postDishImage = function(dishBarcode, imageFilename) {
-  console.log('postDishImage called');
+function postDishImage(dishBarcode, imageFilename) {
   var imageOptions = {
     url: serverAddress + '/uploadDishImage',
     headers: { barcode: dishBarcode, filename: filenameFromPath(imageFilename) }
@@ -41,7 +47,6 @@ var postDishImage = function(dishBarcode, imageFilename) {
 
   //create a post request, and if it fails, push a function onto a list to retry later
   var req = request.post(imageOptions, function(error, resp, body) {
-    console.log('postDishImage resp:\n ' + resp);
     if(error) {
       postsToRetry.push(function () {
         postDishImage(dishBarcode, imageFilename);

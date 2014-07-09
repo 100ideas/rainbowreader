@@ -1,42 +1,53 @@
-var fs = Npm.require('fs');
+var fs = Meteor.require('fs');
 
 var scannerPath = '/dev/hidraw3'
 //var ack = new Buffer('010200000400', 'hex');  //doesn't work...maybe default driver doesn't take writes
 
-fs.open(scannerPath, 'r', function(err, fd) {
+fs.open(scannerPath, 'r', Meteor.bindEnvironment(function(err, fd) {
   if(err) throw err;
 
   var bufferSize = 64;
   var buffer = Buffer(bufferSize);
 
   function startRead() {
-    fs.read(fd, buffer, 0, bufferSize, null, function(err, bytesRead) {
+    fs.read(fd, buffer, 0, bufferSize, null, Meteor.bindEnvironment(function(err, bytesRead) {
       if(err) throw err;
-      //console.log('bytesRead: ' + bytesRead);
+      console.log('bytesRead: ' + bytesRead);
 
-      try { 
-        var barcode = readBarcodeSNAPI(buffer);
-      } catch(ex) {
-        console.log('exception reading barcode: ' + ex);
-        startRead();
+      //ignore barcodes if there isn't a browser session
+      if (workstationSession) {
+        try { 
+          var barcode = readBarcodeSNAPI(buffer);
+
+          //update the session; choose the field based on the type of barcode
+          var property = determineBarcodeType(barcode);
+          var field = {};
+          field[property] = barcode;
+          WorkstationSessions.update(workstationSession, {$set: field});
+        } catch(ex) {
+          console.log('exception reading barcode: ' + ex);
+        }
       }
-
-      console.log(barcode); 
-      startRead();  
-    });
+      startRead();
+    }));
   }
   startRead();
-});
+}));
   
   
 //
 // helper functions
 //
 
+function determineBarcodeType(barcode) {
+  if (barcode[0] == 'D') return 'dishBarcode';
+  return 'userBarcode';
+}
+
 function readBarcodeSNAPI(buffer) {
   // Barcode size is at bytes 2-3, big-endian (lower byte definitely at 3;
   // byte 2 may be unrelated but always seems to be zero).
-  var barcodeLength = buffer.slice(2).readInt16BE();
+  var barcodeLength = buffer.readInt16BE(2);
   var barcode = buffer.toString('utf8', 6, 6+barcodeLength);
   return barcode;
 }

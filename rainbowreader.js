@@ -1,8 +1,49 @@
-if (Meteor.isClient) {
-  workstationSession = WorkstationSessions.insert({});
+//// TODO replace global functions with require-like functionality
+////
+//// hitlist:
+//// takeAndAnalyzePhoto
+//// postColonyData
 
-  var sessionCursor = WorkstationSessions.find();
-  sessionCursor.observe({
+workstationSession = {};
+
+if (Meteor.isClient) {
+
+  Meteor.call('createWorkstationSession', function(error, result) {
+     workstationSession = result;
+  });
+
+  function getSessionDocument() {
+    return WorkstationSessions.findOne(workstationSession);
+  }
+   
+  Template.hello.showScanBarcodes = function () {
+    var doc = getSessionDocument();
+    if (!doc) return true;
+    return !doc.dishBarcode || !doc.userBarcode;
+  }
+
+  Template.hello.showTakePhoto = function () {
+    var doc = getSessionDocument();
+    if (!doc) return false;
+    return doc.userBarcode && doc.dishBarcode && !doc.photoURL;
+  }
+
+  Template.hello.showDishImage = function () {
+    var doc = getSessionDocument();
+    if (!doc) return false;
+    return doc.photoURL;
+  };
+
+  Template.hello.events({
+    'click input': function () {
+      Meteor.call('takeAndAnalyzePhoto', getSessionDocument().dishBarcode, function(error, result) {
+        console.log('taap result:' + result);
+      });
+    }
+  });
+}
+
+/*  sessionCursor.observe({
     changed: function(doc, oldDoc) {
       // state machine based on session document fields
       
@@ -24,27 +65,50 @@ if (Meteor.isClient) {
 
       }
     }
-  });
- 
-  Template.hello.greeting = function () {
-    return "Welcome to rainbowreader.  Session id: " + workstationSession;
-  };
+  });*/
 
-  Template.hello.events({
-    'click input': function () {
-      // debug testing; should be done on server
-      //WorkstationSessions.update(workstationSession, {userBarcode: 'abc', dishBarcode: 'cde'});
-      
-    }
-  });
-}
 
 if (Meteor.isServer) {
   Meteor.startup(function () {
     // code to run on server at startup
   });
 
-  var sessionCursor = WorkstationSessions.find();
+  Meteor.methods({
+    createWorkstationSession: function() {
+      console.log('create ws');
+      workstationSession = WorkstationSessions.insert({dateCreated: Date.now()});
+      return workstationSession;
+    },
+    
+    takeAndAnalyzePhoto: function(dishBarcode) {
+      takePhoto(dishBarcode, Meteor.bindEnvironment(function(photoPath) {
+
+        //// TODO change this to a path relative 
+        //// to /public/ for use by the client
+        var photoURL = 'small.jpg';//photoPath;
+
+        WorkstationSessions.update(
+          {dishBarcode: dishBarcode},
+          {$set: {photoURL: photoURL}}
+        );
+
+        var colonyData = runOpenCFU(photoPath, Meteor.bindEnvironment(function(colonyData) {
+          console.log('runOpenCFU callback');
+          WorkstationSessions.update(
+            {dishBarcode: dishBarcode},
+            {$set: {colonyData: colonyData}}
+          );
+
+          // uploads relevant data to the main visualization server
+          //postColonyData(dishBarcode, colonyData, photoPath);
+        }));
+      }));
+    }
+  });
+}
+
+/*
+  var sessionCursor = WorkstationSessions.find(null, {});
   sessionCursor.observe({
     changed: function(doc, oldDoc) {
       // state machine based on session document fields
@@ -65,5 +129,4 @@ if (Meteor.isServer) {
         doc.pictureURL = 'http://localhost:3000' + photoFilename.slice(ixPhotos);
       }
     }
-  });
-}
+  });*/
