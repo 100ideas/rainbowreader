@@ -61,9 +61,41 @@ if (Meteor.isClient) {
   });
 }
 
+
+
+
+// takes barcode and determines whether dishBarcode or userBarcode
+function determineBarcodeType(barcode) {
+  if (barcode[0] == 'D') return 'dishBarcode';
+  return 'userBarcode';
+}
+
 if (Meteor.isServer) {
+  // code to run on server at startup
   Meteor.startup(function () {
-    // code to run on server at startup
+
+    // initialize barcode scanner
+    // and write barcodes to workstationSession
+    listenForBarcodes(function(barcode) {
+      // ignore barcodes if there isn't a browser session
+      // otherwise write to workstationSession
+      // WARNING: workstationSession is {} if not browser session
+      // because Meteor weirdness.
+      console.log('workstationSession: ' + workstationSession);
+      //if (Object.keys(workstationSession).length !== 0) {
+      if (typeof workstationSession === 'string') {
+        try { 
+          // choose the property name based on the type of barcode
+          var name = determineBarcodeType(barcode);
+          var field = {};
+          field[name] = barcode;
+          WorkstationSessions.update(workstationSession, {$set: field});
+        }
+        catch(ex) {
+          console.log('exception updating workstationSession: ' + ex);
+        }
+      }
+    });
   });
 
   Meteor.methods({

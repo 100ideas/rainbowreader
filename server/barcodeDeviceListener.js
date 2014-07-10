@@ -1,66 +1,80 @@
+/*
+Start listening for barcodes (dishBarcode or userBarcode).
+If scanned, save barcode to workstationSession.
+
+GLOBAL FUNCTIONS
+++++++++++++++++
+ listenForBarcodes(callback)
+  listens for barcode from scanner
+  calls callback on resulting barcode
+*/
+
 var fs = Meteor.require('fs');
 
 var scannerPath = '/dev/hidraw3'
 //var ack = new Buffer('010200000400', 'hex');  //doesn't work...maybe default driver doesn't take writes
 
-fs.open(scannerPath, 'r', Meteor.bindEnvironment(function(err, fd) {
-  if(err) throw err;
+// TODO figure out a way to close the scanner device file
+listenForBarcodes = function(callback) {
 
-  var bufferSize = 64;
-  var buffer = Buffer(bufferSize);
-
-  function startRead() {
-    fs.read(fd, buffer, 0, bufferSize, null, Meteor.bindEnvironment(function(err, bytesRead) {
-      if(err) throw err;
-      console.log('bytesRead: ' + bytesRead);
-
-      // Ignore barcodes if there isn't a browser session.  WARNING: workstationSession is {}
-      // if there isn't a browser session because of weirdness in Meteor. 
-      if (Object.keys(workstationSession).length === 0) {
-        try { 
-          var barcode = readBarcodeSNAPI(buffer);
-
-          // update the session; choose the property name based on the type of barcode
-          var name = determineBarcodeType(barcode);
-          var field = {};
-          field[name] = barcode;
-          WorkstationSessions.update(workstationSession, {$set: field});
-        } catch(ex) {
-          console.log('exception reading barcode: ' + ex);
+  fs.open(scannerPath, 'r', Meteor.bindEnvironment(function(error, fd) {
+    if (error) {
+      console.log("shit went down in barcodeDeviceListener...");
+      console.log("error: " + error);
+    }
+  
+    var bufferSize = 64;
+    var buffer = Buffer(bufferSize);
+  
+    function startRead() {
+      fs.read(fd, buffer, 0, bufferSize, null, Meteor.bindEnvironment(function(error, bytesRead) {
+        if (error) {
+          console.log("error reading from device");
+          console.log("error: " + error);
         }
-      }
 
-      // fs.read is asynchronous, so our callback must be recursive to read a subsequent buffer.
-      // Thank $deity node.js supports tail recursion.
-      startRead();
-    }));
+        var barcode = parseBarcodeSNAPI(buffer);
+
+        callback(barcode);
+        // fs.read is asynchronous; callback must be recursive to read subsequent buffer
+        // this paradigm only makes sense because Node.js supports tail recursion
+        startRead();
+      }));
+    }
+    startRead();
+  }));
+
+  // Experimental code for closing the file
+  /*var shouldClose = false;
+   
+  return function() {
+    shouldClose = true; 
+    console.log('shouldClose callback called.');
+  });*/
+}
+  
+  
+// converts raw scanner output to ASCII string
+function parseBarcodeSNAPI(buffer) {
+  try {
+    // barcode size is at bytes 2-3; big-endian; lower byte definitely at 3;
+    // byte 2 may be unrelated but always seems to be zero).
+    var barcodeLength = buffer.readInt16BE(2);
+    var barcode = buffer.toString('utf8', 6, 6+barcodeLength);
+    return barcode;
   }
-  startRead();
-}));
-  
-  
-//
-// helper functions
-//
-
-function determineBarcodeType(barcode) {
-  if (barcode[0] == 'D') return 'dishBarcode';
-  return 'userBarcode';
+  catch(ex) {
+    console.log("exception parsing barcode: " + ex);
+  }
 }
 
-function readBarcodeSNAPI(buffer) {
-  // Barcode size is at bytes 2-3, big-endian (lower byte definitely at 3;
-  // byte 2 may be unrelated but always seems to be zero).
-  var barcodeLength = buffer.readInt16BE(2);
-  var barcode = buffer.toString('utf8', 6, 6+barcodeLength);
-  return barcode;
-}
+
+
 
 
 //
 // only used in HID keyboard mode
 //
-
 /*
 var maxBarcodeChars = 20;
 var bufferSize = 16 * maxBarcodeChars;
@@ -87,9 +101,9 @@ function decodeHID(type, c) {
  
 function startRead() {
     // read from the device "file"
-    fs.read(fd, buffer, 0, bufferSize, null, function(error, bytesRead) {
+    fs.read(fd, buffer, 0, bufferSize, null, function(erroror, bytesRead) {
 
-      if(error) throw error;
+      if(erroror) throw erroror;
       console.log('bytesRead: ' + bytesRead);
 
       // barcode starts at byte 6
