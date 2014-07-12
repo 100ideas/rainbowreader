@@ -15,6 +15,7 @@
     <input type="button" value="Take Photo" />
   {{/if}}
   {{#if showDishPhoto}}
-    <img src={{showDishPhoto}}>
+    <div style="background:url({{showDishPhoto}})" id="viz">
+    </div>
   {{/if}}
 </template>

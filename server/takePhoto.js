@@ -20,7 +20,7 @@ takePhoto = function(dishBarcode, callback) {
   // TODO get path properly 
   var photosPath = "./public/photos/";
   var filename = photosPath + Date.now().toString() + '_' + dishBarcode + '.jpg';
-  var cmdline = "gphoto2 --capture-and-download --filename=" + filename;
+  var cmdline = "gphoto2 --capture-image-and-download --filename=" + filename;
 
   // TODO wrap in debug
   console.log("capturing photo with gphoto2...");

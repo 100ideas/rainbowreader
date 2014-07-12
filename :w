@@ -89,10 +89,8 @@ if (Meteor.isClient) {
 // HELPER FUNCTION
 
 function drawReticle(selector) {
-  var reticleWidth = '2px';
   var reticleSize = 1.7;
-  var reticleInside = 0.6 * reticleSize;
-  var reticleOutside = 1.5 * reticleSize
+  var reticleInside = 0.2;
   selector
     .append('circle')
     .attr('r', function(d) {return (d.Radius * reticleSize)})
@@ -100,39 +98,15 @@ function drawReticle(selector) {
     .attr('cy', function(d) {return d.Y})
     .style('fill', 'none')
     .style('stroke', 'cyan')
-    .style('stroke-width', reticleWidth);
+    .style('stroke-width', '1px');
   selector
     .append("line")
     .attr("x1", function(d) {return d.X})
     .attr("y1", function(d) {return d.Y - d.Radius * reticleInside})
     .attr("x2", function(d) {return d.X})
-    .attr("y2", function(d) {return d.Y - d.Radius * reticleOutside})
+    .attr("y2", function(d) {return d.Y - d.Radius * reticleSize})
     .style('stroke', 'cyan')
-    .style('stroke-width', reticleWidth);
-  selector
-    .append("line")
-    .attr("x1", function(d) {return d.X + d.Radius * reticleInside})
-    .attr("y1", function(d) {return d.Y})
-    .attr("x2", function(d) {return d.X + d.Radius * reticleOutside})
-    .attr("y2", function(d) {return d.Y})
-    .style('stroke', 'cyan')
-    .style('stroke-width', reticleWidth);
-  selector
-    .append("line")
-    .attr("x1", function(d) {return d.X})
-    .attr("y1", function(d) {return d.Y + d.Radius * reticleInside})
-    .attr("x2", function(d) {return d.X})
-    .attr("y2", function(d) {return d.Y + d.Radius * reticleOutside})
-    .style('stroke', 'cyan')
-    .style('stroke-width', reticleWidth);
-  selector
-    .append("line")
-    .attr("x1", function(d) {return d.X - d.Radius * reticleInside})
-    .attr("y1", function(d) {return d.Y})
-    .attr("x2", function(d) {return d.X - d.Radius * reticleOutside})
-    .attr("y2", function(d) {return d.Y})
-    .style('stroke', 'cyan')
-    .style('stroke-width', reticleWidth);
+    .style('stroke-width', '1px');
 }
 
 
