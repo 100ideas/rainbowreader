@@ -34,8 +34,10 @@ runOpenCFU = function(filename, callback) {
       if (error) console.log("error: " + error);
       if (stderr) console.log("stderr: " + stderr);
       // TODO use dummy data for now (wrap in debug)
-      var colonyData = fs.readFileSync(backupFilePath).toString();
-      callback(JSON.parse(colonyData));
+      setTimeout(function() { // simulate processing and give image a chance to load
+        var colonyData = fs.readFileSync(backupFilePath).toString();
+        callback(JSON.parse(colonyData));
+      }, 1000);
     }
     // success. parse stdout with csv module and return JSON to callback
     else {

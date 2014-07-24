@@ -2,30 +2,35 @@ var request = Meteor.require('request');
 var Stream = Meteor.require('stream');
 var fs = Meteor.require('fs');
 
+// TODO how do we find out the address of the visualization server?
 var serverAddress = 'http://localhost:3000';
 
-postColonyData = function(dishBarcode, colonyData, imageFilename) {
-  postDishJson(dishBarcode, colonyData);
+postColonyDataAndImage = function(dishBarcode, userBarcode, colonyJSON, imageFilename) {
+  postDishJson(dishBarcode, userBarcode, colonyJSON);
   postDishImage(dishBarcode, imageFilename);
 }
  
-function postDishJson(dishBarcode, colonyData) {
+function postDishJson(dishBarcode, userBarcode, colonyJSON) {
   //wrap the colonyData string in a stream
   var colonyDataStream = new Stream();
   colonyDataStream.pipe = function(dest) {
-    dest.write(colonyData);
+    dest.write(JSON.stringify(colonyJSON));
   }
 
   var colonyOptions = {
     url: serverAddress + '/uploadColonyData',
-    headers: { barcode: dishBarcode }
+    headers: { 
+      // http headers are converted to lowercase, hence 'dishbarcode'
+      dishbarcode: dishBarcode, 
+      userbarcode: userBarcode,
+      timestamp: Date.now() }
   };
 
   //create a post request, and if it fails, push a function onto a list to retry later
   var req = request.post(colonyOptions, function(error, resp, body) {
     if(error) {
       postsToRetry.push(function() {
-        postDishJson(dishBarcode, colonyData);
+        postDishJson(dishBarcode, userBarcode, colonyJSON);
       });
     }
   });
@@ -42,7 +47,8 @@ function filenameFromPath(path) {
 function postDishImage(dishBarcode, imageFilename) {
   var imageOptions = {
     url: serverAddress + '/uploadDishImage',
-    headers: { barcode: dishBarcode, filename: filenameFromPath(imageFilename) }
+    // http headers are converted to lowercase, hence 'dishbarcode'
+    headers: { dishbarcode: dishBarcode, filename: filenameFromPath(imageFilename) }
   };
 
   //create a post request, and if it fails, push a function onto a list to retry later
@@ -59,8 +65,8 @@ function postDishImage(dishBarcode, imageFilename) {
 }
 
 var testUpload = function() {
-  var imageFilename = '/home/administrator/dev/rainbow-reader/public/small.jpg';
-  var jsonFilename =  '/home/administrator/dev/rainbow-reader/test/small.json';
-  postColonyData('abcde', jsonFilename, imageFilename);
+  var imageFilename = 'public/small.jpg';
+  var jsonFilename =  'test/small.json';
+  postColonyDataAndImage('abcde', jsonFilename, imageFilename);
 }
 
