@@ -14,14 +14,14 @@ var csv = Meteor.require('csv');
 // TODO wrap lines in debug
 var fs = Meteor.require('fs');
 // in case exec fails, JSON containing results of sample calculation
-var backupFilePath = '/code/rainbowreader/test/colonyData.json';
+var backupFilePath = "Meteor.settings.backupFilePath";
 
 
 // runs OpenCFU on local image file
 // callback is passed single JSON array
 runOpenCFU = function(filename, callback) {
   // looks for OpenCFU executable here
-  var opencfuPath = "/home/administrator/dev/opencfu/opencfu";
+  var opencfuPath = Meteor.settings.opencfuPath;
   // run OpenCFU with parameters
   // TODO explain parameters
   var cmd = opencfuPath + " -d bil -t 3 -i " + filename;

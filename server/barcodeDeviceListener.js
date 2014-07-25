@@ -11,7 +11,7 @@ GLOBAL FUNCTIONS
 
 var fs = Meteor.require('fs');
 
-var scannerPath = '/dev/hidraw3'
+var scannerPath = "Meteor.settings.scannerPath";
 //var ack = new Buffer('010200000400', 'hex');  //doesn't work...maybe default driver doesn't take writes
 
 // TODO figure out a way to close the scanner device file
