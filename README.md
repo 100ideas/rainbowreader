@@ -12,3 +12,20 @@ Linux:
 Web:
 - clear up funkiness of collection entry as workstationSession
 - how does reading station know address of visualization server?
+
+Deployment:
+- see server/lib/settings.js to set environment-specific options
+- need to refactor paths in code into Meteor.settings.pathName
+- need list of expected environment paths 
+  - photo storage
+  - barcode scanner fallback
+  - camera fallback
+- need fallback options in case of missing software / hardware
+  - barcode scanner fallback
+  - camera fallback
+  - opencfu missing
+
+Requirements:
+- gphoto2 (and init script for Canon EOS Rebel?)
+- barcode scanner
+- opencfu no-gui

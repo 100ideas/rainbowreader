@@ -14,7 +14,7 @@ var csv = Meteor.require('csv');
 // TODO wrap lines in debug
 var fs = Meteor.require('fs');
 // in case exec fails, JSON containing results of sample calculation
-var backupFilePath = "Meteor.settings.backupFilePath";
+var fakeColonyDataPath = Meteor.settings.fakeColonyDataPath;
 
 
 // runs OpenCFU on local image file
@@ -26,27 +26,40 @@ runOpenCFU = function(filename, callback) {
   // TODO explain parameters
   var cmd = opencfuPath + " -d bil -t 3 -i " + filename;
 
-  // run opencfu and save output
-  // TODO change exec to spawn, because exec has limited output buffer
-  var child = exec(cmd, Meteor.bindEnvironment(function (error, stdout, stderr) {
-    if (error || stderr) {
-      console.log("shit went down in the OpenCFU...");
-      if (error) console.log("error: " + error);
-      if (stderr) console.log("stderr: " + stderr);
-      // TODO use dummy data for now (wrap in debug)
+  if (!Meteor.settings.fakeMode) {
+
+    // run opencfu and save output
+    // TODO change exec to spawn, because exec has limited output buffer
+    var child = exec(cmd, Meteor.bindEnvironment(function (error, stdout, stderr) {
+      if (error || stderr) {
+        console.log("opencfu.js: shit went down in the OpenCFU...");
+        if (error) console.log("error: " + error);
+        if (stderr) console.log("stderr: " + stderr);
+        // TODO use dummy data for now (wrap in debug)
+        console.log("opencfu.js: processing dummy colonyData.json file... ");
+        setTimeout(function() { // simulate processing and give image a chance to load
+          var colonyData = fs.readFileSync(fakeColonyDataPath).toString();
+          callback(JSON.parse(colonyData));
+        }, 1000);
+      }
+      // success. parse stdout with csv module and return JSON to callback
+      else {
+        csv().from.string(stdout, {comment: '#'}).to.array( function(data) {
+          var colonyJSON = json_from_csv(data);
+          callback(colonyJSON);
+        });
+      }
+    }));
+
+  } else {
+    console.log("fakemode: skipping opencfu cmd in opencfu.js");
+    console.log("opencfu.js: processing dummy colonyData.json file... ");
       setTimeout(function() { // simulate processing and give image a chance to load
-        var colonyData = fs.readFileSync(backupFilePath).toString();
+        var colonyData = fs.readFileSync(fakeColonyDataPath).toString();
         callback(JSON.parse(colonyData));
       }, 1000);
-    }
-    // success. parse stdout with csv module and return JSON to callback
-    else {
-      csv().from.string(stdout, {comment: '#'}).to.array( function(data) {
-        var colonyJSON = json_from_csv(data);
-        callback(colonyJSON);
-      });
-    }
-  }));
+  }
+
 }
 
 

@@ -11,7 +11,7 @@ GLOBAL FUNCTIONS
 
 var fs = Meteor.require('fs');
 
-var scannerPath = "Meteor.settings.scannerPath";
+var scannerPath = Meteor.settings.scannerPath;
 //var ack = new Buffer('010200000400', 'hex');  //doesn't work...maybe default driver doesn't take writes
 
 // TODO figure out a way to close the scanner device file
@@ -21,6 +21,7 @@ listenForBarcodes = function(callback) {
     if (error) {
       console.log("shit went down in barcodeDeviceListener...");
       console.log("error: " + error);
+      barcodeScannerPresent = false;
     }
   
     var bufferSize = 64;
@@ -41,7 +42,12 @@ listenForBarcodes = function(callback) {
         startRead();
       }));
     }
-    startRead();
+    if (Meteor.settings.fakeMode) {
+        console.log("fakemode: using barcode AA0123456");
+        callback("AA0123456");
+    } else {
+        startRead();
+    }
   }));
 
   // Experimental code for closing the file

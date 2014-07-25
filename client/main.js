@@ -125,6 +125,7 @@ function drawReticle(selector) {
 // DEBUG: for inputting barcodes without a scanner
 debugEnterBarcodes = function() {
   var b = Date.now();
+  console.log('debug mode: setting fake barcode as current date: ' + b);
   WorkstationSessions.update(workstationSession, {$set: {userBarcode: b, dishBarcode: b}});
 }
 

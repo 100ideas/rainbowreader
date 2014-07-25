@@ -1,23 +1,33 @@
 // source https://gist.github.com/ritikm/6999942
 // discussion https://groups.google.com/d/msg/meteor-talk/K79-i3LYL3g/yxd4_IZOErAJ
 
-environment = process.env.METEOR_ENV || "development";
+if (process.env.METEOR_ENV) {
+  environment = process.env.METEOR_ENV;
+  console.log("settings.js: detected $METEOR_ENV: " + environment);
+} else {
+  environment = "development";
+  console.log("settings.js: can't find $METEOR_ENV, using default *development* environment");
+}
  
 var settings = {
   development: {
     public: {},
     private: {
+      "fakeMode": false,
     	"opencfuPath": '/home/administrator/dev/opencfu/opencfu',
-		"scannerPath": '/dev/hidraw3',
-		"backupFilePath": '/code/rainbowreader/test/colonyData.json'
+		  "scannerPath": '/dev/hidraw3',
+		  "fakeColonyDataPath": '/code/rainbowreader/test/colonyData.json',
+      "colonyPhotoPath": "public/photos/"
     }
   },
   development_osx: {
     public: {},
     private: {
-    	"opencfuPath": '/home/administrator/dev/opencfu/opencfu',
-		"scannerPath": ' ',
-		"backupFilePath": './test/colonyData.json'
+      "fakeMode": true,
+    	"opencfuPath": '/usr/local/bin/opencfu',
+		  "scannerPath": '',
+		  "fakeColonyDataPath": process.env.PWD + '/test/colonyData.json',
+      "colonyPhotoPath": process.env.PWD + '/public/photos/small.jpg'
     }
   },
   production: {
@@ -27,14 +37,14 @@ var settings = {
 };
  
 if (!process.env.METEOR_SETTINGS) {
-  console.log("=> No METEOR_SETTINGS passed in, using locally defined settings.");
+  console.log("settings.js: No METEOR_SETTINGS passed in,\n\tusing *" + environment + "* defined in settings.js");
  
   if (environment === "production") {
-    Meteor.settings = settings.production;
+    Meteor.settings = settings.production.private;
   } else if (environment === "development_osx") {
-    Meteor.settings = settings.development_osx;
+    Meteor.settings = settings.development_osx.private;
   } else {
-    Meteor.settings = settings.development;
+    Meteor.settings = settings.development.private;
   }
  
   // Push a subset of settings to the client.
