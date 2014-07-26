@@ -16,16 +16,13 @@ Web:
 Deployment:
 - see server/lib/settings.js to set environment-specific options
 - need to refactor paths in code into Meteor.settings.pathName
-- need list of expected environment paths 
-  - photo storage
-  - barcode scanner fallback
-  - camera fallback
-- need fallback options in case of missing software / hardware
-  - barcode scanner fallback
-  - camera fallback
-  - opencfu missing
+- using absolute paths, it's ugly
+
 
 Requirements:
 - gphoto2 (and init script for Canon EOS Rebel?)
 - barcode scanner
 - opencfu no-gui
+
+Debug: 
+- set "fakeMode" to true in settings.js on the osx branch to disable opencfu, barcode scanner, and gphoto calls
