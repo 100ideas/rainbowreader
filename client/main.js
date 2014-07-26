@@ -64,6 +64,7 @@ Template.hello.events({
 // HELPER FUNCTIONS
 // draw a reticle around each colony
 function animatePetriDish() {
+  console.log("main.js: entering animatePetriDish");
   var svg = d3.select('#viz').append('svg');
 
   var colonySelector = svg.selectAll('circle')

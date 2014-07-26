@@ -1,27 +1,27 @@
 <head>
   <title>rainbowreader</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
-  {{> hello}}
-  {{> plateView}}
+  <div class="container-fluid">
+    {{> header}}
+    {{> hello}}
+  </div>
 </body>
 
 <template name="hello">
+
   {{#if showScanBarcodes}}
     Scan barcodes on your ticket and the petri dish.
   {{/if}}
+
   {{#if showTakePhoto}}
     <input type="button" value="Take Photo" />
   {{/if}}
-  {{#if showDishPhoto}}
-    <div style="background:url({{showDishPhoto}})" id="viz">
-    </div>
-  {{/if}}
-</template>
 
-<template name="plateView">
-  <!-- Mac you can put code in here and also create templates to include inside of this. -->
-  <!-- see the body of this html file for the syntax to include a template -->
+  {{#if showDishPhoto}}
+      {{> plate showDishPhoto}}
+  {{/if}}
 
 </template>

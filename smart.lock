@@ -2,13 +2,19 @@
   "meteor": {},
   "dependencies": {
     "basePackages": {
-      "server-eval": {}
+      "server-eval": {},
+      "bootstrap-3": {}
     },
     "packages": {
       "server-eval": {
         "git": "https://github.com/gandev-de/meteor-server-eval.git",
         "tag": "v0.5.0",
         "commit": "0652e70de0b359305f7e04b9131dfc755e1cf27a"
+      },
+      "bootstrap-3": {
+        "git": "https://github.com/mangasocial/meteor-bootstrap-3.git",
+        "tag": "v3.2.0-1",
+        "commit": "17a63902fc6cf1096c5289d963c66cf28b474727"
       }
     }
   }
