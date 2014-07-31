@@ -24,7 +24,7 @@ var settings = {
     public: {},
     private: {
       "fakeMode": true,
-    	"opencfuPath": '/usr/local/bin/opencfu',
+    	"opencfuPath": '/Users/macowell/dev/museum/opencfu',
 		  "scannerPath": '',
 		  "fakeColonyDataPath": process.env.PWD + '/test/colonyData.json',
       "colonyPhotoPath": process.env.PWD + '/public/photos/small.jpg'

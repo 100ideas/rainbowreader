@@ -30,8 +30,8 @@ listenForBarcodes = function(callback) {
     function startRead() {
       fs.read(fd, buffer, 0, bufferSize, null, Meteor.bindEnvironment(function(error, bytesRead) {
         if (error) {
-          console.log("error reading from device");
-          console.log("error: " + error);
+          console.log("barcodeDeviceListener: error reading from device");
+          console.log("barcodeDeviceListener: error: " + error);
         }
 
         var barcode = parseBarcodeSNAPI(buffer);
@@ -43,7 +43,7 @@ listenForBarcodes = function(callback) {
       }));
     }
     if (Meteor.settings.fakeMode) {
-        console.log("fakemode: using barcode AA0123456");
+        console.log("\tfakemode: using barcode AA0123456");
         callback("AA0123456");
     } else {
         startRead();

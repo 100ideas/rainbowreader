@@ -4,13 +4,16 @@
 </head>
 
 <body>
-  <div class="container-fluid">
-    {{> header}}
+  <div class="container">
     {{> hello}}
   </div>
 </body>
 
 <template name="hello">
+
+  {{logContext "hello"}}
+
+  {{> header}}
 
   {{#if showScanBarcodes}}
     Scan barcodes on your ticket and the petri dish.

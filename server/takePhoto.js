@@ -27,7 +27,7 @@ takePhoto = function(dishBarcode, callback) {
 
   // TODO wrap in debug
   console.log("capturing photo with gphoto2...");
-  console.log("fakemode: " + Meteor.settings.fakeMode);
+  console.log("\tfakemode: " + Meteor.settings.fakeMode);
 
   if (!Meteor.settings.fakeMode) {
     var child = exec(cmdline, function (error, stdout, stderr) {
@@ -41,7 +41,7 @@ takePhoto = function(dishBarcode, callback) {
       callback(filename);
     });
   } else {
-    console.log("fakemode: skipping gphoto, using " + colonyPhotoPath);
+    console.log("\tfakemode: skipping gphoto, using " + colonyPhotoPath);
     callback(colonyPhotoPath);
   }
 }

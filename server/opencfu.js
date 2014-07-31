@@ -52,7 +52,7 @@ runOpenCFU = function(filename, callback) {
     }));
 
   } else {
-    console.log("fakemode: skipping opencfu cmd in opencfu.js");
+    console.log("\tfakemode: skipping opencfu cmd in opencfu.js");
     console.log("opencfu.js: processing dummy colonyData.json file... ");
       setTimeout(function() { // simulate processing and give image a chance to load
         var colonyData = fs.readFileSync(fakeColonyDataPath).toString();
