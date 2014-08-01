@@ -4,7 +4,16 @@ Meteor.call('createWorkstationSession', function(error, result) {
 
   // bypass entering barcodes and clicking take Picture 
   debugEnterBarcodes();
-  Meteor.call('takeAndAnalyzePhoto', getSessionDocument().dishBarcode);
+  
+
+
+  /*  while (!getSessionDocument()){
+      //            Meteor.setTimeout(
+      //  	  function(){console.log("missing dishBarcode");}, 100);
+      };*/
+
+  Meteor.setTimeout(function(){Meteor.call('takeAndAnalyzePhoto', getSessionDocument().dishBarcode);},2000);
+
 
   // watch the record for changes, so we can animate when colonyData arrives
   WorkstationSessions.find(workstationSession).observeChanges({
@@ -12,6 +21,7 @@ Meteor.call('createWorkstationSession', function(error, result) {
       if (fields.colonyData) {
         // if we have colonyData, we're ready to animate
         animatePetriDish();
+	drawCircles();
       } 
     }  
   })
@@ -63,6 +73,47 @@ Template.hello.events({
 
 
 // HELPER FUNCTIONS
+
+//drawing circles based on colony data
+
+
+/////////////////////////////////////////////////////////////////////
+//d3 code for drawing circles in the middle section of the plateview
+
+function drawCircles(){
+    
+    console.log("entering drawCircles();");
+    
+    var circleSVG = d3.select("#colonyspectrum").append('svg');
+    
+    console.log("data: " + WorkstationSessions.findOne(workstationSession).colonyData);
+
+    var colonySelector = circleSVG.selectAll('circle')
+	.data(WorkstationSessions.findOne(workstationSession).colonyData)
+	.enter()
+
+
+      
+
+   colonySelector
+    .append('circle')
+	.style('fill', function(d){console.log(d.Hue);return hslaify(d);})
+    .style('stroke', 'black')
+    //    .style('stroke-width', reticleWidth)
+	.attr('r', function(d){return d.Radius;})//function(d) {return (d.Radius * reticleRadiusMultiplier)})
+    .attr('cx', function(d) {return d.X / 4}) 
+	.attr('cy', function(d) {return d.Y/4;})
+	//    .transition()
+	//    .duration(1000)
+	//    .attr('r', function(d) { return (d.Radius)})
+
+	}          
+
+  function hslaify(d) {
+    return "hsla(" + d.Hue + "," + d.Saturation + "%,50%,1)";  
+  }
+
+    
 // draw a reticle around each colony
 function animatePetriDish() {
   console.log("main.js: entering animatePetriDish");
@@ -119,8 +170,10 @@ function drawReticle(selector) {
     .attr('cx', function(d) {return d.X}) 
     .attr('cy', function(d) {return d.Y})
     .transition()
+
     .duration(reticleAnimDuration)
-    .attr('r', function(d) { return (d.Radius * reticleRadiusMultiplier)})
+ 
+   .attr('r', function(d) { return (d.Radius * reticleRadiusMultiplier)})
 }
 
 
@@ -129,6 +182,7 @@ debugEnterBarcodes = function() {
   var b = Date.now();
   console.log('debug mode: setting fake barcode as current date: ' + b);
   WorkstationSessions.update(workstationSession, {$set: {userBarcode: b, dishBarcode: b}});
+
 }
 
 // takes barcode and determines whether it's dishBarcode or userBarcode
@@ -136,3 +190,5 @@ function determineBarcodeType(barcode) {
   if (barcode[0] == 'D') return 'dishBarcode';
   return 'userBarcode';
 }
+
+
