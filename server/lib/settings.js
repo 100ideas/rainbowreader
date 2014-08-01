@@ -15,21 +15,25 @@ var settings = {
   development: {
     public: {},
     private: {
-      "fakeMode": false,
+      "gphoto2": true,
     	"opencfuPath": '/home/administrator/dev/opencfu/opencfu',
 		  "scannerPath": '/dev/hidraw3',
-		  "fakeColonyDataPath": '/code/rainbowreader/test/colonyData.json',
-      "colonyPhotoPath": "public/photos/"
+      "platePhotosPath": "public/photos/",
+		  "fakeColonyDataFile": '/code/rainbowreader/test/colonyData.json',
+      "fakeColonyPhotoFile": 'public/photos/small.jpg'
     }
   },
   development_osx: {
     public: {},
     private: {
-      "fakeMode": true,
-    	"opencfuPath": '/Users/macowell/dev/museum/opencfu',
-		  "scannerPath": '',
-		  "fakeColonyDataPath": process.env.PWD + '/test/colonyData.json',
-      "colonyPhotoPath": process.env.PWD + '/public/photos/small.jpg'
+      "gphoto2":                false,
+    	// "opencfuPath": '/Users/macowell/dev/museum/opencfu/opencfu',
+      "opencfuPath":            false,
+		  "scannerPath":            false,
+      "platePhotosPath":        'public/photos/',
+		  "fakeColonyDataFile":     'test/colonyData.json',
+      "fakeColonyPhotoFile":    process.env.PWD + '/public/photos/small.jpg' // necessary cause opencfu gets confused
+      
     }
   },
   production: {
@@ -39,7 +43,7 @@ var settings = {
 };
  
 if (!process.env.METEOR_SETTINGS) {
-  console.log("settings.js: No METEOR_SETTINGS passed in,\n\tusing *" + environment + "* defined in settings.js");
+  console.log("settings.js: No settings found in $METEOR_SETTINGS, using *" + environment + "* defined in server/lib/settings.js");
  
   if (environment === "production") {
     Meteor.settings = settings.production.private;

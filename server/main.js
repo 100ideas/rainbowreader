@@ -16,7 +16,7 @@ Meteor.startup(function () {
     // otherwise write to workstationSession
     // WARNING: workstationSession is {} if not browser session
     // because Meteor weirdness.
-    console.log('workstationSession: ' + workstationSession);
+    console.log('server/main.js: workstationSession: ' + workstationSession);
     if (typeof workstationSession === 'string') {
       try { 
         // choose the property name based on the type of barcode
@@ -35,7 +35,7 @@ Meteor.startup(function () {
 Meteor.methods({
   createWorkstationSession: function() {
     // create a single mongo document to hold state between server and client
-    console.log('create session');
+    console.log('create session\n\told workstationSession: ' + workstationSession);
     WorkstationSessions.remove({});   //clear previous session documents
     workstationSession = WorkstationSessions.insert({dateCreated: Date.now()});
     return workstationSession;

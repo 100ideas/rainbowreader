@@ -25,5 +25,5 @@ Requirements:
 - opencfu no-gui
 
 Debug: 
-- set "fakeMode" to true in settings.js on the osx branch to disable opencfu, barcode scanner, and gphoto calls
+- set the associated filepath to *false* in "settings.js to disable opencfu, barcode scanner, and gphoto calls
 - check out [server-eval meteorite package](http://stackoverflow.com/questions/11034941/meteor-debug-on-server-side) and [crx chrome extension](https://github.com/gandev/meteor-server-console/releases) for accessing the server console

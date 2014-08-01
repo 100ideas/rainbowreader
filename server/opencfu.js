@@ -26,7 +26,7 @@ runOpenCFU = function(filename, callback) {
   // TODO explain parameters
   var cmd = opencfuPath + " -d bil -t 3 -i " + filename;
 
-  if (!Meteor.settings.fakeMode) {
+  if (Meteor.settings.opencfuPath) {
 
     // run opencfu and save output
     // TODO change exec to spawn, because exec has limited output buffer
@@ -52,8 +52,8 @@ runOpenCFU = function(filename, callback) {
     }));
 
   } else {
-    console.log("\tfakemode: skipping opencfu cmd in opencfu.js");
-    console.log("opencfu.js: processing dummy colonyData.json file... ");
+    console.log("opencfu.js: settings.opencfu is " + Meteor.settings.opencfuPath
+              + "\n\tusing dummy colonyData.json file at " + fakeColonyDataPath);
       setTimeout(function() { // simulate processing and give image a chance to load
         var colonyData = fs.readFileSync(fakeColonyDataPath).toString();
         callback(JSON.parse(colonyData));

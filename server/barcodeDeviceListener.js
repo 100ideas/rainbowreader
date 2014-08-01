@@ -12,43 +12,50 @@ GLOBAL FUNCTIONS
 var fs = Meteor.require('fs');
 
 var scannerPath = Meteor.settings.scannerPath;
+var barcodeScannerPresent = !!scannerPath; //casting to bool; scannerpath is either *false* or a path (or '' which is falsey)
+
 //var ack = new Buffer('010200000400', 'hex');  //doesn't work...maybe default driver doesn't take writes
 
 // TODO figure out a way to close the scanner device file
 listenForBarcodes = function(callback) {
 
-  fs.open(scannerPath, 'r', Meteor.bindEnvironment(function(error, fd) {
-    if (error) {
-      console.log("shit went down in barcodeDeviceListener...");
-      console.log("error: " + error);
-      barcodeScannerPresent = false;
-    }
-  
-    var bufferSize = 64;
-    var buffer = Buffer(bufferSize);
-  
-    function startRead() {
-      fs.read(fd, buffer, 0, bufferSize, null, Meteor.bindEnvironment(function(error, bytesRead) {
-        if (error) {
-          console.log("barcodeDeviceListener: error reading from device");
-          console.log("barcodeDeviceListener: error: " + error);
-        }
+  if (barcodeScannerPresent){
 
-        var barcode = parseBarcodeSNAPI(buffer);
+    fs.open(scannerPath, 'r', Meteor.bindEnvironment(function(error, fd) {
+      if (error) {
+        console.log("shit went down in barcodeDeviceListener...");
+        console.log("error: " + error);
+      }
+    
+      var bufferSize = 64;
+      var buffer = Buffer(bufferSize);
+    
+      function startRead() {
+        fs.read(fd, buffer, 0, bufferSize, null, Meteor.bindEnvironment(function(error, bytesRead) {
+          if (error) {
+            console.log("barcodeDeviceListener: error reading from device");
+            console.log("barcodeDeviceListener: error: " + error);
+          }
 
-        callback(barcode);
-        // fs.read is asynchronous; callback must be recursive to read subsequent buffer
-        // this paradigm only makes sense because Node.js supports tail recursion
-        startRead();
-      }));
-    }
-    if (Meteor.settings.fakeMode) {
-        console.log("\tfakemode: using barcode AA0123456");
-        callback("AA0123456");
-    } else {
-        startRead();
-    }
-  }));
+          var barcode = parseBarcodeSNAPI(buffer);
+
+          callback(barcode);
+          // fs.read is asynchronous; callback must be recursive to read subsequent buffer
+          // this paradigm only makes sense because Node.js supports tail recursion
+          startRead();
+        }));
+      }
+
+      startRead();
+    
+    }));
+
+  } else {
+      console.log("barcodeDeviceListener: listenForBarcodes called & scanner is missing..." 
+                + "\n\tbarcodeScannerPresent? " + barcodeScannerPresent
+                + "\n\tpassing callback dummy barcode AA0123456.");
+      callback("AA0123456");
+  }
 
   // Experimental code for closing the file
   /*var shouldClose = false;
