@@ -1,3 +1,5 @@
+console.log("loaded client/main.js")
+
 // get the state document id from the server
 Meteor.call('createWorkstationSession', function(error, result) {
    workstationSession = result;
@@ -18,9 +20,10 @@ Meteor.call('createWorkstationSession', function(error, result) {
 });
 
 // Helper for retrieving state.  There should only be one document in this collection.
-function getSessionDocument() {
-  return WorkstationSessions.findOne(workstationSession);
-}
+// -- moved to client/lib/globalHelpers so this function loads before other view Managers (i.e. plate.js)
+// function getSessionDocument() {
+//   return WorkstationSessions.findOne(workstationSession);
+// }
 
 ///////////////////////////////////////////////////////////////////////////////
 // STATE MACHINE / WORKFLOW template functions

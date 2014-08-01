@@ -1,5 +1,7 @@
 // source https://gist.github.com/ritikm/6999942
 // discussion https://groups.google.com/d/msg/meteor-talk/K79-i3LYL3g/yxd4_IZOErAJ
+// be sure to set the METEOR_ENV environment variable i.e. in ~/.bash_profile:
+// export METEOR_ENV='development_osx'
 
 if (process.env.METEOR_ENV) {
   environment = process.env.METEOR_ENV;
