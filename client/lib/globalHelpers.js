@@ -1,4 +1,9 @@
-console.log("loaded client/lib/globalHelpers.js")
+// Global function for retrieving state.
+// There should only be one document in this collection. 
+// used to be in client/main.js - mac
+getSessionDocument = function () {
+  return WorkstationSessions.findOne(workstationSession);
+}
 
 // global template helper for logging current context. Pass template name in as parameter
 UI.registerHelper('logContext', function(template) {
@@ -14,8 +19,6 @@ UI.registerHelper('logContext', function(template) {
 	// console.log("current template: " + curtemp);
 });
 
-// Helper for retrieving state.  There should only be one document in this collection.
-// used to be in client/main.js
-getSessionDocument = function () {
-  return WorkstationSessions.findOne(workstationSession);
-}
+UI.registerHelper('getSessionDocument', function() {
+	return getSessionDocument();
+});

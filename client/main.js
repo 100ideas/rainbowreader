@@ -1,5 +1,3 @@
-console.log("loaded client/main.js")
-
 // get the state document id from the server
 Meteor.call('createWorkstationSession', function(error, result) {
    workstationSession = result;

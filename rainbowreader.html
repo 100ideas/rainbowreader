@@ -8,23 +8,3 @@
     {{> hello}}
   </div>
 </body>
-
-<template name="hello">
-
-  {{logContext "hello"}}
-
-  {{> header}}
-
-  {{#if showScanBarcodes}}
-    Scan barcodes on your ticket and the petri dish.
-  {{/if}}
-
-  {{#if showTakePhoto}}
-    <input type="button" value="Take Photo" />
-  {{/if}}
-
-  {{#if showDishPhoto}}
-      {{> plate}}
-  {{/if}}
-
-</template>
