@@ -30,8 +30,8 @@ var settings = {
     	// "opencfuPath": '/Users/macowell/dev/museum/opencfu/opencfu',
       "opencfuPath":            false,
 		  "scannerPath":            false,
-      "platePhotosPath":        'public/photos/',
-		  "fakeColonyDataFile":     'test/colonyData.json',
+      "platePhotosPath":        process.env.PWD + '/public/photos/',
+		  "fakeColonyDataFile":     process.env.PWD + '/test/colonyData.json',
       "fakeColonyPhotoFile":    process.env.PWD + '/public/photos/small.jpg' // necessary cause opencfu gets confused
       
     }
