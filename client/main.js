@@ -21,7 +21,7 @@ Meteor.call('createWorkstationSession', function(error, result) {
       if (fields.colonyData) {
         // if we have colonyData, we're ready to animate
         animatePetriDish();
-	drawCircles();
+        drawCircles();
       } 
     }  
   })
@@ -53,13 +53,13 @@ Template.hello.showTakePhoto = function () {
 }
 
 // show the image and colony animations
-Template.hello.showDishPhoto = function () {
+Template.hello.showPlatePhoto = function () {
   var doc = getSessionDocument();
   if (!doc || !doc.photoURL) return false;
   return doc.photoURL;
 };
 
-///////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
 // EVENT HANDLERS
 
 Template.hello.events({
@@ -71,48 +71,56 @@ Template.hello.events({
   }
 });
 
-
+/////////////////////////////////////////////////////////////////////
 // HELPER FUNCTIONS
 
-//drawing circles based on colony data
+// DEBUG: for inputting barcodes without a scanner
+debugEnterBarcodes = function() {
+  var b = Date.now();
+  console.log('debug mode: setting fake barcode as current date: ' + b);
+  WorkstationSessions.update(workstationSession, {$set: {userBarcode: b, dishBarcode: b}});
 
+}
+
+// takes barcode and determines whether it's dishBarcode or userBarcode
+function determineBarcodeType(barcode) {
+  if (barcode[0] == 'D') return 'dishBarcode';
+  return 'userBarcode';
+}
 
 /////////////////////////////////////////////////////////////////////
 //d3 code for drawing circles in the middle section of the plateview
+// these functions are called above, can they live somewhere else
+// for clarity?
 
 function drawCircles(){
-    
-    console.log("entering drawCircles();");
-    
-    var circleSVG = d3.select("#colonyspectrum").append('svg');
-    
-    console.log("data: " + WorkstationSessions.findOne(workstationSession).colonyData);
 
-    var colonySelector = circleSVG.selectAll('circle')
-	.data(WorkstationSessions.findOne(workstationSession).colonyData)
-	.enter()
+  console.log("entering drawCircles();");
 
+  var circleSVG = d3.select("#colonyspectrum").append('svg');
 
-      
+  // console.log("data: " + WorkstationSessions.findOne(workstationSession).colonyData);
 
-   colonySelector
-    .append('circle')
-	.style('fill', function(d){console.log(d.Hue);return hslaify(d);})
+  var colonySelector = circleSVG.selectAll('circle')
+  .data(WorkstationSessions.findOne(workstationSession).colonyData)
+  .enter()
+
+  colonySelector
+  .append('circle')
+  .style('fill', function(d){return hslaify(d)})
     .style('stroke', 'black')
-    //    .style('stroke-width', reticleWidth)
-	.attr('r', function(d){return d.Radius;})//function(d) {return (d.Radius * reticleRadiusMultiplier)})
+    //.style('stroke-width', reticleWidth)
+    .attr('r', function(d){return d.Radius;}) //function(d) {return (d.Radius * reticleRadiusMultiplier)})
     .attr('cx', function(d) {return d.X / 4}) 
-	.attr('cy', function(d) {return d.Y/4;})
-	//    .transition()
-	//    .duration(1000)
-	//    .attr('r', function(d) { return (d.Radius)})
+    .attr('cy', function(d) {return d.Y / 4})
+    //    .transition()
+    //    .duration(1000)
+    //    .attr('r', function(d) { return (d.Radius)})
+}          
 
-	}          
-
-  function hslaify(d) {
-    return "hsla(" + d.Hue + "," + d.Saturation + "%,50%,1)";  
-  }
-
+function hslaify(d) {
+  return "hsla(" + d.Hue + "," + d.Saturation + "%,50%,1)";  
+}
     
 // draw a reticle around each colony
 function animatePetriDish() {
@@ -175,20 +183,3 @@ function drawReticle(selector) {
  
    .attr('r', function(d) { return (d.Radius * reticleRadiusMultiplier)})
 }
-
-
-// DEBUG: for inputting barcodes without a scanner
-debugEnterBarcodes = function() {
-  var b = Date.now();
-  console.log('debug mode: setting fake barcode as current date: ' + b);
-  WorkstationSessions.update(workstationSession, {$set: {userBarcode: b, dishBarcode: b}});
-
-}
-
-// takes barcode and determines whether it's dishBarcode or userBarcode
-function determineBarcodeType(barcode) {
-  if (barcode[0] == 'D') return 'dishBarcode';
-  return 'userBarcode';
-}
-
-

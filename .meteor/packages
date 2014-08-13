@@ -6,7 +6,7 @@
 standard-app-packages
 insecure
 autopublish
-npm
 d3
 server-eval
 bootstrap-3
+npm

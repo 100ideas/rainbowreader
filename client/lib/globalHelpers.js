@@ -2,6 +2,8 @@
 // There should only be one document in this collection. 
 // used to be in client/main.js - mac
 getSessionDocument = function () {
+	var ws = WorkstationSessions.findOne(workstationSession)
+	console.log("client/lib/globalHelpers:getSessionDocument() called, _id: " + ws._id);
   return WorkstationSessions.findOne(workstationSession);
 }
 
@@ -19,6 +21,7 @@ UI.registerHelper('logContext', function(template) {
 	// console.log("current template: " + curtemp);
 });
 
+// global template helper for getting current workstationSession. Pass template name in as parameter
 UI.registerHelper('getSessionDocument', function() {
 	return getSessionDocument();
 });

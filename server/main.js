@@ -35,9 +35,10 @@ Meteor.startup(function () {
 Meteor.methods({
   createWorkstationSession: function() {
     // create a single mongo document to hold state between server and client
-    console.log('create session\n\told workstationSession: ' + workstationSession);
+    console.log('server/main.js creatNewWorkStationSession\n\told workstationSession: ' + workstationSession);
     WorkstationSessions.remove({});   //clear previous session documents
     workstationSession = WorkstationSessions.insert({dateCreated: Date.now()});
+    console.log('\tnew workstationSession: ' + workstationSession);
     return workstationSession;
   },
   
@@ -59,10 +60,39 @@ Meteor.methods({
       runOpenCFU(photoPath, Meteor.bindEnvironment(function(colonyData) {
         WorkstationSessions.update(workstationSession, {$set: {colonyData: colonyData}});
 
-        // uploads relevant data to the main visualization server
+        analyzeColonies();
+
         var userBarcode = WorkstationSessions.findOne(workstationSession).userBarcode;
         postColonyDataAndImage(dishBarcode, userBarcode, colonyData, photoPath);
       }));
     }));
   }
 });
+
+function analyzeColonies(){
+  // parse colors in workstationSession
+  // assignCommonNames: iterate over colonyDate and add to each array item
+  // findRarestColor: compare current colonies to all in db and pick rarest
+  //                  update colonydata.rarestColorIndex with array indices
+  
+  WorkstationSessions.update( 
+    workstationSession, {$set: { 
+      "colonyData.0.colorName" : "atomic orange" 
+    } 
+  });
+  
+  console.log("entering analyzeColonies...");
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -28,6 +28,8 @@ runOpenCFU = function(filename, callback) {
 
   if (Meteor.settings.opencfuPath) {
 
+    console.log("opencfu.js: executing " + cmd )
+
     // run opencfu and save output
     // TODO change exec to spawn, because exec has limited output buffer
     var child = exec(cmd, Meteor.bindEnvironment(function (error, stdout, stderr) {
@@ -35,18 +37,13 @@ runOpenCFU = function(filename, callback) {
         console.log("opencfu.js: shit went down in the OpenCFU...");
         if (error) console.log("error: " + error);
         if (stderr) console.log("stderr: " + stderr);
-        // TODO use dummy data for now (wrap in debug)
-        console.log("opencfu.js: processing dummy colonyData.json file... ");
-        setTimeout(function() { // simulate processing and give image a chance to load
-          var colonyData = fs.readFileSync(fakeColonyDataFile).toString();
-          callback(JSON.parse(colonyData));
-        }, 1000);
-      }
-      // success. parse stdout with csv module and return JSON to callback
-      else {
+      } else {
+        // success. parse stdout with csv module and return JSON to callback
+        // console.log("================================================\n\tgot stdout:\n " + stdout)
+        console.log( "calling csv module..." );
         csv().from.string(stdout, {comment: '#'}).to.array( function(data) {
           var colonyJSON = json_from_csv(data);
-          callback(colonyJSON);
+          callback(colonyJSON);        
         });
       }
     }));
@@ -70,7 +67,7 @@ var json_from_csv = function(csv_object) {
   // grab header row (assumes first entry is the header)
   var header = csv_object.shift();
   // build object from each row
-  Array.prototype.forEach(csv_object, function(row) {
+  csv_object.forEach(function(row) {
     var row_obj = {};
     for (var i=0; i< row.length; i++){
       // header items as keys, row items as values

@@ -27,7 +27,7 @@ takePhoto = function(dishBarcode, callback) {
   // TODO wrap in debug
   if (Meteor.settings.gphoto2) {
     console.log("takePhoto.js: capturing photo with gphoto2 command\n\t" + cmdline);
-    var child = exec(cmdline, function (error, stdout, stderr) {
+    var child = exec(cmdline, Meteor.bindEnvironment( function (error, stdout, stderr) {
       if (error || stderr) {
         console.log("shit went down in the gphoto2...");
         if (error) console.log("error: " + error);
@@ -36,7 +36,7 @@ takePhoto = function(dishBarcode, callback) {
         filename = platePhotosPath;
       }
       callback(filename);
-    });
+    }));
   } else {
     console.log("takePhoto.js: settings.gphoto2 is "  + Meteor.settings.gphoto2
               + "\n\t using dummy photo located at " + Meteor.settings.fakeColonyPhotoFile);

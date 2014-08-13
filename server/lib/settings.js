@@ -27,8 +27,7 @@ var settings = {
     public: {},
     private: {
       "gphoto2":                false,
-    	// "opencfuPath": '/Users/macowell/dev/museum/opencfu/opencfu',
-      "opencfuPath":            false,
+      "opencfuPath":            'opencfu',
 		  "scannerPath":            false,
       "platePhotosPath":        process.env.PWD + '/public/photos/',
 		  "fakeColonyDataFile":     process.env.PWD + '/test/colonyData.json',
