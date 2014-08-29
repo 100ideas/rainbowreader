@@ -60,7 +60,7 @@ Meteor.methods({
       runOpenCFU(photoPath, Meteor.bindEnvironment(function(colonyData) {
         WorkstationSessions.update(workstationSession, {$set: {colonyData: colonyData}});
 
-        analyzeColonies();
+        analyzeColonies(colonyData);
 
         var userBarcode = WorkstationSessions.findOne(workstationSession).userBarcode;
         postColonyDataAndImage(dishBarcode, userBarcode, colonyData, photoPath);
@@ -69,19 +69,21 @@ Meteor.methods({
   }
 });
 
-function analyzeColonies(){
+function analyzeColonies(colonyData){
   // parse colors in workstationSession
   // assignCommonNames: iterate over colonyDate and add to each array item
   // findRarestColor: compare current colonies to all in db and pick rarest
   //                  update colonydata.rarestColorIndex with array indices
   
-  WorkstationSessions.update( 
-    workstationSession, {$set: { 
-      "colonyData.0.colorName" : "atomic orange" 
-    } 
-  });
-  
   console.log("entering analyzeColonies...");
+
+  // TODO figure out how to update all at once...
+  colonyData.forEach(function(colony, index) {
+    var rgb = [colony.Rmean, colony.Gmean, colony.Bmean];
+    var name = getNameForColor(rgb);
+    var field = 'colonyData.' + index + '.colorName';
+    WorkstationSessions.update(workstationSession, {$set: {field: name}});
+  });
 }
 
 
