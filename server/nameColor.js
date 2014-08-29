@@ -56,39 +56,25 @@ function getSectorFromIndices(indices) {
   return colorSpace[indices[0]][indices[1]][indices[2]];
 }
 
-// data structures 
+/////////////////////////////////////////////////////////////
+// data structures and startup code
+
 var colors = [];  // list of all colors with names and RGB triples
 var numSectors = 8;  // how many pieces to divide each dimension of the space into
 var sectorSpan = Math.ceil(256 / numSectors); // we divide by this to index into an array, so ceil must be used if this division does not produce an integer, otherwise we could index past the array bounds
 var colorSpace = new Array(numSectors);  // 3-dim spatial hash map where each entry is an array of color objects
 
-// construct 3-dimensional array of arrays
-for (var i = 0; i < numSectors; i++) {
-  colorSpace[i] = new Array(numSectors);
-  for (var j = 0; j < numSectors; j++) {
-    colorSpace[i][j] = new Array(numSectors);
-    for (var k = 0; k < numSectors; k++) {
-      colorSpace[i][j][k] = new Array();    // array that will hold colors in this sector
+function constructColorSpace() {
+  // construct 3-dimensional array of arrays
+  for (var i = 0; i < numSectors; i++) {
+    colorSpace[i] = new Array(numSectors);
+    for (var j = 0; j < numSectors; j++) {
+      colorSpace[i][j] = new Array(numSectors);
+      for (var k = 0; k < numSectors; k++) {
+        colorSpace[i][j][k] = new Array();    // array that will hold colors in this sector
+      }
     }
   }
-}
-
-// read color names and RGB values from file
-var rd = readline.createInterface({
-  input: fs.createReadStream(colorsFilename),
-  output: process.stdout,
-  terminal: false
-});
-
-rd.on('line', function(line) {
-  var tokens = line.split('\t');
-  var rgbstr = tokens[1].replace('#', '');
-  var rgb = toRGB(rgbstr);
-  colors.push({rgb:rgb, name:tokens[0]});
-});
-
-rd.on('close', function() {
-  console.log('Done reading ' + colors.length + ' colors.');
 
   // spatially hash each color into the sector which contains it
   colors.forEach(function(color) {
@@ -97,10 +83,27 @@ rd.on('close', function() {
     sector.push(color);
   });
 
+  console.log('Done reading ' + colors.length + ' colors.');
   //console.log(colorSpace[numSectors-1][0][0]);
   //testFindingColors();
+}
+
+
+// read color names and RGB values from file
+var lines = Assets.getText(colorsFilename).split('\n');
+lines.forEach(function(line) {
+  if (line) { 
+    var tokens = line.split('\t');
+    var rgbstr = tokens[1].replace('#', '');
+    var rgb = toRGB(rgbstr);
+    colors.push({rgb:rgb, name:tokens[0]});
+  }
 });
 
+constructColorSpace();
+
+////////////////////////////////////////////////////////////////////////
+// search functions
 
 function findClosestColorUsingSectors(rgb, offset) {
 
