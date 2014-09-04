@@ -42,9 +42,9 @@ Meteor.methods({
     return workstationSession;
 	},
   
-	    takeAndAnalyzePhoto: function(dishBarcode) {
+	takeAndAnalyzePhoto: function(dishBarcode) {
 
-	    console.log("in takeAndAnalyzePhoto");
+	  console.log("in takeAndAnalyzePhoto");
 
     takePhoto(dishBarcode, Meteor.bindEnvironment(function(photoPath) {
 
@@ -67,9 +67,9 @@ Meteor.methods({
 
       runOpenCFU(photoPath, Meteor.bindEnvironment(function(colonyData) {
 	
-		  console.log("inside the Meteor.bindEnvironment callback for runOpenCFU");
+		    console.log("inside the Meteor.bindEnvironment callback for runOpenCFU");
 
-	WorkstationSessions.update(workstationSession, {$set: {colonyData: colonyData}});
+        WorkstationSessions.update(workstationSession, {$set: {colonyData: colonyData}});
 
         analyzeColonies(colonyData);
 
@@ -85,16 +85,24 @@ function analyzeColonies(colonyData){
   // assignCommonNames: iterate over colonyDate and add to each array item
   // findRarestColor: compare current colonies to all in db and pick rarest
   //                  update colonydata.rarestColorIndex with array indices
+
+  // TODO: retrieve colonyData from db query instead of it being passed in,
+  // in case some other process has updated the db before us 
   
   console.log("entering analyzeColonies...");
 
-  // TODO figure out how to update all at once...
   colonyData.forEach(function(colony, index) {
     var rgb = [colony.Rmean, colony.Gmean, colony.Bmean];
     var name = getNameForColor(rgb);
-    var field = 'colonyData.' + index + '.colorName';
-    WorkstationSessions.update(workstationSession, {$set: {field: name}});
+    colony.ColorName = name;
+    //console.log('index ' + index + ' setting: ' + field);
+    //var field = '"colonyData.' + index + '.ColorName"';
+    //WorkstationSessions.update(workstationSession, {$set: {field: name}});
   });
+
+  // updating the color on colonyData one at a timee triggers observeChanges every time
+  // insert modified data in one update... (and hope some one else is trying to modifying data at the same time
+  WorkstationSessions.update(workstationSession, {$set: {colonyData: colonyData}});
 }
 
 
