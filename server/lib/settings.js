@@ -16,7 +16,7 @@ var settings = {
     public: {},
     private: {
       "gphoto2": true,
-    	"opencfuPath": '/home/administrator/dev/opencfu/opencfu',
+      //    	"opencfuPath": '/home/administrator/dev/opencfu/opencfu',
 		  "scannerPath": '/dev/hidraw3',
       "platePhotosPath": "public/photos/",
 		  "fakeColonyDataFile": '/code/rainbowreader/test/colonyData.json',
@@ -27,7 +27,7 @@ var settings = {
     public: {},
     private: {
       "gphoto2":                false,
-      "opencfuPath":            'opencfu',
+      //      "opencfuPath":            'opencfu',
 		  "scannerPath":            false,
       "platePhotosPath":        process.env.PWD + '/public/photos/',
 		  "fakeColonyDataFile":     process.env.PWD + '/test/colonyData.json',

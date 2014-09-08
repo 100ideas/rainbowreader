@@ -12,7 +12,10 @@ Meteor.call('createWorkstationSession', function(error, result) {
       //  	  function(){console.log("missing dishBarcode");}, 100);
       };*/
 
-  Meteor.setTimeout(function(){Meteor.call('takeAndAnalyzePhoto', getSessionDocument().dishBarcode);},2000);
+  Meteor.setTimeout(function()
+
+		    {		    console.log("about to takeAndAnalyzePhoto");
+Meteor.call('takeAndAnalyzePhoto', getSessionDocument().dishBarcode);},2000);
 
 
   // watch the record for changes, so we can animate when colonyData arrives

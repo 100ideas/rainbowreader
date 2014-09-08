@@ -11,6 +11,8 @@ Template.plate.showPlatePhoto = function () {
 Template.plate.showPlateAnalysis = function () {
   var doc = getSessionDocument();
   if (!doc) return false;
+  console.log("from showPlateAnalysis");
+  console.log(doc);
   return !!doc.colonyData // casts to bool
 }
 
