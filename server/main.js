@@ -80,7 +80,7 @@ Meteor.methods({
 	}
 });
 
-function analyzeColonies(colonyData){
+function analyzeColonies(colonyData) {
   // parse colors in workstationSession
   // assignCommonNames: iterate over colonyDate and add to each array item
   // findRarestColor: compare current colonies to all in db and pick rarest
@@ -91,6 +91,7 @@ function analyzeColonies(colonyData){
   
   console.log("entering analyzeColonies...");
 
+  // assign each colony a color name
   colonyData.forEach(function(colony, index) {
     var rgb = [colony.Rmean, colony.Gmean, colony.Bmean];
     var name = getNameForColor(rgb);
@@ -100,9 +101,50 @@ function analyzeColonies(colonyData){
     //WorkstationSessions.update(workstationSession, {$set: {field: name}});
   });
 
-  // updating the color on colonyData one at a timee triggers observeChanges every time
-  // insert modified data in one update... (and hope some one else is trying to modifying data at the same time
+  // Updating the color on colonyData one at a time triggers observeChanges every time.
+  // So insert modified data in one update... (and hope some one else isn't trying to modifying data at the same time).
   WorkstationSessions.update(workstationSession, {$set: {colonyData: colonyData}});
+  
+  // pick the "rarest" 3 colors among these colonies
+  // TODO: make this calculation use all colonies in the last X days
+  // Use an object as a map to count how many times each color name appears.
+  // Then transfer the counts to an array which we sort.
+  // The least common colors will be at the top.
+  var numberOfRarestColors = 3;
+  
+  var colorNamesMap = {};
+  colonyData.forEach(function(colony, index) {
+    if (colorNamesMap[colony.ColorName] === undefined)
+      colorNamesMap[colony.ColorName] = {count:1, colonyDataIndex:index};
+    else
+      colorNamesMap[colony.ColorName].count++;
+  });
+
+  // transfer the map's entries into an array
+  var colorNamesArray = [];
+  for (var key in colorNamesMap) {
+    // make sure we don't get an inherited property
+    if (colorNamesMap.hasOwnProperty(key)) {
+      colorNamesArray.push(colorNamesMap[key]);
+    }
+  }
+
+  // sort ascending by count
+  colorNamesArray.sort(function(a, b) {
+    return a.count - b.count;
+  });
+
+  // set the rarest 3 indices as an array in the db
+  var rareColorIndices = [];
+  var numberToChoose = Math.min(colorNamesArray.length, numberOfRarestColors); 
+  for (var i = 0; i < numberToChoose; i < i++) {
+    rareColorIndices.push(colorNamesArray[i].colonyDataIndex);
+  }
+  
+  var set = {$set: {rareColorIndices:rareColorIndices}};
+  WorkstationSessions.update(workstationSession, set);
+
+  // TODO: calculate 'rarity' score and how many times this color has been seen before
 }
 
 
