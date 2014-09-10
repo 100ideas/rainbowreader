@@ -8,11 +8,11 @@ GLOBAL FUNCTIONS
     callback takes a single JSON array
 */
 
-var exec = Meteor.require('child_process').exec;
-var csv = Meteor.require('csv');
+var exec = Meteor.npmRequire('child_process').exec;
+var csv = Meteor.npmRequire('csv');
 
 // TODO wrap lines in debug
-var fs = Meteor.require('fs');
+var fs = Meteor.npmRequire('fs');
 // in case exec fails, JSON containing results of sample calculation
 var fakeColonyDataFile = Meteor.settings.fakeColonyDataFile;
 

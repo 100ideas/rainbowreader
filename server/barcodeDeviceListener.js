@@ -9,7 +9,7 @@ GLOBAL FUNCTIONS
   calls callback on resulting barcode
 */
 
-var fs = Meteor.require('fs');
+var fs = Meteor.npmRequire('fs');
 
 var scannerPath = Meteor.settings.scannerPath;
 var barcodeScannerPresent = !!scannerPath; //casting to bool; scannerpath is either *false* or a path (or '' which is falsey)

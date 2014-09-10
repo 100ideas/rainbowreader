@@ -1,6 +1,6 @@
-var request = Meteor.require('request');
-var Stream = Meteor.require('stream');
-var fs = Meteor.require('fs');
+var request = Meteor.npmRequire('request');
+var Stream = Meteor.npmRequire('stream');
+var fs = Meteor.npmRequire('fs');
 
 // TODO how do we find out the address of the visualization server?
 var serverAddress = 'http://localhost:3000';
