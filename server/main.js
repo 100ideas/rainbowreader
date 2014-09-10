@@ -62,7 +62,6 @@ Meteor.methods({
 
       WorkstationSessions.update(workstationSession,{$set: {photoURL: photoURL}});
 
-
       console.log("before runOpenCFU");
 
       runOpenCFU(photoPath, Meteor.bindEnvironment(function(colonyData) {
@@ -141,7 +140,7 @@ function analyzeColonies(colonyData) {
     rareColorIndices.push(colorNamesArray[i].colonyDataIndex);
   }
 
-  console.log("set rarest colonies: " + rareColorIndices);
+  console.log("set rarest colonies: " + rareColorIndices)
   
   var set = {$set: {rareColorIndices:rareColorIndices}};
   WorkstationSessions.update(workstationSession, set);

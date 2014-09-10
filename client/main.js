@@ -98,13 +98,21 @@ Template.hello.created = function () {
   console.log("main.js: Template.hello created... ");
 }
 
-Template.hello.renderd = function () {
+Template.hello.rendered = function () {
   console.log("main.js: Template.hello finished rendering... ");
   this.autorun( function (){
     console.log("main.js: Template.hello autorun function executed...");
-    drawCirclesOnPlatePhoto();
-    animateReticulesOnPlatePhoto();
   });  
 }
 
+Template.header.created = function () {
+  console.log("main.js: Template.header created... ");
+}
+
+Template.header.rendered = function () {
+  console.log("main.js: Template.header finished rendering... ");
+  this.autorun( function (){
+    console.log("main.js: Template.header autorun function executed...");
+  });  
+}
 

@@ -49,11 +49,13 @@ Template.plate.showPlateWallUpdate = function () {
 }
 
 Template.plate.created = function () {
-  console.log("plate.js template created... ");
+  console.log("plate.js: Template.plate created... ");
 }
 
-Template.plate.renderd = function () {
+Template.plate.rendered = function () {
   console.log("plate.js: Template.plate.rendered finished... callback executed...")
+    drawCirclesOnPlatePhoto();
+    animateReticulesOnPlatePhoto();
   this.autorun( function (){
     console.log("plate.js: Template.plate autorun function executed...");
     drawCirclesOnPlatePhoto();

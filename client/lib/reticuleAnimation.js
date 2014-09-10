@@ -15,7 +15,7 @@ drawCirclesOnPlatePhoto = function drawCircles(){
   // console.log("data: " + WorkstationSessions.findOne(workstationSession).colonyData);
 
   var colonySelector = circleSVG.selectAll('circle')
-    .data(WorkstationSessions.findOne(workstationSession).colonyData)
+    .data(WorkstationSessions.findOne().colonyData)
     .enter();
 
   colonySelector
@@ -41,7 +41,7 @@ animateReticulesOnPlatePhoto = function animatePetriDish() {
   var svg = d3.select('#plate-photo').append('svg');
 
   var colonySelector = svg.selectAll('circle')
-    .data(WorkstationSessions.findOne(workstationSession).colonyData)
+    .data(WorkstationSessions.findOne().colonyData)
     .enter();
 
   drawReticle(colonySelector);

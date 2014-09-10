@@ -1,3 +1,4 @@
+
 // Global function for retrieving state.
 // There should only be one document in this collection. 
 // used to be in client/main.js - mac
@@ -13,7 +14,9 @@ getSessionDocument = function () {
   //     ws = WorkstationSessions.findOne();
   //   }, 5000);
   // }
-  console.log("getSessionDocument() helper called, _id: " + ws._id);
+  
+  // called so often it takes over the console
+  //console.log("getSessionDocument() helper called, _id: " + ws._id);
   return ws;
 }
 
