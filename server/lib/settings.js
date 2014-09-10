@@ -8,7 +8,6 @@ if (process.env.METEOR_ENV) {
   console.log("settings.js: detected $METEOR_ENV: " + environment);
 } else {
   environment = "development";
-  console.log("settings.js: can't find $METEOR_ENV, using default *development* environment");
 }
  
 var settings = {
@@ -16,10 +15,10 @@ var settings = {
     public: {},
     private: {
       "gphoto2": true,
-      //    	"opencfuPath": '/home/administrator/dev/opencfu/opencfu',
-		  "scannerPath": '/dev/hidraw3',
+      //      "opencfuPath": '/home/administrator/dev/opencfu/opencfu',
+      "scannerPath": '/dev/hidraw3',
       "platePhotosPath": "public/photos/",
-		  "fakeColonyDataFile": '/code/rainbowreader/test/colonyData.json',
+      "fakeColonyDataFile": '/code/rainbowreader/test/colonyData.json',
       "fakeColonyPhotoFile": 'public/photos/small.jpg'
     }
   },
@@ -27,10 +26,10 @@ var settings = {
     public: {},
     private: {
       "gphoto2":                false,
-      //      "opencfuPath":            'opencfu',
-		  "scannerPath":            false,
+      "opencfuPath":            'opencfu',
+      "scannerPath":            false,
       "platePhotosPath":        process.env.PWD + '/public/photos/',
-		  "fakeColonyDataFile":     process.env.PWD + '/test/colonyData.json',
+      "fakeColonyDataFile":     process.env.PWD + '/test/colonyData.json',
       "fakeColonyPhotoFile":    process.env.PWD + '/public/photos/small.jpg' // necessary cause opencfu gets confused
       
     }

@@ -1,8 +1,8 @@
 // global 'exported' functions
 // - getNameForColor
 
-var fs = Meteor.require('fs');
-var readline = Meteor.require('readline');
+var fs = Meteor.npmRequire('fs');
+var readline = Meteor.npmRequire('readline');
 
 var colorsFilename = 'rgb.txt';
 

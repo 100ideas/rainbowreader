@@ -8,7 +8,7 @@ GLOBAL FUNCTIONS
     create filename with timestamp and dishBarcode
     callback takes filename of saved photo
 */
-var exec = Meteor.require('child_process').exec;
+var exec = Meteor.npmRequire('child_process').exec;
 
 // in case exec fails, sample picture of petri dish
 // not sure best convention for combining working directory of meteor

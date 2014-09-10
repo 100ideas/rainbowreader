@@ -7,7 +7,9 @@ standard-app-packages
 insecure
 autopublish
 d3
-npm
 mizzao:bootstrap-3
 mrt:server-eval
+meteorhacks:npm
 
+
+npm-container
