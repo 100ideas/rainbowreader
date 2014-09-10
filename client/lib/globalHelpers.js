@@ -5,6 +5,8 @@ getSessionDocument = function () {
   var ws = WorkstationSessions.findOne();
 
   // WTF TDOD need to figure out race condition w/ WorkstationSessions
+  // only a problem when server starts?
+  //
   // if (!ws) {
   //   setTimeout(function() {
   //     console.log("getSessionDocument() helper called BUT NO WorkstationSession EXISTS YET!\n\ttimeout 1000");
