@@ -140,6 +140,8 @@ function analyzeColonies(colonyData) {
   for (var i = 0; i < numberToChoose; i < i++) {
     rareColorIndices.push(colorNamesArray[i].colonyDataIndex);
   }
+
+  console.log("set rarest colonies: " + rareColorIndices);
   
   var set = {$set: {rareColorIndices:rareColorIndices}};
   WorkstationSessions.update(workstationSession, set);

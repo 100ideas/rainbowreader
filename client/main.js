@@ -5,17 +5,15 @@ Meteor.call('createWorkstationSession', function(error, result) {
   // bypass entering barcodes and clicking take Picture 
   debugEnterBarcodes();
   
-
-
   /*  while (!getSessionDocument()){
       //            Meteor.setTimeout(
-      //  	  function(){console.log("missing dishBarcode");}, 100);
+      //      function(){console.log("missing dishBarcode");}, 100);
       };*/
 
   Meteor.setTimeout(function()
 
-		    {		    console.log("about to takeAndAnalyzePhoto");
-Meteor.call('takeAndAnalyzePhoto', getSessionDocument().dishBarcode);},2000);
+  {console.log("about to takeAndAnalyzePhoto");
+  Meteor.call('takeAndAnalyzePhoto', getSessionDocument().dishBarcode);},2000);
 
 
   // watch the record for changes, so we can animate when colonyData arrives
