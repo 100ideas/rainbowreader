@@ -1,0 +1,67 @@
+<template name="plate">
+
+<!-- state status bar -->
+<div class="row">
+  <div class="col-sm-10 col-sm-offset-1 panel" id="measurement-states">
+    <ul class="list-inline text-center">
+      <li><h5>showPlatePhoto: 
+        {{#if showPlatePhoto}} 
+          <span class="label label-success">true</span>
+        {{else}}
+          <span class="label label-danger">false</span>
+        {{/if}}
+      </h5></li>
+      <li><h5>showPlateAnalysis: 
+        {{#if showPlateAnalysis}} 
+          <span class="label label-success">true</span>
+        {{else}}
+          <span class="label label-danger">false</span>
+        {{/if}}
+      </h5></li>
+      <li><h5>showPlateRareColors: 
+        {{#if showPlateRareColors}} 
+          <span class="label label-success">true</span>
+        {{else}}
+          <span class="label label-danger">false</span>
+        {{/if}}
+      </h5></li>
+      <li><h5>showPlateWallUpdate: 
+        {{#if showPlateAnalysis}} 
+          <span class="label label-success">true</span>
+        {{else}}
+          <span class="label label-danger">false</span>
+        {{/if}}
+      </h5></li>    
+    </ul>
+  </div> 
+</div> 
+
+
+
+<div class="row">
+   <div class="col-sm-10 col-sm-offset-1">
+
+    {{#if showPlateHello}}
+      {{> plateHello}}
+    {{/if}}
+
+    {{#if showPlateMeasurementInstruction}}  
+      {{> plateMeasurementInstruction}}
+    {{/if}}    
+
+    {{#if showPlatePhoto}}
+      {{> platePhoto showPlateAnalysis }}
+    {{/if}}
+
+    {{#if showPlateRareColors}}
+      {{> plateRareColors}}
+    {{/if}}    
+
+    {{#if showPlateWallUpdate}}
+      {{> plateWallUpdate}}
+    {{/if}}      
+
+   </div>
+</div>
+
+</template>

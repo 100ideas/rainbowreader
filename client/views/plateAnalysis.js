@@ -8,6 +8,8 @@ Template.plateAnalysis.colonyCount = function(){
 }
 
 
+
+//counting # of unique xkcd color labels
 Template.plateAnalysis.colorCount = function(){
 
     var currentDoc = getSessionDocument();
@@ -17,14 +19,14 @@ Template.plateAnalysis.colorCount = function(){
 
     currentDoc.colonyData.forEach(function(element){
 
-	    var hue = element.Hue;
+	    var color = element.ColorName;
 
-	    if (colorObject.hasOwnProperty[hue])
+	    if (colorObject.hasOwnProperty[color])
 	    {
 		return;
 	    }
 
-	    colorObject[hue] = 1;
+	    colorObject[color] = 1;
 	});
     
 
@@ -73,3 +75,17 @@ Template.plateAnalysis.displayTime = function(){
     var time = month + ' ' + day + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
     return time;
 }
+
+    Template.plateAnalysis.totalColonies = function(){
+
+	//var visualizationsArray = Visualizations.find().fetch();
+
+
+	console.log("visualizations");
+	console.log(Visualizations);
+
+	var statsObject = visualizationsArray[0];
+
+	return statsObject.coloniesCount;
+
+    }

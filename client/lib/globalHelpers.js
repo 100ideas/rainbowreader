@@ -38,3 +38,28 @@ UI.registerHelper('logContext', function(template) {
 UI.registerHelper('getSessionDocument', function() {
   return getSessionDocument();
 });
+
+/////////////////////////////////////////////////////////////////////
+// HELPER FUNCTIONS for main.js and others :)
+
+// DEBUG: for inputting barcodes without a scanner
+debugEnterBarcodes = function() {
+  var b = Date.now();
+  console.log('debug mode: setting fake barcode as current date: ' + b);
+  WorkstationSessions.update(workstationSession, {$set: {userBarcode: b, dishBarcode: b}});
+
+}
+
+// Helper for retrieving state.  There should only be one document in this collection.
+// -- moved to client/lib/globalHelpers so this function loads before other view Managers (i.e. plate.js)
+// function getSessionDocument() {
+//   return WorkstationSessions.findOne(workstationSession);
+// }
+
+// takes barcode and determines whether it's dishBarcode or userBarcode
+function determineBarcodeType(barcode) {
+  if (barcode[0] == 'D') return 'dishBarcode';
+  return 'userBarcode';
+}
+
+
