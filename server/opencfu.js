@@ -28,19 +28,19 @@ runOpenCFU = function(filename, callback) {
 
   if (Meteor.settings.opencfuPath) {
 
-    console.log("opencfu.js: executing " + cmd )
+    console.log("server/opencfu.js: executing " + cmd )
 
     // run opencfu and save output
     // TODO change exec to spawn, because exec has limited output buffer
     var child = exec(cmd, Meteor.bindEnvironment(function (error, stdout, stderr) {
       if (error || stderr) {
-        console.log("opencfu.js: shit went down in the OpenCFU...");
-        if (error) console.log("error: " + error);
-        if (stderr) console.log("stderr: " + stderr);
+        console.log("\tshit went down in the OpenCFU...");
+        if (error) console.log("\terror: " + error);
+        if (stderr) console.log("\tstderr: " + stderr);
       } else {
         // success. parse stdout with csv module and return JSON to callback
         // console.log("================================================\n\tgot stdout:\n " + stdout)
-        console.log( "calling csv module..." );
+        console.log( "\tOpenCFU finished executing, calling csv module to parse stdout..." );
         csv().from.string(stdout, {comment: '#'}).to.array( function(data) {
           var colonyJSON = json_from_csv(data);
           callback(colonyJSON);        
@@ -49,7 +49,7 @@ runOpenCFU = function(filename, callback) {
     }));
 
   } else {
-    console.log("opencfu.js: settings.opencfu is " + Meteor.settings.opencfuPath
+    console.log("server/opencfu.js: settings.opencfu is " + Meteor.settings.opencfuPath
               + "\n\tusing dummy colonyData.json file at " + fakeColonyDataFile);
       setTimeout(function() { // simulate processing and give image a chance to load
         var colonyData = fs.readFileSync(fakeColonyDataFile).toString();

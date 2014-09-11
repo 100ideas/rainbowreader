@@ -3,7 +3,6 @@ Meteor.call('createWorkstationSession', function(error, result) {
    workstationSession = result;
 
   // bypass entering barcodes and clicking take Picture 
-  debugEnterBarcodes();
   
   /*  while (!getSessionDocument()){
       //            Meteor.setTimeout(

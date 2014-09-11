@@ -57,7 +57,6 @@ listenForBarcodes = function(callback) {
                 + "\n\tbarcodeScannerPresent? " + barcodeScannerPresent
                 + "\n\tpassing callback dummy barcode AA0123456.");
       callback("AA0123456");
-      callback("D00000001");
   }
 
   // Experimental code for closing the file

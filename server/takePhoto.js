@@ -38,7 +38,7 @@ takePhoto = function(dishBarcode, callback) {
       callback(filename);
     }));
   } else {
-    console.log("takePhoto.js: settings.gphoto2 is "  + Meteor.settings.gphoto2
+    console.log("server/takePhoto.js: settings.gphoto2 is "  + Meteor.settings.gphoto2
               + "\n\t using dummy photo located at " + Meteor.settings.fakeColonyPhotoFile);
     callback( Meteor.settings.fakeColonyPhotoFile );
   }
