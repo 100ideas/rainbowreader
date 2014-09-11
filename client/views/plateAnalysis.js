@@ -78,7 +78,7 @@ Template.plateAnalysis.displayTime = function(){
 
     Template.plateAnalysis.totalColonies = function(){
 
-	var visualizationsArray = Visualizations.find().fetch();
+	//var visualizationsArray = Visualizations.find().fetch();
 
 
 	console.log("visualizations");
