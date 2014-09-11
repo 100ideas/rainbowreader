@@ -15,8 +15,8 @@ var settings = {
     public: {},
     private: {
       "gphoto2": true,
-      //      "opencfuPath": '/home/administrator/dev/opencfu/opencfu',
-      "scannerPath": '/dev/hidraw3',
+      "opencfuPath": 'opencfu',
+      "scannerPath": '/dev/hidraw4',
       "platePhotosPath": "public/photos/",
       "fakeColonyDataFile": '/code/rainbowreader/test/colonyData.json',
       "fakeColonyPhotoFile": 'public/photos/small.jpg'
@@ -56,3 +56,4 @@ if (!process.env.METEOR_SETTINGS) {
     __meteor_runtime_config__.PUBLIC_SETTINGS = Meteor.settings.public;
   }
 }
+

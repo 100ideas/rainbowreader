@@ -19,13 +19,14 @@ var barcodeScannerPresent = !!scannerPath; //casting to bool; scannerpath is eit
 // TODO figure out a way to close the scanner device file
 listenForBarcodes = function(callback) {
 
-  if (barcodeScannerPresent){
+  if (barcodeScannerPresent) {
 
     fs.open(scannerPath, 'r', Meteor.bindEnvironment(function(error, fd) {
       if (error) {
         console.log("shit went down in barcodeDeviceListener...");
         console.log("error: " + error);
       }
+      console.log('barcode scanner device file opened');
     
       var bufferSize = 64;
       var buffer = Buffer(bufferSize);
@@ -38,6 +39,7 @@ listenForBarcodes = function(callback) {
           }
 
           var barcode = parseBarcodeSNAPI(buffer);
+          console.log('read from barcode scanned: ' + barcode);
 
           callback(barcode);
           // fs.read is asynchronous; callback must be recursive to read subsequent buffer

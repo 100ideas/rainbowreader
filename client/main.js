@@ -87,13 +87,6 @@ debugEnterBarcodes = function() {
 
 }
 
-// takes barcode and determines whether it's dishBarcode or userBarcode
-function determineBarcodeType(barcode) {
-  if (barcode[0] == 'D') return 'dishBarcode';
-  return 'userBarcode';
-}
-
-
 Template.hello.created = function () {
   console.log("main.js: Template.hello created... ");
 }

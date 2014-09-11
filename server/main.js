@@ -40,44 +40,48 @@ Meteor.methods({
     workstationSession = WorkstationSessions.insert({dateCreated: Date.now()});
     console.log('\tnew workstationSession: ' + workstationSession);
     return workstationSession;
-	},
+  },
   
-	takeAndAnalyzePhoto: function(dishBarcode) {
+  takeAndAnalyzePhoto: function(dishBarcode) {
+    console.log("in takeAndAnalyzePhoto");
+    takePhoto(dishBarcode, Meteor.bindEnvironment(
+      function(photoPath) {
+        // TODO Explain what's going on in this function
+        // convert '~/rainbowreader/public/photos/photo1.jpg'
+        // to 'photos/photo1.jpg'
+        var ixPhotos = photoPath.indexOf('photos/');
+        if (ixPhotos === -1) {
+          console.log('error parsing photo path into URL: ' + photoPath);
+          return;
+        }
+        var photoURL = photoPath.slice(ixPhotos);
 
-	  console.log("in takeAndAnalyzePhoto");
+        WorkstationSessions.update(workstationSession,{$set: {photoURL: photoURL}});
 
-    takePhoto(dishBarcode, Meteor.bindEnvironment(function(photoPath) {
+        console.log("before runOpenCFU");
 
-		
+        runOpenCFU(photoPath, Meteor.bindEnvironment(
+          function(colonyData) {
+            console.log("inside the Meteor.bindEnvironment callback for runOpenCFU");
 
-      // TODO Explain what's going on in this function
-      // convert '~/rainbowreader/public/photos/photo1.jpg'
-      // to 'photos/photo1.jpg'
-      var ixPhotos = photoPath.indexOf('photos/');
-      if (ixPhotos === -1) {
-        console.log('error parsing photo path into URL: ' + photoPath);
-        return;
+            WorkstationSessions.update(workstationSession, {$set: {colonyData: colonyData}});
+            analyzeColonies(colonyData);
+
+            //var userBarcode = WorkstationSessions.findOne(workstationSession).userBarcode;
+            //postColonyDataAndImage(dishBarcode, userBarcode, colonyData, photoPath);
+          }
+        ));
       }
-      var photoURL = photoPath.slice(ixPhotos);
-
-      WorkstationSessions.update(workstationSession,{$set: {photoURL: photoURL}});
-
-      console.log("before runOpenCFU");
-
-      runOpenCFU(photoPath, Meteor.bindEnvironment(function(colonyData) {
-	
-		    console.log("inside the Meteor.bindEnvironment callback for runOpenCFU");
-
-        WorkstationSessions.update(workstationSession, {$set: {colonyData: colonyData}});
-
-        analyzeColonies(colonyData);
-
-        var userBarcode = WorkstationSessions.findOne(workstationSession).userBarcode;
-        postColonyDataAndImage(dishBarcode, userBarcode, colonyData, photoPath);
-	      }));
-	    }));
-	}
+    ));
+  }
 });
+
+// takes barcode and determines whether it's dishBarcode or userBarcode
+function determineBarcodeType(barcode) {
+  if (barcode[0] == 'D') return 'dishBarcode';
+  return 'userBarcode';
+}
+
 
 function analyzeColonies(colonyData) {
   // parse colors in workstationSession
