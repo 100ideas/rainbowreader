@@ -24,10 +24,10 @@ Template.plate.showPlateInstructions = function () {
 // show the image and colony animations
 Template.plate.showPlatePhoto = function () {
   var doc = getSessionDocument();
-  if (doc && doc.photoURL && Session.get("photoTimerDone"))
-  {console.log("returning doc.photoURL:");
-   console.log(doc.photoURL);
-   return doc.photoURL;}
+  if (doc && doc.photoURL) {
+    console.log("returning doc.photoURL:" + doc.photoURL);
+    return doc.photoURL;
+  }
   return false;
 };
 
