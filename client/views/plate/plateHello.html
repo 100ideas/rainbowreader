@@ -2,12 +2,19 @@
 
   <H1>HELLO!</H1>
 
-  <p>Distillery direct trade XOXO McSweeney's squid Williamsburg. Marfa forage hashtag McSweeney's Blue Bottle keffiyeh occupy vinyl, fixie cornhole. Odd Future plaid Neutra ugh messenger bag. Banjo fashion axe scenester artisan, craft beer meggings Godard deep v street art. Mumblecore wolf semiotics, 8-bit Truffaut umami jean shorts.</p>
+  <p>This page invites users to go get a plate and begin the measurement process</p>
 
-  Ticket Barcode...
+  Ticket Barcode: {{ticketBarcode}}
 
-  Plate Barcode...
+  Plate Barcode: {{plateBarcode}}
 
-  (fake barcode button)
+
+  <ul>
+    <li>Ticket Barcode: {{getSessionDocument.userBarcode}}</li>
+    <li>Plate Barcode: {{getSessionDocument.plateBarcode}}</li>
+  </ul>
+
+  <button type="button" class="btn btn-warning btn-large">fake barcode scan</button>
+
 
 </template>

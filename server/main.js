@@ -16,10 +16,11 @@ Meteor.startup(function () {
     // otherwise write to workstationSession
     // WARNING: workstationSession is {} if not browser session
     // because Meteor weirdness.
-    console.log("server/main.js: listenForBarcodes callback triggered\n\tworkstationSession: " + 
+    console.log("server/main.js: listenForBarcodes callback triggered\n\tworkstationSession: " +
                 workstationSession + "\n\tbarcode: " + barcode);
+    
     if (typeof workstationSession === 'string') {
-      try { 
+      try {
         // choose the property name based on the type of barcode
         var name = determineBarcodeType(barcode);
         var field = {};
@@ -36,21 +37,24 @@ Meteor.startup(function () {
 Meteor.methods({
   createWorkstationSession: function() {
     // create a single mongo document to hold state between server and client
-    console.log('server/main.js creatNewWorkStationSession\n\told workstationSession: ' + workstationSession);
+    console.log('server/main.js createNewWorkStationSession\n\told workstationSession: ' + workstationSession);
     WorkstationSessions.remove({});   //clear previous session documents
     workstationSession = WorkstationSessions.insert({dateCreated: Date.now()});
     console.log('\tnew workstationSession: ' + workstationSession);
     return workstationSession;
   },
+
   
-  takeAndAnalyzePhoto: function(dishBarcode) {
-    takePhoto(dishBarcode, Meteor.bindEnvironment(
+  takeAndAnalyzePhoto: function(plateBarcode) {
+    takePhoto(plateBarcode, Meteor.bindEnvironment(
+
       function(photoPath) {
 
         console.log("server/main.js: takeAndAnalyzePhoto")
 
         // convert '~/rainbowreader/public/photos/photo1.jpg'
         // to 'photos/photo1.jpg'
+
         var ixPhotos = photoPath.indexOf('photos/');
         if (ixPhotos === -1) {
           console.log('\terror parsing photo path into URL: ' + photoPath);
@@ -75,21 +79,8 @@ Meteor.methods({
   }
 });
 
-// takes barcode and determines whether it's dishBarcode or userBarcode
+// takes barcode and determines whether it's plateBarcode or userBarcode
 function determineBarcodeType(barcode) {
-  if (barcode[0] == '9') return 'dishBarcode';
-  return 'userBarcode';
+  if (barcode[0] == '9') return 'userBarcode';
+  return 'plateBarcode';
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

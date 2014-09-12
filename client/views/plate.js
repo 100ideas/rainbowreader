@@ -2,25 +2,34 @@ Template.plate.created = function () {
   console.log("plate.js: Template.plate created... ");
 }
 
-Template.plate.rendered = function () {
-  console.log("plate.js: Template.plate.rendered finished... callback executed...")
+/////////////////////////////////////////////////////////////////////
+// EVENT HANDLERS
+
+Template.plateHello.events({
+  'click button': function () { fakeBarcodeScan() }
+});
+
+Template.plateMeasurementInstructions.events({
+  'click button': function () {
+    Meteor.call('takeAndAnalyzePhoto', getSessionDocument().plateBarcode);
+  }
+});
+
+
+/////////////////////////////////////////////////////////////////////
+// Created / Rendered callbacks
+
+Template.platePhoto.created = function () {
+  console.log("plate.js: Template.platePhoto created... ");
+}
+
+Template.platePhoto.rendered = function () {
+  console.log("platePhoto.js: Template.platePhoto.rendered callback: calling reticule animations")
   drawCirclesOnPlatePhoto();
   animateReticulesOnPlatePhoto();
   this.autorun( function (){
-    console.log("plate.js: Template.plate autorun function executed...");
+    console.log("platePhoto.js: Template.platePhoto autorun function executed...");
     drawCirclesOnPlatePhoto();
     animateReticulesOnPlatePhoto();
   });
 }
-
-/////////////////////////////////////////////////////////////////////
-// EVENT HANDLERS
-
-Template.plate.events({
-  // TODO how is this function hooked up to the Take Photo button?
-  // take a photograph and analyze it on the server;
-  // we will receive colonyData through {{colonyData}} handlebars
-  'click input': function () {
-    Meteor.call('takeAndAnalyzePhoto', getSessionDocument().dishBarcode);
-  }
-});

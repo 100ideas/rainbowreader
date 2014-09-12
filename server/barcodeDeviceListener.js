@@ -1,5 +1,5 @@
 /*
-Start listening for barcodes (dishBarcode or userBarcode).
+Start listening for barcodes (plateBarcode or userBarcode).
 If scanned, save barcode to workstationSession.
 
 GLOBAL FUNCTIONS
@@ -23,15 +23,16 @@ var barcodeScannerPresent = !!scannerPath; //casting to bool; scannerpath is eit
 
 // TODO figure out a way to close the scanner device file
 listenForBarcodes = function(callback) {
+  console.log("barcodeDeviceListener:"); 
 
   if (barcodeScannerPresent) {
 
     fs.open(scannerPath, 'r', Meteor.bindEnvironment(function(error, fd) {
       if (error) {
-        console.log("shit went down in barcodeDeviceListener...");
-        console.log("error: " + error);
+        console.log("\tshit went down in barcodeDeviceListener...");
+        console.log("\terror: " + error);
       }
-      console.log('barcode scanner device file opened');
+      console.log('\tbarcode scanner device file opened');
     
       var bufferSize = 64;
       var buffer = Buffer(bufferSize);
@@ -39,12 +40,12 @@ listenForBarcodes = function(callback) {
       function startRead() {
         fs.read(fd, buffer, 0, bufferSize, null, Meteor.bindEnvironment(function(error, bytesRead) {
           if (error) {
-            console.log("barcodeDeviceListener: error reading from device");
-            console.log("barcodeDeviceListener: error: " + error);
+            console.log("\tbarcodeDeviceListener: error reading from device");
+            console.log("\tbarcodeDeviceListener: error: " + error);
           }
 
           var barcode = parseBarcodeSNAPI(buffer);
-          console.log('read from barcode scanned: ' + barcode);
+          console.log('\tread from barcode scanned: ' + barcode);
 
           callback(barcode);
           // fs.read is asynchronous; callback must be recursive to read subsequent buffer
@@ -58,10 +59,11 @@ listenForBarcodes = function(callback) {
     }));
 
   } else {
-      console.log("barcodeDeviceListener: listenForBarcodes called & scanner is missing..." 
-                + "\n\tbarcodeScannerPresent? " + barcodeScannerPresent
-                + "\n\tpassing callback dummy barcode AA0123456.");
-      callback("AA0123456");
+    var fakeBarcode = 'BARCODE_SCANNER_MISSING';
+    console.log("\tbarcodeScannerPresent?: " + barcodeScannerPresent);
+    console.log("\tworkstationSession: " + workstationSession);
+    console.log("\tsetting fake barcodes: userBarcode: " + fakeBarcode + " plateBarcode: " + fakeBarcode);
+    WorkstationSessions.update(workstationSession, {$set: {userBarcode: fakeBarcode, plateBarcode: fakeBarcode}});
   }
 
   // Experimental code for closing the file
@@ -84,10 +86,17 @@ function parseBarcodeSNAPI(buffer) {
     return barcode;
   }
   catch(ex) {
-    console.log("exception parsing barcode: " + ex);
+    console.log("\texception parsing barcode: " + ex);
   }
 }
 
+// DEBUG: for inputting barcodes without a scanner
+// debugEnterBarcodes = function() {
+//   var b = Date.now();
+//   console.log('debug mode: setting fake barcode as current date: ' + b);
+//   WorkstationSessions.update(workstationSession, {$set: {userBarcode: b, plateBarcode: b}});
+
+// }
 
 
 

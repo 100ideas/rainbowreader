@@ -7,7 +7,7 @@
 Template.plate.showPlateHello = function () {
   var doc = getSessionDocument();
   if (!doc) return true;
-  // return !doc.dishBarcode || !doc.userBarcode;
+  // return !doc.plateBarcode || !doc.userBarcode;
   return 1;
 }
 
@@ -15,7 +15,7 @@ Template.plate.showPlateHello = function () {
 Template.plate.showPlateMeasurementInstruction = function () {
   var doc = getSessionDocument();
   if (!doc) return false;
-  // return doc.userBarcode && doc.dishBarcode && !doc.photoURL;
+  // return doc.userBarcode && doc.plateBarcode && !doc.photoURL;
   return 1;
 }
 
