@@ -18,7 +18,7 @@ Meteor.startup(function () {
     // because Meteor weirdness.
     console.log("server/main.js: listenForBarcodes callback triggered\n\tworkstationSession: " +
                 workstationSession + "\n\tbarcode: " + barcode);
-    
+
     if (typeof workstationSession === 'string') {
       try {
         // choose the property name based on the type of barcode
@@ -44,7 +44,7 @@ Meteor.methods({
     return workstationSession;
   },
 
-  
+
   takeAndAnalyzePhoto: function(plateBarcode) {
     takePhoto(plateBarcode, Meteor.bindEnvironment(
 
@@ -62,6 +62,7 @@ Meteor.methods({
         }
         var photoURL = photoPath.slice(ixPhotos);
 
+        console.log("photoURL: " + photoURL)
         WorkstationSessions.update(workstationSession,{$set: {photoURL: photoURL}});
 
         console.log("\tcalling runOpenCFU");
