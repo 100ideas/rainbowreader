@@ -55,7 +55,7 @@ Meteor.methods({
         // convert '~/rainbowreader/public/photos/photo1.jpg'
         // to 'photos/photo1.jpg'
 
-        var ixPhotos = photoPath.indexOf('photos/');
+        var ixPhotos = photoPath.indexOf('photos~/');
         if (ixPhotos === -1) {
           console.log('\terror parsing photo path into URL: ' + photoPath);
           return;
