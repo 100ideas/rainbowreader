@@ -17,7 +17,7 @@ var settings = {
       "gphoto2": true,
       "opencfuPath": 'opencfu',
       "scannerPath": '/dev/usbscanner',
-      "platePhotosPath": "/photos/",
+      "platePhotosPath": "photos/",
       "fakeColonyDataFile": '/code/rainbowreader/test/colonyData.json',
       "fakeColonyPhotoFile": 'public/photos/small.jpg'
     }
