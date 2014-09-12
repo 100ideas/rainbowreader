@@ -16,10 +16,10 @@ Meteor.startup(function () {
     // otherwise write to workstationSession
     // WARNING: workstationSession is {} if not browser session
     // because Meteor weirdness.
-    console.log("server/main.js: listenForBarcodes callback triggered\n\tworkstationSession: " + 
+    console.log("server/main.js: listenForBarcodes callback triggered\n\tworkstationSession: " +
                 workstationSession + "\n\tbarcode: " + barcode);
     if (typeof workstationSession === 'string') {
-      try { 
+      try {
         // choose the property name based on the type of barcode
         var name = determineBarcodeType(barcode);
         var field = {};
@@ -42,7 +42,7 @@ Meteor.methods({
     console.log('\tnew workstationSession: ' + workstationSession);
     return workstationSession;
   },
-  
+
   takeAndAnalyzePhoto: function(dishBarcode) {
     takePhoto(dishBarcode, Meteor.bindEnvironment(
       function(photoPath) {
@@ -51,6 +51,7 @@ Meteor.methods({
 
         // convert '~/rainbowreader/public/photos/photo1.jpg'
         // to 'photos/photo1.jpg'
+
         var ixPhotos = photoPath.indexOf('photos/');
         if (ixPhotos === -1) {
           console.log('\terror parsing photo path into URL: ' + photoPath);
@@ -80,16 +81,3 @@ function determineBarcodeType(barcode) {
   if (barcode[0] == 'D') return 'dishBarcode';
   return 'userBarcode';
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
