@@ -3,7 +3,7 @@
 // There should only be one document in this collection. 
 // used to be in client/main.js - mac
 getSessionDocument = function () {
-  var ws = WorkstationSessions.findOne();
+  var ws = WorkstationSessions.findOne(workstationSession);
 
   // WTF TDOD need to figure out race condition w/ WorkstationSessions
   // only a problem when server starts?
@@ -21,7 +21,7 @@ getSessionDocument = function () {
 }
 
 // global template helper for logging current context. Pass template name in as parameter
-UI.registerHelper('logContext', function(template) {
+Template.registerHelper('logContext', function(template) {
   var currentContext = this;
   if (!template) {template = "no template name provided."};
   if (_.isObject(currentContext) ) {currentContext = "no context yet."};
@@ -35,31 +35,28 @@ UI.registerHelper('logContext', function(template) {
 });
 
 // global template helper for getting current workstationSession. Pass template name in as parameter
-UI.registerHelper('getSessionDocument', function() {
+Template.registerHelper('getSessionDocument', function() {
   return getSessionDocument();
 });
 
-/////////////////////////////////////////////////////////////////////
-// HELPER FUNCTIONS for main.js and others :)
-
-// DEBUG: for inputting barcodes without a scanner
-debugEnterBarcodes = function() {
-  var b = Date.now();
-  console.log('debug mode: setting fake barcode as current date: ' + b);
-  WorkstationSessions.update(workstationSession, {$set: {userBarcode: b, dishBarcode: b}});
-
+// generates and inserts two random barcodes into current workstationSession
+generateFakeBarcodes = function () {
+  var fakeBarcode = 'D' + Date.now();
+  console.log("generating fake barcodes for workstationSession: " + workstationSession);
+  console.log("\tuserBarcode: " + fakeBarcode + " plateBarcode: " + fakeBarcode);
+  WorkstationSessions.update(workstationSession, {$set: {userBarcode: fakeBarcode, plateBarcode: fakeBarcode}});
 }
 
-// Helper for retrieving state.  There should only be one document in this collection.
-// -- moved to client/lib/globalHelpers so this function loads before other view Managers (i.e. plate.js)
-// function getSessionDocument() {
-//   return WorkstationSessions.findOne(workstationSession);
-// }
-
-// takes barcode and determines whether it's dishBarcode or userBarcode
-function determineBarcodeType(barcode) {
-  if (barcode[0] == 'D') return 'dishBarcode';
-  return 'userBarcode';
+// generates and inserts either a random user or plate barcode into current workstationSession
+fakeBarcodeScan = function () {
+  if ( Math.random() * 2 > 1) {
+    var fakeBarcode = 'U' + Date.now();
+    console.log("fakeBarcodeScan: setting a fake barcodes userBarcode: " + fakeBarcode);
+    WorkstationSessions.update(workstationSession, {$set: {userBarcode: fakeBarcode}});
+  } else {
+    var fakeBarcode = 'D' + Date.now();
+    console.log("fakeBarcodeScan: setting a fake barcodes plateBarcode: " + fakeBarcode);
+    WorkstationSessions.update(workstationSession, {$set: {plateBarcode: fakeBarcode}});    
+  }
 }
-
 

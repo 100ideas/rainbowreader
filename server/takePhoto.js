@@ -3,9 +3,9 @@ Runs gphoto2 and asynchronously returns path to saved photo.
 
 GLOBAL FUNCTIONS
 ++++++++++++++++
-  takePhoto(dishBarcode, callback)
+  takePhoto(plateBarcode, callback)
     run gphoto2 and save photo to disk
-    create filename with timestamp and dishBarcode
+    create filename with timestamp and plateBarcode
     callback takes filename of saved photo
 */
 var exec = Meteor.npmRequire('child_process').exec;
@@ -16,12 +16,12 @@ var exec = Meteor.npmRequire('child_process').exec;
 var platePhotosPath = Meteor.settings.platePhotosPath;
 
 // run gphoto2 and save photo to disk
-// create filename with timestamp and dishBarcode
+// create filename with timestamp and plateBarcode
 // callback takes filename of saved photo
-takePhoto = function(dishBarcode, callback) {
+takePhoto = function(plateBarcode, callback) {
   // TODO get path properly 
   // var photosPath = "./public/photos/";
-  var filename = platePhotosPath + Date.now().toString() + '_' + dishBarcode + '.jpg';
+  var filename = platePhotosPath + Date.now().toString() + '_' + plateBarcode + '.jpg';
   var cmdline = "gphoto2 --capture-image-and-download --filename=" + filename;
 
   // TODO wrap in debug

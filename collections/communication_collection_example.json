@@ -1,8 +1,8 @@
 rainbowClientInstance: {
   lastModified: date,
   userBarcode: '',
-  dishBarcode: '',
-  dishPhotoReady: bool,
+  plateBarcode: '',
+  platePhotoReady: bool,
   pictureURL: '',
   colonyData: ''
 }
