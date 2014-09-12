@@ -10,9 +10,9 @@ Template.plateHello.events({
 });
 
 Template.plateMeasurementInstructions.events({
-  'click button': function () {
-    Meteor.call('takeAndAnalyzePhoto', getSessionDocument().plateBarcode);
-  }
+  //'click button': function () {
+  //  Meteor.call('takeAndAnalyzePhoto', getSessionDocument().plateBarcode);
+  //}
 });
 
 

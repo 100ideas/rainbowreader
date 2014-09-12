@@ -15,15 +15,20 @@ Template.plate.showPlateHello = function () {
 Template.plate.showPlateMeasurementInstruction = function () {
   var doc = getSessionDocument();
   if (!doc) return false;
+  else if (doc && doc.hasOwnProperty("userBarcode"))
   // return doc.userBarcode && doc.plateBarcode && !doc.photoURL;
-  return 1;
+    return 1;
+  else return 0;
 }
 
 // show the image and colony animations
 Template.plate.showPlatePhoto = function () {
   var doc = getSessionDocument();
-  if (!doc || !doc.photoURL) return false;
-  return doc.photoURL;
+  if (doc && doc.photoURL && Session.get("photoTimerDone"))
+  {console.log("returning doc.photoURL:");
+   console.log(doc.photoURL);
+   return doc.photoURL;}
+  return false;
 };
 
 // only show if openCFU is done
@@ -31,7 +36,7 @@ Template.plate.showPlatePhoto = function () {
 Template.plate.showPlateAnalysis = function () {
   var doc = getSessionDocument();
   if (!doc) return false;
-  return !!doc.colonyData // casts to bool
+  return !!doc.colonyData && Session.get("reticulesDone") // casts to bool
 }
 
 // only show if we have some rare colors.
@@ -41,13 +46,15 @@ Template.plate.showPlateRareColors = function () {
   if (!doc) return false;
   if (!doc.hasOwnProperty('colonyData')) // not always present
     return false
-  else 
+  else
     return doc.colonyData[0].colorName;
 }
 
 Template.plate.showPlateWallUpdate = function () {
-  var timer = Date.now();
+  //var timer = Date.now();
   var doc = getSessionDocument();
   if (!doc) return false;
-  return timer - doc.dateCreated > 1000; // check to see if colorname is set
+  //return timer - doc.dateCreated > 1000; // check to see if colorname is set
+  return (Session.get("rareColorsShown"));
+
 }
