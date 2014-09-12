@@ -1,6 +1,10 @@
 (function(){/*
 Runs gphoto2 and asynchronously returns path to saved photo.
 
+Method for getting files without running in production mode
+http://stackoverflow.com/questions/11353252/meteor-create-a-file-to-be-downloaded-without-triggering-meteor-to-restart
+
+
 GLOBAL FUNCTIONS
 ++++++++++++++++
   takePhoto(plateBarcode, callback)
