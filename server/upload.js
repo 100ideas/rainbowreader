@@ -5,12 +5,12 @@ var fs = Meteor.npmRequire('fs');
 // TODO how do we find out the address of the visualization server?
 var serverAddress = 'http://localhost:3000';
 
-postColonyDataAndImage = function(dishBarcode, userBarcode, colonyJSON, imageFilename) {
-  postDishJson(dishBarcode, userBarcode, colonyJSON);
-  postDishImage(dishBarcode, imageFilename);
+postColonyDataAndImage = function(plateBarcode, userBarcode, colonyJSON, imageFilename) {
+  postPlateJson(plateBarcode, userBarcode, colonyJSON);
+  postPlateImage(plateBarcode, imageFilename);
 }
  
-function postDishJson(dishBarcode, userBarcode, colonyJSON) {
+function postPlateJson(plateBarcode, userBarcode, colonyJSON) {
   //wrap the colonyData string in a stream
   var colonyDataStream = new Stream();
   colonyDataStream.pipe = function(dest) {
@@ -20,8 +20,8 @@ function postDishJson(dishBarcode, userBarcode, colonyJSON) {
   var colonyOptions = {
     url: serverAddress + '/uploadColonyData',
     headers: { 
-      // http headers are converted to lowercase, hence 'dishbarcode'
-      dishbarcode: dishBarcode, 
+      // http headers are converted to lowercase, hence 'plateBarcode'
+      platebarcode: plateBarcode, 
       userbarcode: userBarcode,
       timestamp: Date.now() }
   };
@@ -30,7 +30,7 @@ function postDishJson(dishBarcode, userBarcode, colonyJSON) {
   var req = request.post(colonyOptions, function(error, resp, body) {
     if(error) {
       postsToRetry.push(function() {
-        postDishJson(dishBarcode, userBarcode, colonyJSON);
+        postDishJson(plateBarcode, userBarcode, colonyJSON);
       });
     }
   });
@@ -44,18 +44,18 @@ function filenameFromPath(path) {
   return path.substring(1+path.lastIndexOf('/'));
 }
 
-function postDishImage(dishBarcode, imageFilename) {
+function postPlateImage(plateBarcode, imageFilename) {
   var imageOptions = {
     url: serverAddress + '/uploadDishImage',
-    // http headers are converted to lowercase, hence 'dishbarcode'
-    headers: { dishbarcode: dishBarcode, filename: filenameFromPath(imageFilename) }
+    // http headers are converted to lowercase, hence 'plateBarcode'
+    headers: { plateBarcode: plateBarcode, filename: filenameFromPath(imageFilename) }
   };
 
   //create a post request, and if it fails, push a function onto a list to retry later
   var req = request.post(imageOptions, function(error, resp, body) {
     if(error) {
       postsToRetry.push(function () {
-        postDishImage(dishBarcode, imageFilename);
+        postDishImage(plateBarcode, imageFilename);
       });
     }
   });

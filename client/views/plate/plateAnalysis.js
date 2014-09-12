@@ -36,11 +36,11 @@ Template.plateAnalysis.colorCount = function(){
 
 }
    
-Template.plateAnalysis.dishBarcode = function(){
+Template.plateAnalysis.plateBarcode = function(){
 
     var currentDoc = getSessionDocument();
 	
-    return currentDoc.dishBarcode;}
+    return currentDoc.plateBarcode;}
 
 
 Template.plateAnalysis.userBarcode = function(){
