@@ -12,7 +12,7 @@ Template.plate.showPlateHello = function () {
 }
 
 // once we have scanned both barcodes, show instructions for taking photograph
-Template.plate.showPlateMeasurementInstruction = function () {
+Template.plate.showPlateInstructions = function () {
   var doc = getSessionDocument();
   if (!doc) return false;
   else if (doc && doc.hasOwnProperty("userBarcode"))

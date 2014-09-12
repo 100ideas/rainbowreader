@@ -9,10 +9,11 @@ Template.plateHello.events({
   'click button': function () { fakeBarcodeScan() }
 });
 
-Template.plateMeasurementInstructions.events({
-  //'click button': function () {
-  //  Meteor.call('takeAndAnalyzePhoto', getSessionDocument().plateBarcode);
-  //}
+Template.plateInstructions.events({
+  'click button': function () {
+    console.log('plateMeasurementInstruction: taking photo');
+    Meteor.call('takeAndAnalyzePhoto', getSessionDocument().plateBarcode);
+  }
 });
 
 
@@ -33,3 +34,25 @@ Template.platePhoto.rendered = function () {
     animateReticulesOnPlatePhoto();
   });
 }
+<<<<<<< HEAD
+=======
+
+
+
+// working on template to auto-render helpers 
+// viewStates = ['viewsMenu', 'adminMenu', 'categoriesMenu'];
+
+//   {{#each viewStates}}
+//     <li>
+//       {{> UI.dynamic template=templateName data=dataContext}}
+//     </li>
+//   {{/each}}
+
+
+// get
+// for (var name in myObject) {
+//   if (myObject.hasOwnProperty(name)) {
+//     alert(name);
+//   }
+// }
+>>>>>>> working on block template helper for enumerating views
