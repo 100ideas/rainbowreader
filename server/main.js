@@ -77,7 +77,7 @@ Meteor.methods({
 
 // takes barcode and determines whether it's dishBarcode or userBarcode
 function determineBarcodeType(barcode) {
-  if (barcode[0] == 'D') return 'dishBarcode';
+  if (barcode[0] == '9') return 'dishBarcode';
   return 'userBarcode';
 }
 

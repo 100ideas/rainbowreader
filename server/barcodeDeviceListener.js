@@ -9,6 +9,11 @@ GLOBAL FUNCTIONS
   calls callback on resulting barcode
 */
 
+// udev rule for assigning a symlink and setting permissions on the Morotola DS457 USB scanner.
+// TODO The interface string may depend on the scanner being in SNAPI mode--investigate other modes.
+// ACTION=="add", SUBSYSTEM=="hidraw", ATTRS{interface}=="SNAPI Command Interface" MODE="0666" SYMLINK="usbscanner"
+
+
 var fs = Meteor.npmRequire('fs');
 
 var scannerPath = Meteor.settings.scannerPath;

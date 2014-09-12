@@ -19,8 +19,6 @@ var platePhotosPath = Meteor.settings.platePhotosPath;
 // create filename with timestamp and dishBarcode
 // callback takes filename of saved photo
 takePhoto = function(dishBarcode, callback) {
-  // TODO get path properly 
-  // var photosPath = "./public/photos/";
   var filename = platePhotosPath + Date.now().toString() + '_' + dishBarcode + '.jpg';
   var cmdline = "gphoto2 --capture-image-and-download --filename=" + filename;
 
@@ -28,12 +26,11 @@ takePhoto = function(dishBarcode, callback) {
   if (Meteor.settings.gphoto2) {
     console.log("takePhoto.js: capturing photo with gphoto2 command\n\t" + cmdline);
     var child = exec(cmdline, Meteor.bindEnvironment( function (error, stdout, stderr) {
-      if (error || stderr) {
+      if (error) {
         console.log("shit went down in the gphoto2...");
         if (error) console.log("error: " + error);
+        if (stdout) console.log("stdout: " + stdout);
         if (stderr) console.log("stderr: " + stderr);
-        // TODO use dummy photo for now (wrap in debug)
-        filename = platePhotosPath;
       }
       callback(filename);
     }));
