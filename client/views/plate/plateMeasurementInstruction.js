@@ -19,17 +19,17 @@ Template.plateMeasurementInstruction.rendered = function(){
 
 
   intervalHandle = Meteor.setInterval(countOneSecond,1000);
-    
 
-} 
+
+}
 
 Template.plateMeasurementInstruction.countdown = function(){
-    
+
   if (Session.get("plateMeasurementCountdown") <= 0)
   {
     Meteor.clearInterval(intervalHandle);
-  }    
-  
+  }
+
   return Session.get("plateMeasurementCountdown");
 
 }
