@@ -11,7 +11,7 @@ Template.plateHello.events({
 
 Template.plateInstructions.events({
   'click button': function () {
-    console.log('plateMeasurementInstruction: taking photo');
+    console.log('plateInstructions: taking photo');
     Meteor.call('takeAndAnalyzePhoto', getSessionDocument().plateBarcode);
   }
 });
@@ -34,8 +34,6 @@ Template.platePhoto.rendered = function () {
     animateReticulesOnPlatePhoto();
   });
 }
-<<<<<<< HEAD
-=======
 
 
 
@@ -55,4 +53,3 @@ Template.platePhoto.rendered = function () {
 //     alert(name);
 //   }
 // }
->>>>>>> working on block template helper for enumerating views
