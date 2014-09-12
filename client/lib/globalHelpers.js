@@ -60,3 +60,24 @@ fakeBarcodeScan = function () {
   }
 }
 
+logTemplates = function () {
+  var userTemplates = new Array();
+  var systemTemplates = new Array();
+  for (var property in Template) {
+    if (Template[property] instanceof Blaze.Template) {
+      // system generated templates always start with '__' ?
+      if (property.indexOf('__') === -1 ) {
+        userTemplates.push(Template[property]);
+      } else {
+        systemTemplates.push(Template[property]);
+      }
+    }
+  }
+  console.log("user templates:")
+  userTemplates.forEach(function(t){console.log("\t" + t.viewName)})
+  console.log("system templates:")
+  systemTemplates.forEach(function(t){console.log("\t" + t.viewName)})
+}
+
+
+

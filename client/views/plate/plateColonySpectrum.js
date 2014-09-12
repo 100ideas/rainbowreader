@@ -1,5 +1,4 @@
-Template.colonySpectrum.rendered = function(){
-
+Template.plateColonySpectrum.rendered = function(){
 
     doc = getSessionDocument();
 

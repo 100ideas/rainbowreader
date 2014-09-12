@@ -2,6 +2,12 @@ Template.plate.created = function () {
   console.log("plate.js: Template.plate created... ");
 }
 
+Template.plate.viewStates = function () {
+}
+
+Template.plate.rendered = function () {
+  console.log("plate.js: Template.plate created... ");
+}
 /////////////////////////////////////////////////////////////////////
 // EVENT HANDLERS
 
@@ -37,7 +43,9 @@ Template.platePhoto.rendered = function () {
 
 
 
+
 // working on template to auto-render helpers 
+// https://www.discovermeteor.com/blog/blaze-dynamic-template-includes/
 // viewStates = ['viewsMenu', 'adminMenu', 'categoriesMenu'];
 
 //   {{#each viewStates}}
@@ -47,9 +55,3 @@ Template.platePhoto.rendered = function () {
 //   {{/each}}
 
 
-// get
-// for (var name in myObject) {
-//   if (myObject.hasOwnProperty(name)) {
-//     alert(name);
-//   }
-// }
