@@ -60,6 +60,7 @@ fakeBarcodeScan = function () {
   }
 }
 
+// writes names of all templates to the log
 logTemplates = function () {
   var userTemplates = new Array();
   var systemTemplates = new Array();
@@ -78,6 +79,7 @@ logTemplates = function () {
   console.log("system templates:")
   systemTemplates.forEach(function(t){console.log("\t" + t.viewName)})
 }
+
 
 
 

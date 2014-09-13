@@ -2,12 +2,27 @@ Template.plate.created = function () {
   console.log("plate.js: Template.plate created... ");
 }
 
-Template.plate.viewStates = function () {
-}
-
 Template.plate.rendered = function () {
   console.log("plate.js: Template.plate created... ");
 }
+
+Template.plate.routes = function () {
+  var routes = new Array();
+  var state = false;
+  for (var p in Template.plate) {
+    if (p.indexOf('show') === 0) {
+      Session.get("multiViewMode") ? state = true : state = Template.plate[p];
+      routes.push({
+        "view": p.charAt(4).toLowerCase() + p.substring(5),
+       "state": state 
+     });
+    }
+  }
+  
+  return routes;
+}
+
+
 /////////////////////////////////////////////////////////////////////
 // EVENT HANDLERS
 
@@ -48,10 +63,10 @@ Template.platePhoto.rendered = function () {
 // https://www.discovermeteor.com/blog/blaze-dynamic-template-includes/
 // viewStates = ['viewsMenu', 'adminMenu', 'categoriesMenu'];
 
-//   {{#each viewStates}}
-//     <li>
-//       {{> UI.dynamic template=templateName data=dataContext}}
-//     </li>
-//   {{/each}}
+  // {{#each viewStates}}
+  //   <li>
+  //     {{> UI.dynamic template=templateName data=dataContext}}
+  //   </li>
+  // {{/each}}
 
 

@@ -7,8 +7,11 @@
 Template.plate.showPlateHello = function () {
   var doc = getSessionDocument();
   if (!doc) return true;
-  // return !doc.plateBarcode || !doc.userBarcode;
-  return 1;
+  if (doc.hasOwnProperty("userBarcode") && doc.hasOwnProperty("plateBarcode")){
+    return !doc.plateBarcode || !doc.userBarcode;
+  } else {
+    return true;
+  }
 }
 
 // once we have scanned both barcodes, show instructions for taking photograph
@@ -16,8 +19,7 @@ Template.plate.showPlateInstructions = function () {
   var doc = getSessionDocument();
   if (!doc) return false;
   else if (doc && doc.hasOwnProperty("userBarcode"))
-  // return doc.userBarcode && doc.plateBarcode && !doc.photoURL;
-    return 1;
+    return doc.userBarcode && doc.plateBarcode && !doc.photoURL;
   else return 0;
 }
 
@@ -55,6 +57,7 @@ Template.plate.showPlateWallUpdate = function () {
   var doc = getSessionDocument();
   if (!doc) return false;
   //return timer - doc.dateCreated > 1000; // check to see if colorname is set
-  return (Session.get("rareColorsShown"));
+  // return Session.get("rareColorsShown");
+  return Template.plate.showPlateRareColors();
 
 }

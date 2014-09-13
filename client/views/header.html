@@ -2,14 +2,33 @@
 
 {{logContext "header"}}
 
-  <div class="header">
-    <ul class="nav nav-pills pull-right">
+<div class="header">
+  <ul class="nav nav-pills pull-right">
 <!--       <li class="active"><a href="#">plates</a></li>
-      <li><a href="#">About</a></li> -->
-      <li><a href="/">Restart</a></li>
-    </ul>
-    <h3 class="text-muted">Plate {{getSessionDocument.plateBarcode}}</h3>
+    <li><a href="#">About</a></li> -->
+    <li><a href="/">Restart</a></li>
+  </ul>
+  <h3 class="text-muted">Plate {{getSessionDocument.plateBarcode}}</h3>
+</div>
 
-  </div>
+<!-- state status bar -->
+
+<div class="row">
+  <div class="col-sm-12 panel" id="measurement-states">
+    <ul class="list-inline text-center">
+
+      {{#each routerStates}}
+        <li><h5>{{this.route}} 
+          {{#if this.routeState}} 
+            <span class="label label-success">true</span>
+          {{else}}
+            <span class="label label-danger">false</span>
+          {{/if}}
+        </h5></li>
+      {{/each}}
+
+    </ul>
+  </div> 
+</div> 
 
 </template>
