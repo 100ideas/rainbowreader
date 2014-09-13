@@ -9,8 +9,8 @@ drawCirclesOnPlatePhoto = function drawCircles(){
     .append('svg')
       // .attr("width", $("#plate-photo").width() )
       // .attr("height", $("#plate-photo").height());
-      .attr("width", '100%' )
-      .attr("height", '100%' );
+      .attr("width", '500px' )
+      .attr("height", '500px' );
 
   // console.log("data: " + WorkstationSessions.findOne(workstationSession).colonyData);
 
@@ -24,17 +24,17 @@ drawCirclesOnPlatePhoto = function drawCircles(){
     .style('stroke', 'black')
     //.style('stroke-width', reticleWidth)
     .attr('r', function(d){return d.Radius;}) //function(d) {return (d.Radius * reticleRadiusMultiplier)})
-    .attr('cx', function(d) {return d.X / 4}) 
+    .attr('cx', function(d) {return d.X / 4})
     .attr('cy', function(d) {return d.Y / 4});
     //    .transition()
     //    .duration(1000)
     //    .attr('r', function(d) { return (d.Radius)})
-} 
+}
 
 function hslaify(d) {
-  return "hsla(" + d.Hue + "," + d.Saturation + "%,50%,1)";  
+  return "hsla(" + d.Hue + "," + d.Saturation + "%,50%,1)";
 }
-    
+
 // draw a reticle around each colony
 animateReticulesOnPlatePhoto = function animatePetriDish() {
   console.log("reticuleAnimation.js: entering animatePetriDish");
@@ -88,11 +88,11 @@ function drawReticle(selector) {
     .style('stroke', 'cyan')
     .style('stroke-width', reticleWidth)
     .attr('r', 0)//function(d) {return (d.Radius * reticleRadiusMultiplier)})
-    .attr('cx', function(d) {return d.X}) 
+    .attr('cx', function(d) {return d.X})
     .attr('cy', function(d) {return d.Y})
     .transition()
 
     .duration(reticleAnimDuration)
- 
+
    .attr('r', function(d) { return (d.Radius * reticleRadiusMultiplier)})
 }
