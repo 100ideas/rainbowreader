@@ -3,42 +3,17 @@
 // these functions are called above, can they live somewhere else
 // for clarity?
 
-drawCirclesOnPlatePhoto = function drawCircles(){
-  console.log("reticuleAnimation.js: entering drawCircles();");
-  var circleSVG = d3.select('#plate-photo')
-    .append('svg')
-      // .attr("width", $("#plate-photo").width() )
-      // .attr("height", $("#plate-photo").height());
-      .attr("width", '100%' )
-      .attr("height", '100%' );
-
-  // console.log("data: " + WorkstationSessions.findOne(workstationSession).colonyData);
-
-  var colonySelector = circleSVG.selectAll('circle')
-    .data(WorkstationSessions.findOne().colonyData)
-    .enter();
-
-  colonySelector
-    .append('circle')
-    .style('fill', function(d){return hslaify(d)})
-    .style('stroke', 'black')
-    //.style('stroke-width', reticleWidth)
-    .attr('r', function(d){return d.Radius;}) //function(d) {return (d.Radius * reticleRadiusMultiplier)})
-    .attr('cx', function(d) {return d.X / 4}) 
-    .attr('cy', function(d) {return d.Y / 4});
-    //    .transition()
-    //    .duration(1000)
-    //    .attr('r', function(d) { return (d.Radius)})
-} 
 
 function hslaify(d) {
-  return "hsla(" + d.Hue + "," + d.Saturation + "%,50%,1)";  
+  return "hsla(" + d.Hue + ",50%,50%,1)";  
 }
     
 // draw a reticle around each colony
 animateReticulesOnPlatePhoto = function animatePetriDish() {
   console.log("reticuleAnimation.js: entering animatePetriDish");
-  var svg = d3.select('#plate-photo').append('svg');
+  var svg = d3.select('#photo-container').append('svg')
+      .attr("width", $("#photo-container").width() )
+      .attr("height", $("#photo-container").height() )
 
   var colonySelector = svg.selectAll('circle')
     .data(WorkstationSessions.findOne().colonyData)
@@ -96,3 +71,33 @@ function drawReticle(selector) {
  
    .attr('r', function(d) { return (d.Radius * reticleRadiusMultiplier)})
 }
+
+
+
+//drawCirclesOnPlatePhoto = function drawCircles(){
+//  console.log("reticuleAnimation.js: entering drawCircles();");
+//  var circleSVG = d3.select("#photo-container")
+//    .append("svg")
+//       .attr("width", $("#photo-container").width() )
+//       .attr("height", $("#photo-container").height() )
+//      //.attr("width", '100%' )
+//      //.attr("height", '100%' );
+//
+//  // console.log("data: " + WorkstationSessions.findOne(workstationSession).colonyData);
+//
+//  var colonySelector = circleSVG.selectAll('circle')
+//    .data(WorkstationSessions.findOne().colonyData)
+//    .enter();
+//
+//  colonySelector
+//    .append('circle')
+//    .style('fill', function(d){return hslaify(d)})
+//    .style('stroke', 'black')
+//    //.style('stroke-width', reticleWidth)
+//    .attr('r', function(d){return d.Radius;}) //function(d) {return (d.Radius * reticleRadiusMultiplier)})
+//    .attr('cx', function(d) {return d.X / 4}) 
+//    .attr('cy', function(d) {return d.Y / 4});
+//    //    .transition()
+//    //    .duration(1000)
+//    //    .attr('r', function(d) { return (d.Radius)})
+//} 

@@ -34,6 +34,18 @@ var settings = {
       
     }
   },
+  alex: {
+    public: {},
+    private: {
+      "gphoto2":                false,
+      "opencfuPath":            false,
+      "scannerPath":            false,
+      "platePhotosPath":        process.env.PWD + '/public/photos/',
+      "fakeColonyDataFile":     process.env.PWD + '/test/colonyData.json',
+      "fakeColonyPhotoFile":    process.env.PWD + '/public/photos/small.jpg' // necessary cause opencfu gets confused
+      
+    }
+  },
   production: {
     public: {},
     private: {}
@@ -47,6 +59,8 @@ if (!process.env.METEOR_SETTINGS) {
     Meteor.settings = settings.production.private;
   } else if (environment === "development_osx") {
     Meteor.settings = settings.development_osx.private;
+  } else if (environment === "alex") {
+    Meteor.settings = settings.alex.private;
   } else {
     Meteor.settings = settings.development.private;
   }
