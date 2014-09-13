@@ -55,7 +55,7 @@ var settings = {
       "platePhotosPath":        process.env.PWD + '/public/photos/',
       "fakeColonyDataFile":     process.env.PWD + '/test/colonyData.json',
       "fakeColonyPhotoFile":    process.env.PWD + '/public/photos/small.jpg' // necessary cause opencfu gets confused
-      
+
     }
   },
   production: {
@@ -74,7 +74,7 @@ if (!process.env.METEOR_SETTINGS) {
   } else if (environment === "development_nagle") {
     Meteor.settings = settings.development_nagle.private;
   }
-  } else if (environment === "alex") {
+ else if (environment === "alex") {
     Meteor.settings = settings.alex.private;
   } else {
     Meteor.settings = settings.development.private;
