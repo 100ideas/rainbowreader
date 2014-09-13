@@ -5,15 +5,15 @@
 
 
 function hslaify(d) {
-  return "hsla(" + d.Hue + ",50%,50%,1)";  
+  return "hsla(" + d.Hue + ",50%,50%,1)";
 }
 
 // draw a reticle around each colony
 animateReticulesOnPlatePhoto = function animatePetriDish() {
   console.log("reticuleAnimation.js: entering animatePetriDish");
   var svg = d3.select('#photo-container').append('svg')
-      .attr("width", $("#photo-container").width() )
-      .attr("height", $("#photo-container").height() )
+      .attr("width", 1296) // $("#photo-container").width() )
+      .attr("height", 972) // $("#photo-container").height() )
 
   var colonySelector = svg.selectAll('circle')
     .data(WorkstationSessions.findOne().colonyData)
@@ -95,9 +95,9 @@ function drawReticle(selector) {
 //    .style('stroke', 'black')
 //    //.style('stroke-width', reticleWidth)
 //    .attr('r', function(d){return d.Radius;}) //function(d) {return (d.Radius * reticleRadiusMultiplier)})
-//    .attr('cx', function(d) {return d.X / 4}) 
+//    .attr('cx', function(d) {return d.X / 4})
 //    .attr('cy', function(d) {return d.Y / 4});
 //    //    .transition()
 //    //    .duration(1000)
 //    //    .attr('r', function(d) { return (d.Radius)})
-//} 
+//}

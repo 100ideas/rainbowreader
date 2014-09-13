@@ -12,16 +12,31 @@ Template.plate.rendered = function () {
 // EVENT HANDLERS
 
 Template.plateHello.events({
-  'click button': function () { fakeBarcodeScan() }
+  'click button': function () {
+
+     Session.set("helloButtonClicked",true);
+     fakeBarcodeScan() }
 });
 
 Template.plateInstructions.events({
   'click button': function () {
     console.log('plateInstructions: taking photo');
+    Session.set("instructionsButtonClicked",true);
     Meteor.call('takeAndAnalyzePhoto', getSessionDocument().plateBarcode);
   }
 });
 
+Template.plateAnalysis.events({
+  'click button': function() {
+    Session.set("analysisButtonClicked",true);
+  }
+});
+
+Template.plateRareColors.events({
+  'click button': function() {
+    Session.set("rareColorsButtonClicked",true);
+  }
+});
 
 /////////////////////////////////////////////////////////////////////
 // Created / Rendered callbacks
@@ -43,16 +58,17 @@ Template.platePhoto.rendered = function () {
 
         console.log("platePhoto.js: Template.platePhoto.rendered callback: calling reticule animations")
         animateReticulesOnPlatePhoto()
+        Meteor.setTimeout(function(){Session.set("reticulesDone",true);}, 10000)
       }
     }
   })
-  
+
 }
 
 
 
 
-// working on template to auto-render helpers 
+// working on template to auto-render helpers
 // https://www.discovermeteor.com/blog/blaze-dynamic-template-includes/
 // viewStates = ['viewsMenu', 'adminMenu', 'categoriesMenu'];
 
@@ -61,5 +77,3 @@ Template.platePhoto.rendered = function () {
 //       {{> UI.dynamic template=templateName data=dataContext}}
 //     </li>
 //   {{/each}}
-
-

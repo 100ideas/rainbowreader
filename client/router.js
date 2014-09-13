@@ -4,8 +4,18 @@
 // Probably only one should evaluate to true at a time.
 
 // starting state, so return true by default
+
+Session.set("helloButtonClicked",false);
+Session.set("instructionsButtonClicked",false);
+Session.set("analysisButtonClicked",false);
+Session.set("rareColorsButtonClicked",false);
+
+
+
+
 Template.plate.showPlateHello = function () {
   var doc = getSessionDocument();
+  if (Session.get("helloButtonClicked")) return false;
   if (!doc) return true;
   // return !doc.plateBarcode || !doc.userBarcode;
   return 1;
@@ -15,7 +25,8 @@ Template.plate.showPlateHello = function () {
 Template.plate.showPlateInstructions = function () {
   var doc = getSessionDocument();
   if (!doc) return false;
-  else if (doc && doc.hasOwnProperty("userBarcode"))
+  if (Session.get("instructionsButtonClicked")) return false;
+  else if (doc && (doc.hasOwnProperty("userBarcode") || doc.hasOwnProperty("plateBarcode")))
   // return doc.userBarcode && doc.plateBarcode && !doc.photoURL;
     return 1;
   else return 0;
@@ -24,6 +35,8 @@ Template.plate.showPlateInstructions = function () {
 // show the image and colony animations
 Template.plate.showPlatePhoto = function () {
   var doc = getSessionDocument();
+
+  if (Session.get("analysisButtonClicked")) return false;
   if (doc && doc.photoURL) {
     console.log("returning doc.photoURL:" + doc.photoURL);
     return doc.photoURL;
@@ -36,18 +49,20 @@ Template.plate.showPlatePhoto = function () {
 Template.plate.showPlateAnalysis = function () {
   var doc = getSessionDocument();
   if (!doc) return false;
-  return !!doc.colonyData && Session.get("reticulesDone") // casts to bool
+  if (Session.get("analysisButtonClicked")) return false;
+  return !!doc.colonyData && Session.get("reticulesDone")
 }
 
 // only show if we have some rare colors.
 // TODO only trigger after reticule animation is done
 Template.plate.showPlateRareColors = function () {
   var doc = getSessionDocument();
+  if (Session.get("rareColorsButtonClicked")) return false;
   if (!doc) return false;
   if (!doc.hasOwnProperty('colonyData')) // not always present
     return false
   else
-    return doc.colonyData[0].colorName;
+    return Session.get("analysisButtonClicked") && doc.colonyData[0].ColorName;
 }
 
 Template.plate.showPlateWallUpdate = function () {
@@ -55,6 +70,6 @@ Template.plate.showPlateWallUpdate = function () {
   var doc = getSessionDocument();
   if (!doc) return false;
   //return timer - doc.dateCreated > 1000; // check to see if colorname is set
-  return (Session.get("rareColorsShown"));
+  return (Session.get("rareColorsButtonClicked"));
 
 }
