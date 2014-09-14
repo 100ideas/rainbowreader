@@ -9,7 +9,7 @@ if (process.env.METEOR_ENV) {
 } else {
   environment = "development";
 }
- 
+
 var settings = {
   development: {
     public: {},
@@ -31,7 +31,31 @@ var settings = {
       "platePhotosPath":        process.env.PWD + '/public/photos/',
       "fakeColonyDataFile":     process.env.PWD + '/test/colonyData.json',
       "fakeColonyPhotoFile":    process.env.PWD + '/public/photos/small.jpg' // necessary cause opencfu gets confused
-      
+
+    }
+  },
+  development_nagle: {
+    public: {},
+    private: {
+      "gphoto2":                false,
+      "opencfuPath":            false,
+      "scannerPath":            false,
+      "platePhotosPath":        process.env.PWD + '/public/photos/',
+      "fakeColonyDataFile":     process.env.PWD + '/test/colonyData.json',
+      "fakeColonyPhotoFile":    process.env.PWD + '/public/photos/small.jpg' // necessary cause opencfu gets confused
+
+    }
+  },
+  alex: {
+    public: {},
+    private: {
+      "gphoto2":                false,
+      "opencfuPath":            false,
+      "scannerPath":            false,
+      "platePhotosPath":        process.env.PWD + '/public/photos/',
+      "fakeColonyDataFile":     process.env.PWD + '/test/colonyData.json',
+      "fakeColonyPhotoFile":    process.env.PWD + '/public/photos/small.jpg' // necessary cause opencfu gets confused
+
     }
   },
   production: {
@@ -39,21 +63,25 @@ var settings = {
     private: {}
   }
 };
- 
+
 if (!process.env.METEOR_SETTINGS) {
   console.log("settings.js: No settings found in $METEOR_SETTINGS, using *" + environment + "* defined in server/lib/settings.js");
- 
+
   if (environment === "production") {
     Meteor.settings = settings.production.private;
   } else if (environment === "development_osx") {
     Meteor.settings = settings.development_osx.private;
+  } else if (environment === "development_nagle") {
+    Meteor.settings = settings.development_nagle.private;
+  }
+ else if (environment === "alex") {
+    Meteor.settings = settings.alex.private;
   } else {
     Meteor.settings = settings.development.private;
   }
- 
+
   // Push a subset of settings to the client.
   if (Meteor.settings && Meteor.settings.public) {
     __meteor_runtime_config__.PUBLIC_SETTINGS = Meteor.settings.public;
   }
 }
-

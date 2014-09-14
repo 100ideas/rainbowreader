@@ -1,11 +1,3 @@
-//// TODO replace global function
-////
-//// hitlist:
-//// takePhoto
-//// runOpenCFU
-//// postColonyDataAndImage
-
-
 // code to run on server at startup
 Meteor.startup(function () {
 
@@ -52,7 +44,7 @@ Meteor.methods({
 
         console.log("server/main.js: takeAndAnalyzePhoto")
 
-        // convert '~/rainbowreader/public/photos/photo1.jpg'
+        // convert '~/rainbowreadevelopment_osxder/public/photos/photo1.jpg'
         // to 'photos/photo1.jpg'
 
         var ixPhotos = photoPath.indexOf('photos/');

@@ -3,7 +3,7 @@ Template.plate.created = function () {
 }
 
 Template.plate.rendered = function () {
-  console.log("plate.js: Template.plate created... ");
+  console.log("plate.js: Template.plate rendered... ");
 }
 
 Template.plate.routes = function () {
@@ -27,46 +27,55 @@ Template.plate.routes = function () {
 // EVENT HANDLERS
 
 Template.plateHello.events({
-  'click button': function () { fakeBarcodeScan() }
+  'click button': function () {
+
+     Session.set("helloButtonClicked",true);
+     fakeBarcodeScan() }
 });
 
 Template.plateInstructions.events({
   'click button': function () {
     console.log('plateInstructions: taking photo');
+    Session.set("instructionsButtonClicked",true);
     Meteor.call('takeAndAnalyzePhoto', getSessionDocument().plateBarcode);
   }
 });
 
+Template.plateAnalysis.events({
+  'click button': function() {
+    Session.set("analysisButtonClicked",true);
+  }
+});
+
+Template.plateRareColors.events({
+  'click button': function() {
+    Session.set("rareColorsButtonClicked",true);
+  }
+});
 
 /////////////////////////////////////////////////////////////////////
 // Created / Rendered callbacks
 
 Template.platePhoto.created = function () {
-  console.log("plate.js: Template.platePhoto created... ");
+  console.log("plate.js: Template.platePhoto created... ")
 }
 
 Template.platePhoto.rendered = function () {
-  console.log("platePhoto.js: Template.platePhoto.rendered callback: calling reticule animations")
-  drawCirclesOnPlatePhoto();
-  animateReticulesOnPlatePhoto();
-  this.autorun( function (){
-    console.log("platePhoto.js: Template.platePhoto autorun function executed...");
-    drawCirclesOnPlatePhoto();
-    animateReticulesOnPlatePhoto();
-  });
+
+  $('#photo-container').css('background-image', "url('" + WorkstationSessions.findOne().photoURL + "')")
+
+  WorkstationSessions.find().observe({
+
+    changed: function(newDocument, oldDocument) {
+
+      // watch for colonyData field
+      if (newDocument.colonyData && !oldDocument.colonyData) {
+
+        console.log("platePhoto.js: Template.platePhoto.rendered callback: calling reticule animations")
+        animateReticulesOnPlatePhoto()
+        Meteor.setTimeout(function(){Session.set("reticulesDone",true);}, 10000)
+      }
+    }
+  })
+
 }
-
-
-
-
-// working on template to auto-render helpers 
-// https://www.discovermeteor.com/blog/blaze-dynamic-template-includes/
-// viewStates = ['viewsMenu', 'adminMenu', 'categoriesMenu'];
-
-  // {{#each viewStates}}
-  //   <li>
-  //     {{> UI.dynamic template=templateName data=dataContext}}
-  //   </li>
-  // {{/each}}
-
-

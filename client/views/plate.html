@@ -1,29 +1,15 @@
 <template name="plate">
 
-{{#each routes}}
-  <div class="row">
-    <div class="col-sm-4 col-sm-offset-4">
-    {{#if this.state}}
-      {{> UI.dynamic template=this.view}}
-    {{/if}}
+<div class="container">
+  {{#each routes}}
+    <div class="row">
+      <div class="col-sm-4 col-sm-offset-4">
+      {{#if this.state}}
+        {{> UI.dynamic template=this.view}}
+      {{/if}}
+      </div>
     </div>
-  </div>
-{{/each}}
+  {{/each}}
+</div>
 
 </template>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

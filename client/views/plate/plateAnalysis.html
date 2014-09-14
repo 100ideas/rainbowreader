@@ -1,17 +1,17 @@
 <template name="plateAnalysis">
-	
+
   {{logContext "plateAnalysis"}}
 
 
-  <h3 class="text-center">plate statistics</h3>  
+  <h3 class="text-center">plate statistics</h3>
 
 
-  <p>Plate # {{plateBarcode}}</p>              
-  
+  <p>Plate # {{plateBarcode}}</p>
+
   <p>Started On: {{displayTime}}</p>
-  
+
   <p>Transformed by: name goes here, {{userBarcode}}</p>
-  
+
   <p>Measured by: name goes here, barcode goes here</p>
 
   <p>Colonies counted:  {{colonyCount454654}}</p>
@@ -25,12 +25,13 @@
   <p>Gamut: </p>
 
   <p>Picked: </p>
- 
 
 
 
 
-  
-  
+<button type="button" class="btn btn-warning btn-large">Done reading analysis</button>
+
+
+
 
 </template>
