@@ -1,4 +1,3 @@
-
 // Global function for retrieving state.
 // There should only be one document in this collection. 
 // used to be in client/main.js - mac
