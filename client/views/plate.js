@@ -62,7 +62,7 @@ Template.platePhoto.created = function () {
 
 Template.platePhoto.rendered = function () {
 
-  $('#photo-container').css('background-image', "url('" + WorkstationSessions.findOne().photoURL + "')")
+  // $('#photo-container').css('background-image', "url('" + WorkstationSessions.findOne().photoURL + "')")
 
   WorkstationSessions.find().observe({
 
@@ -71,9 +71,9 @@ Template.platePhoto.rendered = function () {
       // watch for colonyData field
       if (newDocument.colonyData && !oldDocument.colonyData) {
 
-        console.log("platePhoto.js: Template.platePhoto.rendered callback: calling reticule animations")
-        animateReticulesOnPlatePhoto()
-        Meteor.setTimeout(function(){Session.set("reticulesDone",true);}, 10000)
+        console.log("platePhoto.js: Template.platePhoto.rendered callback: calling reticule animations");
+        animateReticulesOnPlatePhoto();
+        Meteor.setTimeout(function(){Session.set("reticulesDone",true);}, 10000);
       }
     }
   })

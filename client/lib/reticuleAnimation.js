@@ -12,8 +12,11 @@ function hslaify(d) {
 animateReticulesOnPlatePhoto = function animatePetriDish() {
   console.log("reticuleAnimation.js: entering animatePetriDish");
   var svg = d3.select('#photo-container').append('svg')
-      .attr("width", 1296) // $("#photo-container").width() )
-      .attr("height", 972) // $("#photo-container").height() )
+      // .attr("width", 1296) // $("#photo-container").width() )
+      // .attr("height", 972) // $("#photo-container").height() )
+      .attr("width", $("#plate-photo").width() )
+      .attr("height", $("#plate-photo").height() )
+      .style("top", $("#plate-photo").height() * -1 )
 
   var colonySelector = svg.selectAll('circle')
     .data(WorkstationSessions.findOne().colonyData)
@@ -29,6 +32,9 @@ function drawReticle(selector) {
   var reticleOutsideFraction = 0.5;  // portion of the reticle radius that the lines extend ouside the reticle
   var reticleAnimDuration = 3000;    // reticle animation length
   var reticleInitialMultiplier = 2000;
+  // js dom wackiness to get original height of img with id="photo-container"
+  // then use this to scale the svg overlay to the displayed size of the css responsive img
+  var scaleFactor = $("#photo-container").width() / document.getElementById($("#plate-photo").attr("id")).naturalWidth;
 
   // partial computations
   var reticleInside = (1 - reticleInsideFraction) * reticleRadiusMultiplier;
@@ -40,16 +46,16 @@ function drawReticle(selector) {
       .append("line")
       .style('stroke', 'cyan')
       .style('stroke-width', reticleWidth)
-      .attr("x1", function(d) {return d.X + x1 * d.Radius * reticleInitialMultiplier})
-      .attr("y1", function(d) {return d.Y + y1 * d.Radius * reticleInitialMultiplier})
-      .attr("x2", function(d) {return d.X + x2 * d.Radius * reticleInitialMultiplier})
-      .attr("y2", function(d) {return d.Y + y2 * d.Radius * reticleInitialMultiplier})
+      .attr("x1", function(d) {return d.X * scaleFactor + x1 * d.Radius * reticleInitialMultiplier})
+      .attr("y1", function(d) {return d.Y * scaleFactor + y1 * d.Radius * reticleInitialMultiplier})
+      .attr("x2", function(d) {return d.X * scaleFactor + x2 * d.Radius * reticleInitialMultiplier})
+      .attr("y2", function(d) {return d.Y * scaleFactor + y2 * d.Radius * reticleInitialMultiplier})
       .transition()
       .duration(reticleAnimDuration  *  0.75)
-      .attr("x1", function(d) {return d.X + x1 * d.Radius})
-      .attr("y1", function(d) {return d.Y + y1 * d.Radius})
-      .attr("x2", function(d) {return d.X + x2 * d.Radius})
-      .attr("y2", function(d) {return d.Y + y2 * d.Radius})
+      .attr("x1", function(d) {return d.X * scaleFactor + x1 * d.Radius})
+      .attr("y1", function(d) {return d.Y * scaleFactor + y1 * d.Radius})
+      .attr("x2", function(d) {return d.X * scaleFactor + x2 * d.Radius})
+      .attr("y2", function(d) {return d.Y * scaleFactor + y2 * d.Radius})
   }
   reticleLine(selector, 0, -reticleInside, 0, -reticleOutside);
   reticleLine(selector, 0,  reticleInside, 0,  reticleOutside);
@@ -63,13 +69,14 @@ function drawReticle(selector) {
     .style('stroke', 'cyan')
     .style('stroke-width', reticleWidth)
     .attr('r', 0)//function(d) {return (d.Radius * reticleRadiusMultiplier)})
-    .attr('cx', function(d) {return d.X})
-    .attr('cy', function(d) {return d.Y})
+    .attr('cx', function(d) {return d.X * scaleFactor})
+    .attr('cy', function(d) {return d.Y * scaleFactor})
     .transition()
-
     .duration(reticleAnimDuration)
+    .attr('r', function(d) { return (d.Radius * reticleRadiusMultiplier)})
+    .attr('cx', function(d) {return d.X * scaleFactor})
+    .attr('cy', function(d) {return d.Y * scaleFactor})
 
-   .attr('r', function(d) { return (d.Radius * reticleRadiusMultiplier)})
 }
 
 
