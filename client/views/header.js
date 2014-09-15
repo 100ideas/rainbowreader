@@ -16,5 +16,7 @@ Template.header.routerStates = function () {
       showLogic.push({"route": p, "routeState": Template.plate[p] });
     }
   }
+  // OMFG routing
+  showLogic.splice(3, 0, {"route": "showPlateAnalysis", "routeState": Template.platePhoto.showPlateAnalysis });
   return showLogic;
 }

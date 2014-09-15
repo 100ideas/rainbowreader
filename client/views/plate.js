@@ -8,17 +8,22 @@ Template.plate.rendered = function () {
 
 Template.plate.routes = function () {
   var routes = new Array();
+  var view = "";
   var state = false;
   for (var p in Template.plate) {
     if (p.indexOf('show') === 0) {
       Session.get("multiViewMode") ? state = true : state = Template.plate[p];
-      routes.push({
-        "view": p.charAt(4).toLowerCase() + p.substring(5),
-       "state": state 
-     });
+      view = p.charAt(4).toLowerCase() + p.substring(5),
+      routes.push({"view": view, "state": state});
     }
   }
   
+  var rs = {};
+
+  routes.forEach( function (r){ rs[r.view] = r.state(); });
+  Session.set("routerState", rs);
+
+
   return routes;
 }
 
@@ -52,30 +57,3 @@ Template.plateRareColors.events({
     Session.set("rareColorsButtonClicked",true);
   }
 });
-
-/////////////////////////////////////////////////////////////////////
-// Created / Rendered callbacks
-
-Template.platePhoto.created = function () {
-  console.log("plate.js: Template.platePhoto created... ")
-}
-
-Template.platePhoto.rendered = function () {
-
-  // $('#photo-container').css('background-image', "url('" + WorkstationSessions.findOne().photoURL + "')")
-
-  WorkstationSessions.find().observe({
-
-    changed: function(newDocument, oldDocument) {
-
-      // watch for colonyData field
-      if (newDocument.colonyData && !oldDocument.colonyData) {
-
-        console.log("platePhoto.js: Template.platePhoto.rendered callback: calling reticule animations");
-        animateReticulesOnPlatePhoto();
-        Meteor.setTimeout(function(){Session.set("reticulesDone",true);}, 10000);
-      }
-    }
-  })
-
-}
