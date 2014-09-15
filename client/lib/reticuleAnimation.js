@@ -8,15 +8,19 @@ function hslaify(d) {
   return "hsla(" + d.Hue + ",50%,50%,1)";
 }
 
+
+// TODO add function to transform reticules if viewport changes dimensions
+// http://www.w3.org/TR/SVG/coords.html#TransformAttribute
+
 // draw a reticle around each colony
 animateReticulesOnPlatePhoto = function animatePetriDish() {
   console.log("reticuleAnimation.js: entering animatePetriDish");
   var svg = d3.select('#photo-container').append('svg')
       // .attr("width", 1296) // $("#photo-container").width() )
       // .attr("height", 972) // $("#photo-container").height() )
-      .attr("width", $("#plate-photo").width() )
-      .attr("height", $("#plate-photo").height() )
-      .style("top", $("#plate-photo").height() * -1 )
+      .attr("width", "100%" )
+      .attr("height", "100%" )
+      // .style("top", $("#plate-photo").height() * -1 )
 
   var colonySelector = svg.selectAll('circle')
     .data(WorkstationSessions.findOne().colonyData)

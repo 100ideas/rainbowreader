@@ -15,7 +15,7 @@ Template.platePhoto.rendered = function () {
 
         console.log("platePhoto.js: Template.platePhoto.rendered callback: calling reticule animations");
         animateReticulesOnPlatePhoto();
-        Meteor.setTimeout(function(){Session.set("reticulesDone",true);}, 10000);
+        Meteor.setTimeout(function(){Session.set("reticulesDone",true);}, 3000);
       }
     }
   })

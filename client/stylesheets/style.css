@@ -8,10 +8,13 @@
   color: #777;
 }
 
+#photo-container{
+  position: relative;
+}
+
 #photo-container svg{
   z-index: 100;
-  position: relative;
+  position: absolute;
   top: 0;
   left: 0;
-
 }
