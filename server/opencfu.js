@@ -24,7 +24,9 @@ runOpenCFU = function(filename, callback) {
   var opencfuPath = Meteor.settings.opencfuPath;
   // run OpenCFU with parameters
   // TODO explain parameters
-  var cmd = opencfuPath + " -d bil -t 3 -i " + filename;
+  var minRadius = 25;	// units are unclear
+  var bilateralThreshold = 5;
+  var cmd = opencfuPath + " -d bil -t " + bilateralThreshold + " -r " + minRadius + " -i " + filename;
 
   if (Meteor.settings.opencfuPath) {
 

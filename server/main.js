@@ -1,5 +1,6 @@
 // code to run on server at startup
 Meteor.startup(function () {
+  StaticServer.add('/photos', '/photos/');
 
   // initialize barcode scanner
   // and write barcodes to workstationSession
@@ -42,20 +43,21 @@ Meteor.methods({
 
       function(photoPath) {
 
-        console.log("server/main.js: takeAndAnalyzePhoto")
+        console.log("server/main.js: takeAndAnalyzePhoto");
 
         // convert '~/rainbowreadevelopment_osxder/public/photos/photo1.jpg'
         // to 'photos/photo1.jpg'
 
-        var ixPhotos = photoPath.indexOf('photos/');
+        /*var ixPhotos = photoPath.indexOf('photos/');
         if (ixPhotos === -1) {
           console.log('\terror parsing photo path into URL: ' + photoPath);
           return;
         }
-        var photoURL = photoPath.slice(ixPhotos);
+        var photoURL = photoPath.slice(ixPhotos);*/
+        var photoURL = photoPath;  //this works assuming we have mapped file system /photos to http /photos
 
         console.log("photoURL: " + photoURL)
-        WorkstationSessions.update(workstationSession,{$set: {photoURL: photoURL}});
+        WorkstationSessions.update(workstationSession, {$set: {photoURL: photoURL}});
 
         console.log("\tcalling runOpenCFU");
 
