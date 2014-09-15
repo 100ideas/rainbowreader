@@ -81,8 +81,8 @@ Template.plateAnalysis.displayTime = function(){
 	//var visualizationsArray = Visualizations.find().fetch();
 
 
-	console.log("visualizations");
-	console.log(Visualizations);
+	console.log("plateAnalysis.js: visualizations");
+	// console.log(Visualizations);
 
 	var statsObject = visualizationsArray[0];
 

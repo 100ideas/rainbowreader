@@ -54,7 +54,7 @@ Template.plate.showPlatePhoto = function () {
 
 // only show if openCFU is done
 // controls transclusion of plateAnalysis in platePhoto
-Template.plate.showPlateAnalysis = function () {
+Template.platePhoto.showPlateAnalysis = function () {
   var doc = getSessionDocument();
   if (!doc) return false;
   if (Session.get("analysisButtonClicked")) return false;

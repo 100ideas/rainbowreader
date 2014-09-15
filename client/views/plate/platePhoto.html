@@ -2,18 +2,19 @@
 
   {{logContext "platePhoto"}}
 
-<div class="col-sm-10" id="photo-container">
-  <h3 class="text-center">got the photo</h3>
+<h3 class="text-center">got the photo</h3>
+<div id="photo-container">
   <img src="{{getSessionDocument.photoURL}}" class="img-responsive" id="plate-photo">
 </div>
 
 <div class="col-sm-10">
-  <!-- use to control state in platePhoto template? -->
-  {{#if this}}
-    {{> plateAnalysis}}
-  {{else}}
-    no colonyData to analyze. showPlateAnalysis: {{this}}
-  {{/if}}
+
+{{#if showPlateAnalysis}}
+  {{> plateAnalysis}}
+{{else}}
+  <p>no colonyData to analyze. showPlateAnalysis: {{showPlateAnalysis}}</p>
+{{/if}}
+
 </div>
 
 </template>
