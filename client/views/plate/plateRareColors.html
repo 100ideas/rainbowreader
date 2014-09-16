@@ -4,7 +4,22 @@
 
   <h3 class="text-center">rare colors:</h3>
 
+  {{#each listRareColors}}
+    {{> rareColorCard}}
+  {{/each}}
   <button type="button" class="btn btn-warning btn-large">Onward</button>
+
+
+</template>
+
+
+<template name="rareColorCard">
+
+
+
+ <div id="colorCircle"></div>
+
+ fuck yeah {{ColorName}}
 
 
 </template>
