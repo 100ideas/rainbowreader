@@ -19,51 +19,82 @@ analyzeColonies = function (colonyData) {
     //WorkstationSessions.update(workstationSession, {$set: {field: name}});
   });
 
+  calculateColorRarity(colonyData);
+
   // Updating the color on colonyData one at a time triggers observeChanges every time.
   // So insert modified data in one update... (and hope some one else isn't trying to modifying data at the same time).
   WorkstationSessions.update(workstationSession, {$set: {colonyData: colonyData}});
   console.log("\tset color names; last one was: " +  WorkstationSessions.findOne(workstationSession).colonyData.pop().ColorName);
-  
+
+  // copy all the fields into a record in Experiments (used by the visualization)
+  var record = WorkstationSessions.findOne(workstationSession);
+  Experiments.insert(record);
+}
+
+// This function takes and modifies an array of colonyData.
+// It calculates a rarity score based on the color of each colony.
+// It also finds the 3 rarest colors and store the indices of a colony of each color.
+// We modify the colonyData, because the function that calls this one then updates colonyData
+// in the database.
+function calculateColorRarity(colonyData) {
   // pick the "rarest" 3 colors among these colonies
   // TODO: make this calculation use all colonies in the last X days
   // Use an object as a map to count how many times each color name appears.
   // Then transfer the counts to an array which we sort.
   // The least common colors will be at the top.
   var numberOfRarestColors = 3;
-  
+
+  var countAllColonies = 0;
   var colorNamesMap = {};
-  colonyData.forEach(function(colony, index) {
-    if (colorNamesMap[colony.ColorName] === undefined)
-      colorNamesMap[colony.ColorName] = {count:1, colonyDataIndex:index};
-    else
-      colorNamesMap[colony.ColorName].count++;
-  });
-
-  // transfer the map's entries into an array
-  var colorNamesArray = [];
-  for (var key in colorNamesMap) {
-    // make sure we don't get an inherited property
-    if (colorNamesMap.hasOwnProperty(key)) {
-      colorNamesArray.push(colorNamesMap[key]);
-    }
+  function addColoniesToMap(colonyData) {
+    colonyData.forEach(function(colony, index) {
+      countAllColonies++;
+      if (colorNamesMap[colony.ColorName] === undefined)
+        colorNamesMap[colony.ColorName] = 1;
+      else
+        colorNamesMap[colony.ColorName]++;
+    });
   }
 
-  // sort ascending by count
-  colorNamesArray.sort(function(a, b) {
-    return a.count - b.count;
+  // count colonies from the current photo
+  addColoniesToMap(colonyData);
+
+  // count the colonies already in the database
+  var allExperiments = Experiments.find().fetch();
+  allExperiments.forEach(function(experiment) {
+    if (experiment.colonyData) addColoniesToMap(experiment.colonyData);
   });
 
-  // set the rarest 3 indices as an array in the db
-  var rareColorIndices = [];
-  var numberToChoose = Math.min(colorNamesArray.length, numberOfRarestColors); 
-  for (var i = 0; i < numberToChoose; i < i++) {
-    rareColorIndices.push(colorNamesArray[i].colonyDataIndex);
-  }
-
-  console.log("\tset rarest colonies: " + rareColorIndices)
+  // Calculate the fraction of all colonies which are each color.
+  // This includes the current colonyData, so each should have a defined count.
+  colonyData.forEach(function(colony) {
+    var count = colorNamesMap[colony.ColorName];
+    colony.Rarity = count / countAllColonies;
+  });
   
-  var set = {$set: {rareColorIndices:rareColorIndices}};
-  WorkstationSessions.update(workstationSession, set);
+  // sort ascending by count
+  colonyData.sort(function(a, b) {
+    return a.Rarity - b.Rarity;
+  });
 
-  // TODO: calculate 'rarity' score and how many times this color has been seen before
+  // walk through the sorted colonies, and save the indices of max 3 unique colors
+  var rareColorIndices = [];
+  var numberToChoose = Math.min(colonyData.length, numberOfRarestColors); 
+  for (var i = 0; i < numberToChoose; i++) {
+    // have we picked this color already?
+    var seenColor = false;
+    rareColorIndices.forEach(function(j) {
+      if (colonyData[j].ColorName == colonyData[i].ColorName) seenColor = true;
+    });
+    if (seenColor == false) rareColorIndices.push(i);
+  }
+
+  /*colonyData.forEach(function(colony) {  
+    console.log(colony.ColorName + ' - ' + colony.Rarity);
+  });*/
+
+  // set the rarest 3 indices as an array in the db; also set the total number of colonies
+  var set = {$set: {rareColorIndices:rareColorIndices, coloniesCountAtThisTime:countAllColonies}};
+  WorkstationSessions.update(workstationSession, set);
 }
+
