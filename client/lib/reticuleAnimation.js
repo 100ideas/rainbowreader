@@ -39,6 +39,8 @@ function drawReticle(selector) {
   // js dom wackiness to get original height of img with id="photo-container"
   // then use this to scale the svg overlay to the displayed size of the css responsive img
   var scaleFactor = $("#photo-container").width() / document.getElementById($("#plate-photo").attr("id")).naturalWidth;
+  // time in ms between successive reticle animations
+  var delay = 100
 
   // partial computations
   var reticleInside = (1 - reticleInsideFraction) * reticleRadiusMultiplier;
@@ -56,6 +58,7 @@ function drawReticle(selector) {
       .attr("y2", function(d) {return d.Y * scaleFactor + y2 * d.Radius * reticleInitialMultiplier})
       .transition()
       .duration(reticleAnimDuration  *  0.75)
+      .delay(function(d,i) {return i * 100})
       .attr("x1", function(d) {return d.X * scaleFactor + x1 * d.Radius})
       .attr("y1", function(d) {return d.Y * scaleFactor + y1 * d.Radius})
       .attr("x2", function(d) {return d.X * scaleFactor + x2 * d.Radius})
@@ -77,6 +80,7 @@ function drawReticle(selector) {
     .attr('cy', function(d) {return d.Y * scaleFactor})
     .transition()
     .duration(reticleAnimDuration)
+    .delay(function(d,i) {return i * 100})
     .attr('r', function(d) { return (d.Radius * reticleRadiusMultiplier)})
     .attr('cx', function(d) {return d.X * scaleFactor})
     .attr('cy', function(d) {return d.Y * scaleFactor})
