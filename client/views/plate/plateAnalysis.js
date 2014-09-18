@@ -28,30 +28,39 @@ Template.plateAnalysis.colorCount = function(){
 
 	    colorObject[color] = 1;
 	});
-    
 
-    
+
+
     //getting the number of elements in the object, which is the number of unique colors
     return Object.keys(colorObject).length;
 
 }
-   
+
 Template.plateAnalysis.plateBarcode = function(){
 
     var currentDoc = getSessionDocument();
-	
-    return currentDoc.plateBarcode;}
+
+  if (currentDoc.hasOwnProperty("plateBarcode"))
+  {
+    return currentDoc.plateBarcode;
+  }
+  else return "no plate number detected";
+}
 
 
 Template.plateAnalysis.userBarcode = function(){
 
-    var currentDoc = getSessionDocument();
+  var currentDoc = getSessionDocument();
 
+  if (currentDoc.hasOwnProperty("userBarcode"))
+  {
     return currentDoc.userBarcode;
+  }
+  else return "no user number detected";
 }
 
 Template.plateAnalysis.displayTime = function(){
-    
+
     var currentDoc = getSessionDocument();
 
     var unixTime = currentDoc.dateCreated;
@@ -66,7 +75,7 @@ Template.plateAnalysis.displayTime = function(){
     var hour = date.getHours();
     var min = date.getMinutes();
     var sec = date.getSeconds();
-    
+
 
     if (hour<10) hour +=0;
     if (min<10) min += 0;
@@ -78,14 +87,15 @@ Template.plateAnalysis.displayTime = function(){
 
     Template.plateAnalysis.totalColonies = function(){
 
-	//var visualizationsArray = Visualizations.find().fetch();
+  if (Visualizations.find().fetch().length)
 
+	{
+    var visualizationsArray = Visualizations.find().fetch();
+  	var statsObject = visualizationsArray[0];
 
-	console.log("plateAnalysis.js: visualizations");
-	// console.log(Visualizations);
+	  return statsObject.coloniesCount;
 
-	var statsObject = visualizationsArray[0];
+  }
 
-	return statsObject.coloniesCount;
-
-    }
+  else return "eColor & visualizations not found";
+}

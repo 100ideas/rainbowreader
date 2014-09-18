@@ -9,4 +9,4 @@ Experiments = new Meteor.Collection('experiments');
 // all if it is '' or undefined
 workstationSession = {};
 
-
+Visualizations = new Meteor.Collection('visualizations');
