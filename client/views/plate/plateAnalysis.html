@@ -1,28 +1,24 @@
 <template name="plateAnalysis">
 
-  <h3 class="text-center">plate statistics</h3>
+  <h3 class="text-center">Your Plate's Results</h3>
 
-  <p>Plate # {{plateBarcode}}</p>
+  <p>Plate # <h4 style="display:inline">{{plateBarcode}}</h4></p>
 
-  <p>Started On: {{displayTime}}</p>
+  <p>Started On: <h4 style="display:inline">{{displayTime}}</h4></p>
 
-  <p>Transformed by: name goes here, {{userBarcode}}</p>
+<!-- I don't think we're capturing the initial ticket yet -nagle -->
+<!--  <p>Transformed by user # {{userBarcode}}</p> -->
 
-  <p>Measured by: name goes here, barcode goes here</p>
+ <p>Measured by user number <h4 style="display:inline">{{userBarcode}}</h4></p>
 
-  <p>Colonies counted:  {{colonyCount454654}}</p>
+  <p>Colonies counted:  <h4 style="display:inline">{{colonyCount}}</h4></p>
 
-  <p>Total colonies for the entire exhibit: {{totalColonies}} </p>
+  <p>Total colonies for the entire exhibit: <h4 style="display:inline">{{totalColonies}}</h4> </p>
 
-  <p>Unique colors counted: {{colorCount}} </p>
+  <p>Unique colors counted: <h4 style="display:inline">{{colorCount}}</h4></p>
 
-  <p>Unique colors for the entire exhibit: </p>
 
-  <p>Gamut: </p>
-
-  <p>Picked: </p>
-
-<button type="button" class="btn btn-warning btn-large">Done reading analysis</button>
+<button type="button" class="btn btn-warning btn-large">What's next?</button>
 
 
 
