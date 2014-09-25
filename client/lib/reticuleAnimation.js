@@ -8,21 +8,45 @@ function hslaify(d) {
   return "hsla(" + d.Hue + ",50%,50%,1)";
 }
 
+// initialize background image
+createBackgroundSVG = function () {
+  console.log("reticuleAnimation.js:\n\tcreating background svg");
 
-// TODO add function to transform reticules if viewport changes dimensions
-// http://www.w3.org/TR/SVG/coords.html#TransformAttribute
+  // set dimensions of full size photos here (small.jpg is 2100x1400)
+  var photoWidth = 4272;
+  var photoHeight = 2848;
+
+  var svg = d3.select('#bg-photo-container').insert('svg', ':first-child')
+    .attr("width", "100%")
+    .attr("height", "100%" )
+    .attr("viewBox", "0 0 " + photoWidth + " " + photoHeight)     
+    .attr("preserveAspectRatio", "xMinYMid slice") 
+      .append("svg:image")
+      .attr("id", "bg-photo")
+      .attr("xlink:href", 'photos/bg_no_plate.jpg')
+      .attr("width", photoWidth)
+      .attr("height", photoHeight);
+
+  // http://www.tnoda.com/blog/2013-12-07
+  // keep our svg background responsive        
+  // $(window).resize(function() {
+  //   d3.select('svg')
+  //     .attr("width", $(window).width() )
+  //     .attr("height", $(window).height() );
+  // });
+}
+
+changeBackgroundImg = function (img) {
+  if (!img || img === 'bill') img = "http://www.fillmurray.com/1250/700";
+  console.log("switching background image to:" + img);
+  d3.select('#bg-photo').attr("xlink:href", img);  
+}
+
 
 // draw a reticle around each colony
 animateReticulesOnPlatePhoto = function animatePetriDish() {
-  console.log("reticuleAnimation.js: entering animatePetriDish");
-  var svg = d3.select('#photo-container').append('svg')
-      // .attr("width", 1296) // $("#photo-container").width() )
-      // .attr("height", 972) // $("#photo-container").height() )
-      .attr("width", "100%" )
-      .attr("height", "100%" )
-      // .style("top", $("#plate-photo").height() * -1 )
 
-  var colonySelector = svg.selectAll('circle')
+  var colonySelector = d3.select('#bg-photo-container svg').selectAll('circle')
     .data(WorkstationSessions.findOne().colonyData)
     .enter();
 
@@ -36,9 +60,8 @@ function drawReticle(selector) {
   var reticleOutsideFraction = 0.5;  // portion of the reticle radius that the lines extend ouside the reticle
   var reticleAnimDuration = 3000;    // reticle animation length
   var reticleInitialMultiplier = 2000;
-  // js dom wackiness to get original height of img with id="photo-container"
-  // then use this to scale the svg overlay to the displayed size of the css responsive img
-  var scaleFactor = $("#photo-container").width() / document.getElementById($("#plate-photo").attr("id")).naturalWidth;
+
+  
   // time in ms between successive reticle animations
   var delay = 100
 
@@ -52,17 +75,17 @@ function drawReticle(selector) {
       .append("line")
       .style('stroke', 'cyan')
       .style('stroke-width', reticleWidth)
-      .attr("x1", function(d) {return d.X * scaleFactor + x1 * d.Radius * reticleInitialMultiplier})
-      .attr("y1", function(d) {return d.Y * scaleFactor + y1 * d.Radius * reticleInitialMultiplier})
-      .attr("x2", function(d) {return d.X * scaleFactor + x2 * d.Radius * reticleInitialMultiplier})
-      .attr("y2", function(d) {return d.Y * scaleFactor + y2 * d.Radius * reticleInitialMultiplier})
+      .attr("x1", function(d) {return d.X + x1 * d.Radius * reticleInitialMultiplier})
+      .attr("y1", function(d) {return d.Y + y1 * d.Radius * reticleInitialMultiplier})
+      .attr("x2", function(d) {return d.X + x2 * d.Radius * reticleInitialMultiplier})
+      .attr("y2", function(d) {return d.Y + y2 * d.Radius * reticleInitialMultiplier})
       .transition()
       .duration(reticleAnimDuration  *  0.75)
       .delay(function(d,i) {return i * 100})
-      .attr("x1", function(d) {return d.X * scaleFactor + x1 * d.Radius})
-      .attr("y1", function(d) {return d.Y * scaleFactor + y1 * d.Radius})
-      .attr("x2", function(d) {return d.X * scaleFactor + x2 * d.Radius})
-      .attr("y2", function(d) {return d.Y * scaleFactor + y2 * d.Radius})
+      .attr("x1", function(d) {return d.X + x1 * d.Radius})
+      .attr("y1", function(d) {return d.Y + y1 * d.Radius})
+      .attr("x2", function(d) {return d.X + x2 * d.Radius})
+      .attr("y2", function(d) {return d.Y + y2 * d.Radius})
   }
   reticleLine(selector, 0, -reticleInside, 0, -reticleOutside);
   reticleLine(selector, 0,  reticleInside, 0,  reticleOutside);
@@ -76,14 +99,14 @@ function drawReticle(selector) {
     .style('stroke', 'cyan')
     .style('stroke-width', reticleWidth)
     .attr('r', 0)//function(d) {return (d.Radius * reticleRadiusMultiplier)})
-    .attr('cx', function(d) {return d.X * scaleFactor})
-    .attr('cy', function(d) {return d.Y * scaleFactor})
+    .attr('cx', function(d) {return d.X})
+    .attr('cy', function(d) {return d.Y})
     .transition()
     .duration(reticleAnimDuration)
     .delay(function(d,i) {return i * 100})
     .attr('r', function(d) { return (d.Radius * reticleRadiusMultiplier)})
-    .attr('cx', function(d) {return d.X * scaleFactor})
-    .attr('cy', function(d) {return d.Y * scaleFactor})
+    .attr('cx', function(d) {return d.X})
+    .attr('cy', function(d) {return d.Y})
 
 }
 
