@@ -4,16 +4,18 @@ Template.platePhoto.created = function () {
 
 Template.platePhoto.rendered = function () {
 
-  // $('#photo-container').css('background-image', "url('" + WorkstationSessions.findOne().photoURL + "')")
-
   WorkstationSessions.find().observe({
-
     changed: function(newDocument, oldDocument) {
+      
+      // trigger background umage update when photo us available
+      if (newDocument.photoURL != oldDocument.photoURL) {
+        console.log("platePhoto.js: we've got a photo! " + newDocument.photoURL);
+        changeBackgroundImg(newDocument.photoURL);
+      }
 
-      // watch for colonyData field
+      // trigger reticules when colonyData field is updated
       if (newDocument.colonyData && !oldDocument.colonyData) {
-
-        console.log("platePhoto.js: Template.platePhoto.rendered callback: calling reticule animations");
+        console.log("platePhoto.js: observed a change in colonyData calling reticule animations");
         animateReticulesOnPlatePhoto();
         Meteor.setTimeout(function(){Session.set("reticulesDone",true);}, 3000);
       }
@@ -21,3 +23,6 @@ Template.platePhoto.rendered = function () {
   })
 
 }
+
+
+changeBackgroundImg

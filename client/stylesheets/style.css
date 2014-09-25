@@ -8,13 +8,9 @@
   color: #777;
 }
 
-#photo-container{
-  position: relative;
-}
-
-#photo-container svg{
-  z-index: 100;
+#bg-photo-container{
+  height:100%;
+  width:100%;
   position: absolute;
-  top: 0;
-  left: 0;
+  z-index: -1;
 }

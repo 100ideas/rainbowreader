@@ -4,6 +4,7 @@ Template.plate.created = function () {
 
 Template.plate.rendered = function () {
   console.log("plate.js: Template.plate rendered... ");
+  createBackgroundSVG();
 }
 
 Template.plate.routes = function () {
@@ -22,7 +23,6 @@ Template.plate.routes = function () {
 
   routes.forEach( function (r){ rs[r.view] = r.state(); });
   Session.set("routerState", rs);
-
 
   return routes;
 }
