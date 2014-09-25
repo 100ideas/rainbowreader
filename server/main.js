@@ -45,26 +45,28 @@ Meteor.methods({
 
         console.log("server/main.js: takeAndAnalyzePhoto");
 
-        // convert '~/rainbowreadevelopment_osxder/public/photos/photo1.jpg'
-        // to 'photos/photo1.jpg'
-
-        /*var ixPhotos = photoPath.indexOf('photos/');
-        if (ixPhotos === -1) {
-          console.log('\terror parsing photo path into URL: ' + photoPath);
-          return;
+        // assume we have mapped file system /photos to http /photos
+        var photoURL = photoPath;  
+        // if not, parse the path specified in settings.js file
+        if (Meteor.settings.platePhotosPath !== '/photos/') {
+          photoURL = Meteor.settings.fakeColonyPhotoFile;
+          // convert '~/rainbowreadevelopment_osxder/public/photos/photo1.jpg'
+          // to 'photos/photo1.jpg'
+          var ixPhotos = photoPath.indexOf('photos/');
+          if (ixPhotos === -1) {
+            console.log('\terror parsing photo path into URL: ' + photoPath);
+            return;
+          }
+          var photoURL = photoPath.slice(ixPhotos);
         }
-        var photoURL = photoPath.slice(ixPhotos);*/
-        var photoURL = photoPath;  //this works assuming we have mapped file system /photos to http /photos
 
-        console.log("photoURL: " + photoURL)
+        console.log("\tset WorkstationSession photoURL: " + photoURL);
         WorkstationSessions.update(workstationSession, {$set: {photoURL: photoURL}});
-
-        console.log("\tcalling runOpenCFU");
-
+        
         runOpenCFU(photoPath, Meteor.bindEnvironment(
           function(colonyData) {
             WorkstationSessions.update(workstationSession, {$set: {colonyData: colonyData}});
-            console.log("\tfound " + WorkstationSessions.findOne(workstationSession).colonyData.length + " colonies")
+            console.log("\tOpenCFU found " + WorkstationSessions.findOne(workstationSession).colonyData.length + " colonies")
             analyzeColonies(colonyData);
           }
         ));
