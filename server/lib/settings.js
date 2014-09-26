@@ -7,11 +7,11 @@ if (process.env.METEOR_ENV) {
   environment = process.env.METEOR_ENV;
   console.log("settings.js: detected $METEOR_ENV: " + environment);
 } else {
-  environment = "development";
+  environment = "museum";
 }
 
 var settings = {
-  development: {
+  museum: {
     public: {},
     private: {
       "gphoto2": true,
@@ -61,7 +61,11 @@ var settings = {
   production: {
     public: {},
     private: {}
-  }
+  },
+
+  museum: {
+      public: {},
+      private: {}
 };
 
 if (!process.env.METEOR_SETTINGS) {
@@ -79,6 +83,8 @@ if (!process.env.METEOR_SETTINGS) {
   } else {
     Meteor.settings = settings.development.private;
   }
+
+  Meteor.settings.environment = environment;
 
   // Push a subset of settings to the client.
   if (Meteor.settings && Meteor.settings.public) {
