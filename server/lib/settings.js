@@ -30,7 +30,7 @@ var settings = {
       "scannerPath":            false,
       "platePhotosPath":        process.env.PWD + '/public/photos/',
       "fakeColonyDataFile":     process.env.PWD + '/test/colonyData.json',
-      "fakeColonyPhotoFile":    process.env.PWD + '/public/photos/small.jpg' // necessary cause opencfu gets confused
+      "fakeColonyPhotoFile":    process.env.PWD + '/public/photos/large.jpg' // necessary cause opencfu gets confused
 
     }
   },

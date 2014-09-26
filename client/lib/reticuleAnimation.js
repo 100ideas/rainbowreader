@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////
-//d3 code for drawing circles in the middle section of the plateview
-// these functions are called above, can they live somewhere else
-// for clarity?
+// Methods to set up, add, and animate background photo of plate.
+// 
+
 
 
 function hslaify(d) {
@@ -9,6 +9,7 @@ function hslaify(d) {
 }
 
 // initialize background image
+// called in plate.js: Template.plate.rendered()
 createBackgroundSVG = function () {
   console.log("reticuleAnimation.js:\n\tcreating background svg");
 
@@ -36,6 +37,8 @@ createBackgroundSVG = function () {
   // });
 }
 
+// called in platePhoto.js: Template.platePhoto.rendered() inside
+// WorkstationSessions.find().observe() callback TODO not always triggered?
 changeBackgroundImg = function (img) {
   if (!img || img === 'bill') img = "http://www.fillmurray.com/1250/700";
   console.log("switching background image to:" + img);
@@ -44,6 +47,8 @@ changeBackgroundImg = function (img) {
 
 
 // draw a reticle around each colony
+// called in platePhoto.js: Template.platePhoto.rendered() inside
+// WorkstationSessions.find().observe() callback
 animateReticulesOnPlatePhoto = function animatePetriDish() {
 
   var colonySelector = d3.select('#bg-photo-container svg').selectAll('circle')

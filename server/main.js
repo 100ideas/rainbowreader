@@ -1,6 +1,6 @@
 // code to run on server at startup
 Meteor.startup(function () {
-  StaticServer.add('/photos', '/photos/');
+  if (Meteor.settings.platePhotosPath === '/photos/') StaticServer.add('/photos', '/photos/');
 
   // initialize barcode scanner
   // and write barcodes to workstationSession
