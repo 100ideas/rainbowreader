@@ -1,5 +1,12 @@
 // code to run on server at startup
 Meteor.startup(function () {
+
+
+  //letting the client access Meteor.settings.environment
+  Admin.remove({});
+  var environment = Meteor.settings.environment;
+  Admin.insert({'environment':environment});
+
   if (Meteor.settings.platePhotosPath === '/photos/') StaticServer.add('/photos', '/photos/');
 
   // initialize barcode scanner
@@ -37,7 +44,15 @@ Meteor.methods({
     return workstationSession;
   },
 
+/*
+  getEnvironment: function(){
 
+
+
+
+
+  },
+*/
   takeAndAnalyzePhoto: function(plateBarcode) {
     takePhoto(plateBarcode, Meteor.bindEnvironment(
 
@@ -46,7 +61,7 @@ Meteor.methods({
         console.log("server/main.js: takeAndAnalyzePhoto");
 
         // assume we have mapped file system /photos to http /photos
-        var photoURL = photoPath;  
+        var photoURL = photoPath;
         // if not, parse the path specified in settings.js file
         if (Meteor.settings.platePhotosPath !== '/photos/') {
           photoURL = Meteor.settings.fakeColonyPhotoFile;
@@ -62,7 +77,7 @@ Meteor.methods({
 
         console.log("\tset WorkstationSession photoURL: " + photoURL);
         WorkstationSessions.update(workstationSession, {$set: {photoURL: photoURL}});
-        
+
         runOpenCFU(photoPath, Meteor.bindEnvironment(
           function(colonyData) {
             WorkstationSessions.update(workstationSession, {$set: {colonyData: colonyData}});

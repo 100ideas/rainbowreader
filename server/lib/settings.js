@@ -63,7 +63,7 @@ var settings = {
     private: {}
   }
 
-  
+
 };
 
 if (!process.env.METEOR_SETTINGS) {
@@ -79,10 +79,10 @@ if (!process.env.METEOR_SETTINGS) {
  else if (environment === "alex") {
     Meteor.settings = settings.alex.private;
   } else {
-    Meteor.settings = settings.development.private;
+    Meteor.settings = settings.museum.private;
   }
 
-  Meteor.settings.public.environment = environment;
+  Meteor.settings.environment = environment;
 
   // Push a subset of settings to the client.
   if (Meteor.settings && Meteor.settings.public) {

@@ -10,3 +10,5 @@ Experiments = new Meteor.Collection('experiments');
 workstationSession = {};
 
 Visualizations = new Meteor.Collection('visualizations');
+
+Admin = new Meteor.Collection('admin');
