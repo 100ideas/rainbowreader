@@ -38,12 +38,13 @@ Template.registerHelper('getSessionDocument', function() {
   return getSessionDocument();
 });
 
+Meteor.startup(function(){
 
-getEnvironment = function(){
-  var environment = Admin.findOne({}).environment;
-  return environment;
-}
-
+  getEnvironment = function(){
+    var environment = Admin.findOne({}).environment;
+    return environment;
+  }
+});
 /*Template.registerHelper('getEnvironment', function(){
 
   return getEnvironment();
