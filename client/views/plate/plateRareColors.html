@@ -2,9 +2,30 @@
 
   {{logContext "plateRareColors"}}
 
-  <h3 class="text-center">rare colors:</h3>
+  <h3 class="text-center">You've found rare colors!</h3>
 
+
+
+  {{#each listRareColors}}
+    <div style="border: 1px solid black">{{> rareColorCard}}</div>
+    {{drawCircle Hue Saturation ColorName}}
+
+  {{/each}}
   <button type="button" class="btn btn-warning btn-large">Onward</button>
 
+
+</template>
+
+
+<template name="rareColorCard">
+
+<p>The color's name is: {{ColorName}}</p>
+
+<div>It looks like: <canvas id="{{idName ColorName}}" width="50" height="50"></canvas></div>
+
+<p>Of all the colonies we've seen so far, it occurs {{showRarity Rarity}}% of the time.</p>
+
+
+<p></p>
 
 </template>

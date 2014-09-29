@@ -1,5 +1,5 @@
 // Global function for retrieving state.
-// There should only be one document in this collection. 
+// There should only be one document in this collection.
 // used to be in client/main.js - mac
 getSessionDocument = function () {
   var ws = WorkstationSessions.findOne(workstationSession);
@@ -13,7 +13,7 @@ getSessionDocument = function () {
   //     ws = WorkstationSessions.findOne();
   //   }, 5000);
   // }
-  
+
   // called so often it takes over the console
   //console.log("getSessionDocument() helper called, _id: " + ws._id);
   return ws;
@@ -26,7 +26,7 @@ Template.registerHelper('logContext', function(template) {
   if (_.isObject(currentContext) ) {currentContext = "no context yet."};
   console.log("logContext helper: \n\ttemplate: " + template + "\n\t context: " + currentContext);
 
-  // always empty cause this is a global helper? need to get at the closure somehow or maybe 
+  // always empty cause this is a global helper? need to get at the closure somehow or maybe
   // crawl up the data context?
   //
   // var curtemp = UI._templateInstance();
@@ -37,6 +37,19 @@ Template.registerHelper('logContext', function(template) {
 Template.registerHelper('getSessionDocument', function() {
   return getSessionDocument();
 });
+
+Meteor.startup(function(){
+
+  getEnvironment = function(){
+    var environment = Admin.findOne({}).environment;
+    return environment;
+  }
+});
+/*Template.registerHelper('getEnvironment', function(){
+
+  return getEnvironment();
+
+});*/
 
 // generates and inserts two random barcodes into current workstationSession
 generateFakeBarcodes = function () {
@@ -55,7 +68,7 @@ fakeBarcodeScan = function () {
   } else {
     var fakeBarcode = 'D' + Date.now();
     console.log("fakeBarcodeScan: setting a fake barcodes plateBarcode: " + fakeBarcode);
-    WorkstationSessions.update(workstationSession, {$set: {plateBarcode: fakeBarcode}});    
+    WorkstationSessions.update(workstationSession, {$set: {plateBarcode: fakeBarcode}});
   }
 }
 
@@ -78,7 +91,3 @@ logTemplates = function () {
   console.log("system templates:")
   systemTemplates.forEach(function(t){console.log("\t" + t.viewName)})
 }
-
-
-
-
