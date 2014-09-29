@@ -10,6 +10,13 @@ Template.plateRareColors.listRareColors = function(){
 
 };
 
+Template.plateRareColors.events({
+  'click #rareColorsButton': function() {
+    Meteor.call('insertExperiment')
+    console.log("YEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHH")
+  }
+})
+
 
 Template.rareColorCard.rendered = function(){
 
@@ -20,6 +27,7 @@ Template.rareColorCard.rendered = function(){
 
 Template.rareColorCard.showRarity = function(rarity){
 
+    rarity = rarity * 100;
     return rarity.toFixed(3);
 }
 

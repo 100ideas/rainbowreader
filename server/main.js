@@ -44,15 +44,13 @@ Meteor.methods({
     return workstationSession;
   },
 
-/*
-  getEnvironment: function(){
-
-
-
+  insertExperiment: function(){
+    // copy all the fields into a record in Experiments (used by the visualization)
+    var record = WorkstationSessions.findOne(workstationSession);
+    Experiments.insert(record);
 
 
   },
-*/
   takeAndAnalyzePhoto: function(plateBarcode) {
     takePhoto(plateBarcode, Meteor.bindEnvironment(
 

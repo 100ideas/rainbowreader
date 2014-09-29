@@ -26,9 +26,9 @@ analyzeColonies = function (colonyData) {
   WorkstationSessions.update(workstationSession, {$set: {colonyData: colonyData}});
   console.log("\tset color names; last one was: " +  WorkstationSessions.findOne(workstationSession).colonyData.pop().ColorName);
 
-  // copy all the fields into a record in Experiments (used by the visualization)
-  var record = WorkstationSessions.findOne(workstationSession);
-  Experiments.insert(record);
+//  // copy all the fields into a record in Experiments (used by the visualization)
+//  var record = WorkstationSessions.findOne(workstationSession);
+//  Experiments.insert(record);
 }
 
 // This function takes and modifies an array of colonyData.
