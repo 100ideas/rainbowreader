@@ -15,10 +15,10 @@ Session.set("rareColorsButtonClicked",false);
 
 Template.plate.showPlateHello = function () {
   var doc = getSessionDocument();
-  if (Session.get("helloButtonClicked")) return false;
+  //if (Session.get("helloButtonClicked")) return false;
   if (!doc) return true;
-  if (doc.hasOwnProperty("userBarcode") && doc.hasOwnProperty("plateBarcode")){
-    return !doc.plateBarcode || !doc.userBarcode;
+  if (doc.hasOwnProperty("userBarcode")) { // for the future when we have plateBarcode && doc.hasOwnProperty("plateBarcode")){
+    return !doc.userBarcode; // in the future: !doc.plateBarcode || !doc.userBarcode
   } else {
     return true;
   }
