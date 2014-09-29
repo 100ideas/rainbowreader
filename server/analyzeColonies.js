@@ -62,6 +62,7 @@ function calculateColorRarity(colonyData) {
   // This includes the current colonyData, so each should have a defined count.
   colonyData.forEach(function(colony) {
     var count = colorNamesMap[colony.ColorName];
+    colony.NumberOfColoniesThisColor = count;
     colony.Rarity = count / countAllColonies;
   });
   

@@ -19,12 +19,9 @@
 
 <template name="rareColorCard">
 
-<p>The color's name is: {{ColorName}}</p>
+<div><canvas id="{{idName ColorName}}" width="50" height="50"></canvas>{{ColorName}}</div>
 
-<div>It looks like: <canvas id="{{idName ColorName}}" width="50" height="50"></canvas></div>
-
-<p>Of all the colonies we've seen so far, it occurs {{showRarity Rarity}}% of the time.</p>
-
+<p>Seen {{NumberOfColoniesThisColor}} times out of {{totalColonies}} colonies total.</p>
 
 <p></p>
 
