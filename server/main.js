@@ -7,7 +7,7 @@ Meteor.startup(function () {
   var environment = Meteor.settings.environment;
   Admin.insert({'environment':environment});
 
-  if (Meteor.settings.platePhotosPath === '/photos/') StaticServer.add('/photos', '/photos/');
+  if (Meteor.settings.environment === 'museum') StaticServer.add('/photos', '/photos/');
 
   // initialize barcode scanner
   // and write barcodes to workstationSession
@@ -61,7 +61,7 @@ Meteor.methods({
         // assume we have mapped file system /photos to http /photos
         var photoURL = photoPath;
         // if not, parse the path specified in settings.js file
-        if (Meteor.settings.platePhotosPath !== '/photos/') {
+        if (! (Meteor.settings.environment === 'museum')) {
           photoURL = Meteor.settings.fakeColonyPhotoFile;
           // convert '~/rainbowreadevelopment_osxder/public/photos/photo1.jpg'
           // to 'photos/photo1.jpg'
