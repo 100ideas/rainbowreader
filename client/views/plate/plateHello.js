@@ -2,8 +2,10 @@
 
 Template.plateHello.notMuseum = function(){
   // return typeof Admin.findOne() === 'undefined' ? 'NOT_CONNECTED' : Admin.findOne().environment;
-  if (AdminSubscriptionReady() )
-    return Admin.findOne().environment;
-  else 
-    return "NOT_CONNECTED";
+  if (AdminSubscription.ready()){
+    console.log("Admin.findOne().environment: " + Admin.findOne().environment);
+    return Admin.findOne().environment === 'museum';
+  }else {
+    return 'NOT_CONNECTED';
+  }
 }

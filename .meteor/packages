@@ -5,11 +5,9 @@
 
 standard-app-packages
 insecure
-autopublish
 d3
 mizzao:bootstrap-3
 mrt:server-eval
 meteorhacks:npm
 npm-container
 williamledoux:static-server
-
