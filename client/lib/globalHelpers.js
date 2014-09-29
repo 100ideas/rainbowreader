@@ -73,13 +73,25 @@ generateFakeBarcodes = function () {
 fakeBarcodeScan = function () {
   if ( Math.random() * 2 > 1) {
     var fakeBarcode = 'U' + Date.now();
-    console.log("fakeBarcodeScan: setting a fake barcodes userBarcode: " + fakeBarcode);
+    console.log("fakeBarcodeScan: setting a fake userBarcode: " + fakeBarcode);
     WorkstationSessions.update(workstationSession, {$set: {userBarcode: fakeBarcode}});
   } else {
     var fakeBarcode = 'D' + Date.now();
-    console.log("fakeBarcodeScan: setting a fake barcodes plateBarcode: " + fakeBarcode);
+    console.log("fakeBarcodeScan: setting a fake plateBarcode: " + fakeBarcode);
     WorkstationSessions.update(workstationSession, {$set: {plateBarcode: fakeBarcode}});
   }
+}
+
+fakeUserBarcode = function () {
+  var fakeBarcode = 'U' + Date.now();
+  console.log("fakeUserBarcode: setting a fake userBarcode: " + fakeBarcode);
+  WorkstationSessions.update(workstationSession, {$set: {userBarcode: fakeBarcode}});
+}
+
+fakePlateBarcode = function () {
+  var fakeBarcode = 'D' + Date.now();
+  console.log("fakePlateBarcode: setting a fake plateBarcode: " + fakeBarcode);
+  WorkstationSessions.update(workstationSession, {$set: {plateBarcode: fakeBarcode}});
 }
 
 // writes names of all templates to the log

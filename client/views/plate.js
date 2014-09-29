@@ -33,9 +33,9 @@ Template.plate.routes = function () {
 
 Template.plateHello.events({
   'click button': function () {
-
-     Session.set("helloButtonClicked",true);
-     fakeBarcodeScan() }
+    Session.set("helloButtonClicked",true)
+    fakeUserBarcode();
+   }
 });
 
 Template.plateInstructions.events({

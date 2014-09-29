@@ -1,29 +1,20 @@
 <template name="plateHello">
 
-<div class="col-sm-8">
-  <h1 class="jumbo">GENES BACTERIA COLORS</h1>
-</div>
-
 <div class="col-sm-4">
 
-  <H1>HELLO!</H1>
+  <H1>Hello there!</H1>
 
-  <p>This page invites users to go get a plate and begin the measurement process</p>
+  <p>Ready to analyze the colors of your bacteria?</p>
 
-  Ticket Barcode: {{ticketBarcode}}
-
-  Plate Barcode: {{plateBarcode}}
-
-
-  <ul>
-    <li>Ticket Barcode: {{getSessionDocument.userBarcode}}</li>
-    <!--li>Plate Barcode: {{getSessionDocument.plateBarcode}}</l-->
-  </ul>
-
+  <p>Scan your Tech Tag to begin…</p>
 
   {{#if notMuseum}}
-  <button type="button" class="btn btn-warning btn-large">fake barcode scan</button>
+    <button type="button" class="btn btn-warning btn-large">fake barcode scan</button>
   {{/if}}
+</div>
+
+<div class="col-sm-8">
+  <h1 class="jumbo">GENES BACTERIA COLORS</h1>
 </div>
 
 </template>
