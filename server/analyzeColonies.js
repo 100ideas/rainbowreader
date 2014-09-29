@@ -44,27 +44,20 @@ function calculateColorRarity(colonyData) {
   // The least common colors will be at the top.
   var numberOfRarestColors = 3;
 
-  var countAllColonies = 0;
-  var colorNamesMap = {};
-  function addColoniesToMap(colonyData) {
-    colonyData.forEach(function(colony, index) {
-      countAllColonies++;
-      if (colorNamesMap[colony.ColorName] === undefined)
-        colorNamesMap[colony.ColorName] = 1;
-      else
-        colorNamesMap[colony.ColorName]++;
-    });
-  }
+  // get the number of colonies
+  var countAllColonies = colonyData.length;
+  var stats = Visualizations.findOne({'id': 'stats'});
+  if (stats && stats.coloniesCount) countAllColonies += stats.coloniesCount;
 
-  // count colonies from the current photo
-  addColoniesToMap(colonyData);
-
-  // count the colonies already in the database
-  var allExperiments = Experiments.find().fetch();
-  allExperiments.forEach(function(experiment) {
-    if (experiment.colonyData) addColoniesToMap(experiment.colonyData);
+  // retrieve counts for colors of previous colonies and add colonyData
+  var colorNamesMap = Visualizations.findOne('colorCounts') || {};
+  colonyData.forEach(function(colony, index) {
+    if (colorNamesMap[colony.ColorName] === undefined)
+      colorNamesMap[colony.ColorName] = 1;
+    else
+      colorNamesMap[colony.ColorName]++;
   });
-
+  
   // Calculate the fraction of all colonies which are each color.
   // This includes the current colonyData, so each should have a defined count.
   colonyData.forEach(function(colony) {
@@ -88,10 +81,6 @@ function calculateColorRarity(colonyData) {
     });
     if (seenColor == false) rareColorIndices.push(i);
   }
-
-  /*colonyData.forEach(function(colony) {  
-    console.log(colony.ColorName + ' - ' + colony.Rarity);
-  });*/
 
   // set the rarest 3 indices as an array in the db; also set the total number of colonies
   var set = {$set: {rareColorIndices:rareColorIndices, coloniesCountAtThisTime:countAllColonies}};
