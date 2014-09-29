@@ -38,18 +38,28 @@ Template.registerHelper('getSessionDocument', function() {
   return getSessionDocument();
 });
 
-Meteor.startup(function(){
+// Meteor.startup(function(){
 
-  getEnvironment = function(){
-    var environment = Admin.findOne({}).environment;
-    return environment;
-  }
-});
-/*Template.registerHelper('getEnvironment', function(){
+//   getEnvironment = function(){
+//     console.log("globalHelpers.js: in getEnvironment()")
+//     var environment = Admin.findOne({}).environment;
+//     return environment;
+//   }
+// });
 
-  return getEnvironment();
 
-});*/
+// getEnvironment = function() {
+//   console.log("globalHelpers.js: in getEnvironment()")
+//   return Admin.findOne({}).environment; 
+// }
+
+
+// Template.registerHelper('notMuseum', function(){
+//   var current_environment = Admin.findOne({}).environment;
+//   console.log("gloabl notMuseum: " + current_environment);
+//   museum = current_environment === 'museum' ? false : true;
+//   return museum;
+// });
 
 // generates and inserts two random barcodes into current workstationSession
 generateFakeBarcodes = function () {
