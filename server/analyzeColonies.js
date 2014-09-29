@@ -50,7 +50,7 @@ function calculateColorRarity(colonyData) {
   if (stats && stats.coloniesCount) countAllColonies += stats.coloniesCount;
 
   // retrieve counts for colors of previous colonies and add colonyData
-  var colorNamesMap = Visualizations.findOne('colorCounts') || {};
+  var colorNamesMap = Visualizations.findOne({'id': 'colorCounts'}) || {};
   colonyData.forEach(function(colony, index) {
     if (colorNamesMap[colony.ColorName] === undefined)
       colorNamesMap[colony.ColorName] = 1;
