@@ -1,9 +1,9 @@
 //if we're not at the museum, show some debugging states.
 
 Template.plateHello.notMuseum = function(){
-
-    var currentEnvironment = getEnvironment();
-    console.log(currentEnvironment);
-    return (!("museum" == currentEnvironment));
-    return true;
+  // return typeof Admin.findOne() === 'undefined' ? 'NOT_CONNECTED' : Admin.findOne().environment;
+  if (AdminSubscriptionReady() )
+    return Admin.findOne().environment;
+  else 
+    return "NOT_CONNECTED";
 }
