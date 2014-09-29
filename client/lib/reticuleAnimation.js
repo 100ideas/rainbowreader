@@ -14,8 +14,8 @@ createBackgroundSVG = function () {
   console.log("reticuleAnimation.js:\n\tcreating background svg");
 
   // set dimensions of full size photos here (small.jpg is 2100x1400)
-  var photoWidth = 4272;
-  var photoHeight = 2848;
+  var photoWidth = 1920;
+  var photoHeight = 1280;
 
   var svg = d3.select('#bg-photo-container').insert('svg', ':first-child')
     .attr("width", "100%")
@@ -59,7 +59,7 @@ animateReticulesOnPlatePhoto = function animatePetriDish() {
 }
 
 function drawReticle(selector) {
-  var reticleWidth = '2px';
+  var reticleWidth = '1px';
   var reticleRadiusMultiplier = 1.7; // how much bigger the reticle is than the colony
   var reticleInsideFraction = 0.4;   // portion of the reticle radius that the lines extend inside the reticle
   var reticleOutsideFraction = 0.5;  // portion of the reticle radius that the lines extend ouside the reticle
