@@ -6,6 +6,7 @@
 // starting state, so return true by default
 
 Session.set("helloButtonClicked",false);
+Session.set("introductionButtonClicked",false);
 Session.set("instructionsButtonClicked",false);
 Session.set("analysisButtonClicked",false);
 Session.set("rareColorsButtonClicked",false);
@@ -24,6 +25,16 @@ Template.plate.showPlateHello = function () {
   }
 }
 
+Template.plate.showPlateIntroduction = function() {
+
+  var doc = getSessionDocument();
+
+  if (Session.get("introductionButtonClicked")) {return false;}
+  else if (doc.userBarcode) {return true;}
+  else {return false;}
+
+
+}
 // once we have scanned both barcodes, show instructions for taking photograph
 Template.plate.showPlateInstructions = function () {
   var doc = getSessionDocument();
@@ -34,7 +45,7 @@ Template.plate.showPlateInstructions = function () {
   //   return doc.userBarcode && doc.plateBarcode && !doc.photoURL;
 
   if (Session.get("instructionsButtonClicked")) return false;
-  else if (doc && (doc.hasOwnProperty("userBarcode") || doc.hasOwnProperty("plateBarcode")))
+  else if (doc && Session.get("introductionButtonClicked") && (doc.hasOwnProperty("userBarcode") || doc.hasOwnProperty("plateBarcode")))
   // return doc.userBarcode && doc.plateBarcode && !doc.photoURL;
     return 1;
   else return 0;

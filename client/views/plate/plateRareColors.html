@@ -1,28 +1,22 @@
 <template name="plateRareColors">
-
-  {{logContext "plateRareColors"}}
-
+<div class="col-sm-4">
   <h3 class="text-center">You've found rare colors!</h3>
-
-
 
   {{#each listRareColors}}
     <div style="border: 1px solid black">{{> rareColorCard}}</div>
     {{drawCircle Hue Saturation ColorName}}
-
   {{/each}}
-  <button type="button" class="btn btn-warning btn-large" id="rareColorsButton">Onward</button>
 
+  <button type="button" class="btn btn-warning btn-large" id="rareColorsButton">Onward</button>
+</div>
 
 </template>
 
 
 <template name="rareColorCard">
 
-<div><canvas id="{{idName ColorName}}" width="50" height="50"></canvas>{{ColorName}}</div>
+  <div><canvas id="{{idName ColorName}}" width="100" height="100"></canvas>{{ColorName}}</div>
 
-<p>Seen {{NumberOfColoniesThisColor}} times out of {{totalColonies}} colonies total.</p>
-
-<p></p>
+  <p>Seen {{NumberOfColoniesThisColor}} times out of {{totalColonies}} colonies total.</p>
 
 </template>

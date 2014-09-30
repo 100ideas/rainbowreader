@@ -54,15 +54,13 @@ Template.plateRareColors.drawCircle = function(hue, saturation, colorName){
 
   var id = colorName.replace(/\s+/g, '');
 
-
-
   var saturationPercent = (saturation / 255) * 100;
   saturationPercent = saturationPercent.toFixed(2);
   var canvas = document.getElementById(id);
       var context = canvas.getContext('2d');
       var centerX = canvas.width / 2;
       var centerY = canvas.height / 2;
-      var radius = canvas.width/3;
+      var radius = canvas.width / 3;
 
       context.beginPath();
       context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
