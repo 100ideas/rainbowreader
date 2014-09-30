@@ -1,10 +1,10 @@
 body {
-font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-font-size: 14px;
-line-height: 1.42857143;
-color: #fff;
-min-height: 700px;
-overflow: hidden;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #fff;
+  min-height: 700px;
+  overflow: hidden;
 }
 
 .plate-views { 

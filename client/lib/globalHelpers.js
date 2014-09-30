@@ -3,19 +3,6 @@
 // used to be in client/main.js - mac
 getSessionDocument = function () {
   var ws = WorkstationSessions.findOne(workstationSession);
-
-  // WTF TDOD need to figure out race condition w/ WorkstationSessions
-  // only a problem when server starts?
-  //
-  // if (!ws) {
-  //   setTimeout(function() {
-  //     console.log("getSessionDocument() helper called BUT NO WorkstationSession EXISTS YET!\n\ttimeout 1000");
-  //     ws = WorkstationSessions.findOne();
-  //   }, 5000);
-  // }
-
-  // called so often it takes over the console
-  //console.log("getSessionDocument() helper called, _id: " + ws._id);
   return ws;
 }
 
@@ -37,29 +24,6 @@ Template.registerHelper('logContext', function(template) {
 Template.registerHelper('getSessionDocument', function() {
   return getSessionDocument();
 });
-
-// Meteor.startup(function(){
-
-//   getEnvironment = function(){
-//     console.log("globalHelpers.js: in getEnvironment()")
-//     var environment = Admin.findOne({}).environment;
-//     return environment;
-//   }
-// });
-
-
-// getEnvironment = function() {
-//   console.log("globalHelpers.js: in getEnvironment()")
-//   return Admin.findOne({}).environment; 
-// }
-
-
-// Template.registerHelper('notMuseum', function(){
-//   var current_environment = Admin.findOne({}).environment;
-//   console.log("gloabl notMuseum: " + current_environment);
-//   museum = current_environment === 'museum' ? false : true;
-//   return museum;
-// });
 
 // generates and inserts two random barcodes into current workstationSession
 generateFakeBarcodes = function () {

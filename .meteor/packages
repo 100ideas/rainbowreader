@@ -11,3 +11,5 @@ mrt:server-eval
 meteorhacks:npm
 npm-container
 williamledoux:static-server
+stevezhu:lodash
+

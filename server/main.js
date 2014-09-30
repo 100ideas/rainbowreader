@@ -1,11 +1,8 @@
 // code to run on server at startup
 Meteor.startup(function () {
 
-  //letting the client access Meteor.settings.environment
-  Admin.remove({});
-  Admin.insert( Meteor.settings.public );
-
-  if (Meteor.settings.environment === 'museum') StaticServer.add('/photos', '/photos/');
+  // don't need static server if we're not on museum ubuntu box
+  if (Meteor.settings.public.environment === 'museum') StaticServer.add('/photos', '/photos/');
 
   // initialize barcode scanner
   // and write barcodes to workstationSession
