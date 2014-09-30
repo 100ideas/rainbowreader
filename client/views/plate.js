@@ -18,7 +18,7 @@ Template.plate.routes = function () {
       routes.push({"view": view, "state": state});
     }
   }
-  
+
   var rs = {};
 
   routes.forEach( function (r){ rs[r.view] = r.state(); });
@@ -36,6 +36,14 @@ Template.plateHello.events({
     Session.set("helloButtonClicked",true)
     fakeUserBarcode();
    }
+});
+
+Template.plateIntroduction.events({
+  'click button': function () {
+    console.log('plateIntroduction button clicked');
+    Session.set("introductionButtonClicked",true);
+
+  }
 });
 
 Template.plateInstructions.events({
