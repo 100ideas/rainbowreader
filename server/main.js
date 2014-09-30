@@ -78,8 +78,9 @@ Meteor.methods({
 
         runOpenCFU(photoPath, Meteor.bindEnvironment(
           function(colonyData) {
-            WorkstationSessions.update(workstationSession, {$set: {colonyData: colonyData}});
-            console.log("\tOpenCFU found " + WorkstationSessions.findOne(workstationSession).colonyData.length + " colonies")
+            // delay writing colonyData to db until we've calculated rare colors
+            //WorkstationSessions.update(workstationSession, {$set: {colonyData: colonyData}});
+            console.log("\tOpenCFU found " + colonyData.length + " colonies")
             analyzeColonies(colonyData);
           }
         ));

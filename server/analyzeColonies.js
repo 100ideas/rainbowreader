@@ -73,8 +73,8 @@ function calculateColorRarity(colonyData) {
 
   // walk through the sorted colonies, and save the indices of max 3 unique colors
   var rareColorIndices = [];
-  var numberToChoose = Math.min(colonyData.length, numberOfRarestColors); 
-  for (var i = 0; i < numberToChoose; i++) {
+  var numberToChoose = Math.min(colonyData.length, numberOfRarestColors);
+  for (var i = 0; rareColorIndices.length < numberToChoose; i++) {
     // have we picked this color already?
     var seenColor = false;
     rareColorIndices.forEach(function(j) {
