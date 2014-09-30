@@ -1,0 +1,75 @@
+On the OSX Mac Mini (ecolor)
+=============================
+
+Make sure the mac mini is connected to Tech Studio wifi.
+
+Start ecolor on the mini (try typing 'tab' key to auto-complete commands):
+
+	$ cd /code/ecolor/
+	$ ./start.sh
+
+Now hopefully ecolor meteor app is running AND the mongo db on the mac mini is running.
+
+If you need to restart meteor, or there are errors about a child process or mongo not working properly, hit Ctrl+C to stop meteor, then run:
+
+	$ ./shutdown.sh
+
+And now rerun ./start.sh.
+
+
+On the Ubuntu Mac Mini (rainbowreader)
+======================================
+
+RainbowReader expects to connect to a mongo server at 10.4.98.52:3001 - this is the current IP address of the ecolor mac mini. You can check this with the following command (run in an ubuntu terminal):
+
+	$ env | grep mongo
+
+If the IP address there is different, see below for how to fix. But hopefully it's all good, so, open the terminal then get to rainbowreader directory with this command (don't type dollar sign):
+
+	$ cd /code/rainbowreader/
+
+start up rainbowreader:
+
+	$ meteor
+
+open up chrome (should automatically open rainbowreader at http://localhost:3000). Scan a barcode or two. Now go back and look for error messages in the terminal. You should see happy messages such as:
+
+	=> App running at: http://localhost:3000/
+	I20140918-15:53:28.469(-7)? server/main.js createNewWorkStationSession
+	I20140918-15:53:28.471(-7)? 	old workstationSession: [object Object]
+	I20140918-15:53:28.583(-7)? 	new workstationSession: M5iN5Yb96jopTXLCh
+	I20140918-15:54:31.710(-7)? server/main.js createNewWorkStationSession
+	I20140918-15:54:31.710(-7)? 	old workstationSession: M5iN5Yb96jopTXLCh
+	I20140918-15:54:31.740(-7)? 	new workstationSession: 49r4viSKEbDXZXxbz
+
+
+
+Updating code by pulling from git
+=================================
+
+close meteor if it's running with vulcan death-grip of ctrl-c
+
+then pull the latest code and hope we don't need to merge
+
+	$ git pull
+
+
+Setting the right Mongo IP address on the ubuntu box
+====================================================
+
+What is the IP address of the OSX mac mini? Make sure it is connected to Tech Studio wifi, then open a terminal and run:
+
+	$ ifconfig | grep '10\,'
+
+which should return something like 
+
+	$> inet 10.4.98.52  netmask [blah blah blah]
+
+the IP address is the first set of four numbers after inet, in this case, 10.4.98.52.
+
+Go over to ubuntu mac mini and set the MONGO_URL environment variable with the new address (change the numbers after :// and before :3001/meteor)
+
+	$ export MONGO_URL="mongodb://10.4.98.52:3001/meteor"
+
+then start up rainbowreader as described above
+

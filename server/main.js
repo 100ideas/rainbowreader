@@ -4,9 +4,9 @@ Meteor.startup(function () {
 
   //letting the client access Meteor.settings.environment
   Admin.remove({});
-  var environment = Meteor.settings.environment;
+  var environment = Meteor.settings.environment; 
   Admin.insert({'environment':environment});
-
+  Admin.insert({'refreshTimeout':Meteor.settings.refreshTimeout});
   if (Meteor.settings.environment === 'museum') StaticServer.add('/photos', '/photos/');
 
   // initialize barcode scanner
