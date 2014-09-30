@@ -12,7 +12,20 @@ Template.plateRareColors.listRareColors = function(){
 
 Template.plateRareColors.events({
   'click #rareColorsButton': function() {
+    var transitionTime = 2000;
     Meteor.call('insertExperiment')
+    Meteor.setTimeout(function() {
+      $('#bg-photo-container').addClass('blurred') 
+    }, transitionTime)
+    d3.select('#bg-photo-container svg').selectAll('circle')
+      .transition()
+      .duration(transitionTime)
+      .attr('cy', '-1000')
+    d3.select('#bg-photo-container svg').selectAll('line')
+      .transition()
+      .duration(transitionTime)
+      .attr('y1', '-1000')
+      .attr('y2', '-1000')
   }
 })
 
