@@ -2,8 +2,6 @@
 // Methods to set up, add, and animate background photo of plate.
 // 
 
-
-
 function hslaify(d) {
   return "hsla(" + d.Hue + ",50%,50%,1)";
 }

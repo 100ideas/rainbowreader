@@ -31,6 +31,6 @@ h1.jumbo { font-size: 140px;}
 }
 
 .blurred {
-  -webkit-filter: blur(2px);
-  filter: blur(8px);
+  -webkit-filter: blur(15px);
+  filter: blur(15px);
 }

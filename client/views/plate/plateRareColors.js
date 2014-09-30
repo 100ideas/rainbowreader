@@ -26,6 +26,10 @@ Template.plateRareColors.events({
       .duration(transitionTime)
       .attr('y1', '-1000')
       .attr('y2', '-1000')
+
+    // reload the page after a short time 
+    var refreshTimeout = Admin.findOne().refreshTimeout || 8000;
+    Meteor.setTimeout(function() { location.reload() }, refreshTimeout)
   }
 })
 
