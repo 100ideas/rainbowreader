@@ -1,12 +1,10 @@
 // code to run on server at startup
 Meteor.startup(function () {
 
-
   //letting the client access Meteor.settings.environment
   Admin.remove({});
-  var environment = Meteor.settings.environment; 
-  Admin.insert({'environment':environment});
-  Admin.insert({'refreshTimeout':Meteor.settings.refreshTimeout});
+  Admin.insert( Meteor.settings.public );
+
   if (Meteor.settings.environment === 'museum') StaticServer.add('/photos', '/photos/');
 
   // initialize barcode scanner

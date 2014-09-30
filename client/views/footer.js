@@ -1,5 +1,8 @@
 Template.footer.events({
-  'click button': function () {
+  'click #bill': function () {
     changeBackgroundImg();
+   },
+   'click #restart': function () {
+      location.reload();
    }
 });

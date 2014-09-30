@@ -12,8 +12,8 @@ createBackgroundSVG = function () {
   console.log("reticuleAnimation.js:\n\tcreating background svg");
 
   // set dimensions of full size photos here (small.jpg is 2100x1400)
-  var photoWidth = 4272;
-  var photoHeight = 2848;
+  var photoWidth = Admin.findOne().photoWidth;
+  var photoHeight = Admin.findOne().photoHeight;
 
   var svg = d3.select('#bg-photo-container').insert('svg', ':first-child')
     .attr("width", "100%")
