@@ -45,6 +45,7 @@ reload@1.1.0
 retry@1.0.0
 routepolicy@1.0.1
 session@1.0.2
+sewdn:velocityjs@0.8.0
 spacebars-compiler@1.0.2
 spacebars@1.0.2
 standard-app-packages@1.0.2
