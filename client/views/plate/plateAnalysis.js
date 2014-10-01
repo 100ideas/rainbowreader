@@ -21,15 +21,10 @@ Template.plateAnalysis.colorCount = function(){
 
 	    var color = element.ColorName;
 
-	    if (colorObject.hasOwnProperty[color])
-	    {
-		return;
-	    }
+	    if (colorObject.hasOwnProperty[color]) { return; }
 
 	    colorObject[color] = 1;
 	});
-
-
 
     //getting the number of elements in the object, which is the number of unique colors
     return Object.keys(colorObject).length;
@@ -38,7 +33,7 @@ Template.plateAnalysis.colorCount = function(){
 
 Template.plateAnalysis.plateBarcode = function(){
 
-    var currentDoc = getSessionDocument();
+  var currentDoc = getSessionDocument();
 
   if (currentDoc.hasOwnProperty("plateBarcode"))
   {
@@ -85,7 +80,7 @@ Template.plateAnalysis.displayTime = function(){
     return time;
 }
 
-    Template.plateAnalysis.totalColonies = function(){
+Template.plateAnalysis.totalColonies = function(){
 
   if (Visualizations.find().fetch().length)
 

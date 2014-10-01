@@ -27,7 +27,7 @@ var settings = {
     public: {
       "photoWidth":             4272,   // camera default is 4272x2848
       "photoHeight":            2848,   // small.jpg is 2100x1400
-      "refreshTimeout":         8000    // how long in ms before restarting after plateShowWallUpdate
+      "refreshTimeout":         15000    // how long in ms before restarting after plateShowWallUpdate
     }
   }
 }
