@@ -20,7 +20,7 @@ Template.platePhoto.rendered = function () {
       //             "\n\tnewDocument: " + newDocument._id + "\t" + newDocument.dateCreated + "\t" + newDocument.userBarcode + "\t" + newDocument.photoURL);
       
       if (newDocument.colonyData && !oldDocument.colonyData) {
-        console.log("platePhoto.js: observed a change in colonyData calling reticule animations");
+        console.log("platePhoto.js: observed a change in colonyData; calling animateReticulesOnPlatePhoto()");
         animateReticulesOnPlatePhoto();
         Meteor.setTimeout(function(){Session.set("reticulesDone",true);}, 3000);
       }

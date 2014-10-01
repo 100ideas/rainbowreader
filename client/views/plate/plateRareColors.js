@@ -28,14 +28,13 @@ Template.plateRareColors.events({
       .attr('y2', '-1000')
 
     // reload the page after a short time 
-    var refreshTimeout = Admin.findOne().refreshTimeout || 8000;
+    var refreshTimeout = Meteor.settings.public.refreshTimeout || 8000;
     Meteor.setTimeout(function() { location.reload() }, refreshTimeout)
   }
 })
 
 
 Template.rareColorCard.rendered = function(){
-  console.log("rareColorCard.rendered entered");
 }
 
 Template.rareColorCard.totalColonies = function(){

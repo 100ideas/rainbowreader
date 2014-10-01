@@ -56,21 +56,20 @@ Template.plateInstructions.events({
 
 Template.plateAnalysis.events({
   'click button': function() {
-    var rareColors = getSessionDocument().colonyData.slice(0,3).map(function(d) {return d.ColorName})
-    console.log(rareColors)
+    var rareColors = getSessionDocument().colonyData.slice(0,3).map(function(d) {return d.ColorName});
+    // console.log(rareColors);
     Session.set("analysisButtonClicked",true);
     d3.select('#bg-photo-container svg').selectAll('circle')
       .transition()
       .style('stroke', function(d) {
-console.log(d)
-console.log(rareColors.indexOf(d.ColorName))
-return (rareColors.indexOf(d.ColorName) != -1) ? 'red' : 'cyan'})
-      .style('stroke-width', function(d) {return (rareColors.indexOf(d.ColorName) != -1) ? '5px' : '1px'})
+        // console.log(d);
+        // console.log(rareColors.indexOf(d.ColorName));
+        return (rareColors.indexOf(d.ColorName) != -1) ? 'red' : 'cyan'})
+      .style('stroke-width', function(d) {return (rareColors.indexOf(d.ColorName) != -1) ? '5px' : '1px'});
     d3.select('#bg-photo-container svg').selectAll('line')
       .transition()
       .style('stroke', function(d) {return (rareColors.indexOf(d.ColorName) != -1) ? 'red' : 'cyan'})
       .style('stroke-width', function(d) {return (rareColors.indexOf(d.ColorName) != -1) ? '5px' : '1px'})
-
   }
 });
 

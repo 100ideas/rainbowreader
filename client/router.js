@@ -12,8 +12,6 @@ Session.set("analysisButtonClicked",false);
 Session.set("rareColorsButtonClicked",false);
 
 
-
-
 Template.plate.showPlateHello = function () {
   var doc = getSessionDocument();
   //if (Session.get("helloButtonClicked")) return false;
@@ -26,15 +24,11 @@ Template.plate.showPlateHello = function () {
 }
 
 Template.plate.showPlateIntroduction = function() {
-
   var doc = getSessionDocument();
-
-  if (Session.get("introductionButtonClicked")) {return false;}
-  else if (doc.userBarcode) {return true;}
-  else {return false;}
-
-
+  if (Session.get("introductionButtonClicked")) return false;
+  else return doc ? doc.hasOwnProperty("userBarcode") ? doc.userBarcode : false : false;  // wacky double ternary 
 }
+
 // once we have scanned both barcodes, show instructions for taking photograph
 Template.plate.showPlateInstructions = function () {
   var doc = getSessionDocument();
@@ -57,7 +51,6 @@ Template.plate.showPlatePhoto = function () {
 
   if (Session.get("analysisButtonClicked")) return false;
   if (doc && doc.photoURL) {
-    console.log("returning doc.photoURL:" + doc.photoURL);
     return doc.photoURL;
   }
   return false;
