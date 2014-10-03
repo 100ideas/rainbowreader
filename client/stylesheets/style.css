@@ -64,8 +64,8 @@ button:focus, button:active{
   display: none;
 }
 
-#admin-status{
-  display: none;
+#plate-barcode-status{
+  display: inline-block;
 }
 
 .blurred {

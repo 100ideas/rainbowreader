@@ -7,6 +7,7 @@ Meteor.startup(function(){
 
 // get the state document id from the server
 Meteor.call('createWorkstationSession', function(error, result) {
-   console.log('client/index.js createNewWorkStationSession\n\told workstationSession: ' + workstationSession);
-   workstationSession = result;
+  workstationSession = result;
+  console.log('client/index.js createNewWorkStationSession\n\told workstationSession: ' + workstationSession);
+
 });

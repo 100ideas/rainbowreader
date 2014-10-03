@@ -6,35 +6,50 @@
       <div class="col-xs-6">
 
         <div id="admin-bar">
-          <button type="button" class="btn btn-sm btn-primary" id="admin-button"><i class="fa fa-wrench"></i></button>
+          <button type="button" class="btn btn-sm btn-primary" id="admin-button"><i class="fa fa-lg fa-wrench"></i></button>
            
             <div id="admin-buttons">
               <button type="button" class="btn btn-sm btn-danger" id="restart">restart</button>
-              <button type="button" class="btn btn-sm btn-primary" id="userbc">user <i class="fa fa-barcode"></i></button>
-              <button type="button" class="btn btn-sm btn-primary" id="platebc">plate <i class="fa fa-barcode"></i></button>
+              <div class="btn-group">
+                <button type="button" class="btn btn-sm btn-primary" id="userbc">user <i class="fa fa-lg fa-barcode"></i></button>
+                <button type="button" class="btn btn-sm btn-primary" id="platebc">plate <i class="fa fa-lg fa-barcode"></i></button>
+                <button type="button" class="btn btn-sm btn-warning" id="deletebc"><i class="fa fa-lg fa-trash-o"></i></button>   
+              </div>           
               <button type="button" class="btn btn-sm btn-primary" id="nobg">disable bg</button>
               <button type="button" class="btn btn-sm btn-warning" id="bill">bill me</button>   
             </div>
 
           </div>
+      </div>  
 
-      </div>
-      <div class="col-xs-4 col-xs-offset-2">
-        <div class="pull-right" id="admin-status">
-          <span class="userbarcode">1209i-018123</span>
-          <i class="fa fa-child fa-2x"></i>
-          <i class="fa fa-flask fa-2x"></i>
-          <i class="fa fa-camera-retro fa-2x"></i>
-          <i class="fa fa-ticket fa-2x"></i>
-          <i class="fa fa-wrench fa-2x"></i>
-          <i class="fa fa-barcode fa-2x"></i>
-          <i class="fa fa-spinner fa-spin fa-2x"></i>  
-        </div>
-      </div>    
+      <div class="col-xs-4 col-xs-offset-2" id="admin-status-container">
+      {{> adminStatus}}
+      </div> 
+
     </div>
   </div>
 </div>
 
-
 </template>
+
+<template name="adminStatus">
+
+  <div class="pull-right" id="admin-status">
+    {{#each thisArray}}
+      <span id="plate-barcode-status">
+          {{this}}
+      </span> 
+    {{/each}}
+    </div>   
+
+<!--   <i class="fa fa-child fa-2x"></i>
+  <i class="fa fa-flask fa-2x"></i>
+  <i class="fa fa-camera-retro fa-2x"></i>
+  <i class="fa fa-ticket fa-2x"></i>
+  <i class="fa fa-wrench fa-2x"></i>
+  <i class="fa fa-barcode fa-2x"></i>
+  <i class="fa fa-spinner fa-spin fa-2x"></i>   -->
+
+</template> 
+
 
