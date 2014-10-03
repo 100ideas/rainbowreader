@@ -38,7 +38,31 @@ createBackgroundSVG = function () {
 // called in platePhoto.js: Template.platePhoto.rendered() inside
 // WorkstationSessions.find().observe() callback TODO not always triggered?
 changeBackgroundImg = function (img) {
-  if (!img || img === 'bill') img = "http://www.fillmurray.com/1250/700";
+  
+  if (!img) {
+    if ($('#bg-photo').attr("href") === undefined) {
+      img = 'photos/bg_no_plate.jpg'
+      console.log("switching background image to:" + img);
+      d3.select('#bg-photo').attr("xlink:href", img);
+      return "disable bg";
+    } else {
+      console.log("switching background image to black ");
+      d3.select('#bg-photo').attr("xlink:href", img);
+      return "enable bg";
+    }
+  };
+
+  if (img === 'bill') {
+    if ($('#bg-photo').attr("href") === "http://www.fillmurray.com/1250/700") {
+      img = 'photos/bg_no_plate.jpg'
+      d3.select('#bg-photo').attr("xlink:href", img);        
+      return 'bill me';
+    } else {
+      img = "http://www.fillmurray.com/1250/700";
+      d3.select('#bg-photo').attr("xlink:href", img);  
+      return 'unbill me';
+    }
+  }
   console.log("switching background image to:" + img);
   d3.select('#bg-photo').attr("xlink:href", img);  
 }

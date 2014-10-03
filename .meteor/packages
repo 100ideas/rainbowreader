@@ -12,5 +12,6 @@ meteorhacks:npm
 npm-container
 williamledoux:static-server
 stevezhu:lodash
-sewdn:velocityjs
+chrismbeckett:fontawesome4
+percolate:velocityjs
 

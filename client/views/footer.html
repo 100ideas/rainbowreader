@@ -1,23 +1,27 @@
 <template name="footer">
 
-<div class="footer" style="margin-bottom: 100px;">
+<div class="footer">
   <div class="container">
     <div class="row">
       <div class="col-xs-6">
-        <button type="button" class="btn btn-sm btn-primary" id="admin"><i class="fa fa-wrench"></i></button>
-        <span id="admin-bar">        
-          <button type="button" class="btn btn-sm btn-danger" id="restart">restart</button>
-          <button type="button" class="btn btn-sm btn-primary" id="userbc">user <i class="fa fa-barcode"></i></button>
-          <button type="button" class="btn btn-sm btn-primary" id="platebc">plate <i class="fa fa-barcode"></i></button>
-          <button type="button" class="btn btn-sm btn-primary" id="nobg">background</button>
-          <span class="pull-right">
-            <button type="button" class="btn btn-sm btn-primary" id="vmd">vmd</button>
-            <button type="button" class="btn btn-sm btn-warning" id="bill">bill me</button>   
-          </span>      
-        </span>
+
+        <div id="admin-bar">
+          <button type="button" class="btn btn-sm btn-primary" id="admin-button"><i class="fa fa-wrench"></i></button>
+           
+            <div id="admin-buttons">
+              <button type="button" class="btn btn-sm btn-danger" id="restart">restart</button>
+              <button type="button" class="btn btn-sm btn-primary" id="userbc">user <i class="fa fa-barcode"></i></button>
+              <button type="button" class="btn btn-sm btn-primary" id="platebc">plate <i class="fa fa-barcode"></i></button>
+              <button type="button" class="btn btn-sm btn-primary" id="nobg">disable bg</button>
+              <button type="button" class="btn btn-sm btn-warning" id="bill">bill me</button>   
+            </div>
+
+          </div>
+
       </div>
       <div class="col-xs-4 col-xs-offset-2">
-        <div class="pull-right">
+        <div class="pull-right" id="admin-status">
+          <span class="userbarcode">1209i-018123</span>
           <i class="fa fa-child fa-2x"></i>
           <i class="fa fa-flask fa-2x"></i>
           <i class="fa fa-camera-retro fa-2x"></i>
