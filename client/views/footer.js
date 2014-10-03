@@ -23,15 +23,24 @@ Template.footer.events({
 });
 
 deletePlateBarcode = function () {
-  WorkstationSessions.update({_id: workstationSession}, {$unset: {plateBarcode: true}});
-  // Meteor.call('createWorkstationSession', function(error, result) {
-  //  workstationSession = result;
-  // })
+  if (workstationSession) {
+    console.log("deletePlateBarcode: workstationSession: " + workstationSession);
+    WorkstationSessions.update({_id: workstationSession}, {$unset: {plateBarcode: true}});
+  } else {
+    Meteor.call('createWorkstationSession', function(error, result) {
+      workstationSession = result;
+      console.log("deletePlateBarcode(): " + error );
+    });
+  }
 }
 
 Template.adminStatus.helpers({
   thisArray: function() {
-    console.log("thisArray: " + WorkstationSessions.findOne(workstationSession));
+    var ws = WorkstationSessions.findOne(workstationSession);
+    console.log("adminStatus workstationSession: " + workstationSession);
+    // if (!ws) return "";
+    // ws.hasOwnProperty("plateBarcode") ? ws.plateBarcode : "";
+    // need to return a cursor for reactivity?
     return [WorkstationSessions.findOne(workstationSession).plateBarcode];
   },
 })
@@ -57,6 +66,7 @@ Template.adminStatus.rendered = function () {
     removeElement: function (node) {
       var $node = $(node);
       console.log("adminStatus uihooks removeElement: node:" + node );
+      debugger;
       $node.velocity("transition.bounceRightOut", {
         // duration: ,
         // easing: ,
@@ -68,20 +78,14 @@ Template.adminStatus.rendered = function () {
     }
   };
 
-  this.autorun( function () {
-    var bc = WorkstationSessions.findOne(workstationSession);
-    if (lodash.has(bc, "plateBarcode")){
-      console.log('Template.adminStatus.autorun platebc: ' + bc.plateBarcode);
-    } else {
-      console.log('Template.adminStatus.autorun NO platebc!')
-    }
-    // $("#plate-barcode-status").velocity("callout.shake");
-  });
+  // this.autorun( function () {
+  //   var bc = WorkstationSessions.findOne(workstationSession);
+  //   if (lodash.has(bc, "plateBarcode")){
+  //     console.log('Template.adminStatus.autorun platebc: ' + bc.plateBarcode);
+  //   } else {
+  //     console.log('Template.adminStatus.autorun NO platebc!')
+  //   }
+  //   // $("#plate-barcode-status").velocity("callout.shake");
+  // });
 
 };
-/*
- 
- $("#admin-buttons button").velocity("transition.slideButtonsIn", { stagger: 50, backwards: true }) 
- $("#admin-buttons button").velocity("transition.slideButtonsOut", { stagger: 50, backwards: true })
-
- */

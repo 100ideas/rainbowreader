@@ -1,16 +1,27 @@
 <template name="plateInstructions">
 
-<div class="col-sm-4">
+<div class="col-sm-4 col-sm-offset-2">
 
-  <H1 class="text-justify">Take a picture of your plate</H1>
+  <div class="panel panel-default plate">
+    <div class="panel-heading">
+      <h2 class="panel-title">Take a picture of your plate</h2>
+    </div>
+<!--     <div class="panel-body">
+      <p class="text-justify"></p>
+    </div> -->
 
-  <ol>
-    <li>Remove the lid</li>
-    <li>Open the clear cover on the UV box</li>
-    <li>Place the plate UPSIDE DOWN in the center of the UV box</li>
-    <li>Close the clear cover</li>
+    <ul class="list-group">
+<!--       <li class="list-group-item {{barcodeSuccess.user}}">your barcode: {{getSessionDocument.userBarcode}}</li>
+      <li class="list-group-item {{barcodeSuccess.plate}}">plate barcode: {{getSessionDocument.plateBarcode}}</li> -->
+      <li class="list-group-item">1. Remove the lid</li>
+      <li class="list-group-item">2. Open the clear cover on the UV box</li>
+      <li class="list-group-item">3. Place the plate UPSIDE DOWN in the center of the UV box</li>
+      <li class="list-group-item">4. Close the clear cover</li>
+    </ul>
+
+  </div>  
+
     <li><button type="button" class="btn btn-warning btn-fat">take photo <i class="fa fa-camera-retro"></i></button></li>
-  </ol>
 
 </div>
 

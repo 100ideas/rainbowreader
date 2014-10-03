@@ -3,9 +3,9 @@ $.Velocity.RegisterUI("transition.slideButtonsIn", {
     defaultDuration: 300,
     calls: [
       [
-        { translateX: [0, function () {return this.parentElement.clientWidth * -1 - this.clientWidth;}] }, 
+        { translateX: [0, function () {return this.parentElement.clientWidth * -1 - this.clientWidth*2;}] }, 
         1, 
-        { easing: [300, 25] }
+        { easing: [400, 25] }
       ]
     ]
   });
@@ -14,7 +14,7 @@ $.Velocity.RegisterUI("transition.slideButtonsOut", {
     defaultDuration: 400,
     calls: [ 
       [ 
-        { translateX: function () { return this.parentElement.clientWidth * -1 - this.clientWidth;} }, 
+        { translateX: function () { return this.parentElement.clientWidth * -1 - this.clientWidth*2;} }, 
         1, 
         { easing: [300, 25] }      
       ]
@@ -29,26 +29,24 @@ toggleAdminBar = function (){
   if( adminButtons.hasClass('velocity-animating') ) {
     //do nothing, we're animating: spin the button, but don't queue any velocity animatons
     $("#admin-button").velocity("callout.shake");
-    console.log("click ignoreed, currently animating")
   } else if (adminButtons.css("display") === 'none') {
     adminButtons.velocity("transition.slideButtonsIn", {
       stagger: 10, 
       drag: true,
+      // backwards: true,
       begin: function() {document.getElementById("admin-button").setAttribute("disabled", "disabled")},
-                          // $("#admin-button").attr("disabled", "disabled");
-                          // $("#admin-button i").addClass("fa-spin");
       complete: function() {document.getElementById("admin-button").removeAttribute("disabled")}      
     });
-    adminStatus.velocity("transition.slideRightBigIn");
+    // adminStatus.velocity("transition.slideRightBigIn");
   } else {
     adminButtons.velocity("transition.slideButtonsOut", {
-      stagger: 10, 
+      stagger: 5, 
       drag: true,
       backwards: true,
       begin: function() {document.getElementById("admin-button").setAttribute("disabled", "disabled")},
       complete: function() {document.getElementById("admin-button").removeAttribute("disabled")}        
     });
-    adminStatus.velocity("transition.slideRightBigOut");
+    // adminStatus.velocity("transition.slideRightBigOut");
   }
 }
 

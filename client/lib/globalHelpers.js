@@ -25,6 +25,13 @@ Template.registerHelper('getSessionDocument', function() {
   return getSessionDocument();
 });
 
+Template.registerHelper('barcodeSuccess', function() {
+  var r = {};
+  r.user = getSessionDocument().userBarcode ? "success" : "";
+  r.plate = getSessionDocument().plateBarcode ? "success" : "";
+  return r;
+});
+
 // generates and inserts two random barcodes into current workstationSession
 generateFakeBarcodes = function () {
   var fakeBarcode = 'D' + Date.now();
@@ -49,12 +56,14 @@ fakeBarcodeScan = function () {
 fakeUserBarcode = function () {
   var fakeBarcode = 'U' + Date.now();
   console.log("fakeUserBarcode: setting a fake userBarcode: " + fakeBarcode);
+  console.log("fakeUserBarcode: workstationSession: " + workstationSession);
   WorkstationSessions.update(workstationSession, {$set: {userBarcode: fakeBarcode}});
 }
 
 fakePlateBarcode = function () {
   var fakeBarcode = 'D' + Date.now();
   console.log("fakePlateBarcode: setting a fake plateBarcode: " + fakeBarcode);
+  console.log("fakePlateBarcode: workstationSession: " + workstationSession);
   WorkstationSessions.update(workstationSession, {$set: {plateBarcode: fakeBarcode}});
 }
 

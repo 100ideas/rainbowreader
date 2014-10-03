@@ -15,6 +15,17 @@ body {
 
 h1.jumbo { font-size: 140px;}
 
+.panel{
+  color:#333;
+  margin-top: 25px;
+}
+
+.panel li.success {
+  color: #3c763d;
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+}
+
 #colonyspectrum {
   padding-top: 60px;
 }
@@ -64,8 +75,12 @@ button:focus, button:active{
   display: none;
 }
 
-#plate-barcode-status{
-  display: inline-block;
+#admin-status .barcode-status{
+  display: none;
+}
+
+#admin-status .barcode-status i {
+  display: none;
 }
 
 .blurred {

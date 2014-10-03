@@ -20,11 +20,11 @@
             </div>
 
           </div>
-      </div>  
+        </div>  
 
-      <div class="col-xs-4 col-xs-offset-2" id="admin-status-container">
-      {{> adminStatus}}
-      </div> 
+        <div class="col-xs-4 col-xs-offset-2" id="admin-status-container">
+        {{> adminStatus}}
+        </div> 
 
     </div>
   </div>
@@ -36,8 +36,8 @@
 
   <div class="pull-right" id="admin-status">
     {{#each thisArray}}
-      <span id="plate-barcode-status">
-          {{this}}
+      <span class="barcode-status">
+        <i class="fa fa-child fa"></i> {{this}}
       </span> 
     {{/each}}
     </div>   
