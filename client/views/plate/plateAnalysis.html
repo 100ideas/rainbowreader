@@ -1,26 +1,29 @@
 <template name="plateAnalysis">
 
-  <h3 class="text-center">Your Plate's Results</h3>
+  <div class="panel panel-default plate-analysis">
+    <div class="panel-heading">
+      <h2 class="panel-title">Your Plate's Results</h2>
+    </div>
+<!--     <div class="panel-body">
+      <p class="text-justify"></p>
+    </div> -->
 
-  <p>Plate # <h4 style="display:inline">{{plateBarcode}}</h4></p>
+    <ul class="list-group">
+      <li class="list-group-item {{barcodeSuccess.user}}">your barcode: {{getSessionDocument.userBarcode}}</li>
+      <li class="list-group-item {{barcodeSuccess.plate}}">plate barcode: {{getSessionDocument.plateBarcode}}</li>
+    </ul>
 
-  <p>Started On: <h4 style="display:inline">{{displayTime}}</h4></p>
+    <ul class="list-group stats" id="plate-stats-list-group">
+      <li class="list-group-item">Started On: {{displayTime}}</li>
+      <li class="list-group-item">Colonies counted: {{colonyCount}}</li>
+      <li class="list-group-item">Total colonies for the entire exhibit: {{totalColonies}}</li>
+      <li class="list-group-item">Unique colors counted: {{colorCount}}</li>
+    </ul>    
 
-<!-- I don't think we're capturing the initial ticket yet -nagle -->
-<!--  <p>Transformed by user # {{userBarcode}}</p> -->
+    {{statsListAnimation}}
 
- <p>Measured by user number <h4 style="display:inline">{{userBarcode}}</h4></p>
+  </div>  
 
-  <p>Colonies counted:  <h4 style="display:inline">{{colonyCount}}</h4></p>
-
-  <p>Total colonies for the entire exhibit: <h4 style="display:inline">{{totalColonies}}</h4> </p>
-
-  <p>Unique colors counted: <h4 style="display:inline">{{colorCount}}</h4></p>
-
-
-<button type="button" class="btn btn-warning btn-lg">Any rare colors?</button>
-
-
-
+<button type="button" class="btn btn-warning btn-fat">Rare Colors Detected!</button>
 
 </template>

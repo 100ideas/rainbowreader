@@ -4,6 +4,9 @@ Template.platePhoto.created = function () {
 
 Template.platePhoto.rendered = function () {
 
+  // reset reticuleToggle
+  Session.set("reticulesDone",false);
+
   // trigger background umage update when photo us available
   var photoURL = getSessionDocument().photoURL
   if (photoURL) {
@@ -22,7 +25,7 @@ Template.platePhoto.rendered = function () {
       if (newDocument.colonyData && !oldDocument.colonyData) {
         console.log("platePhoto.js: observed a change in colonyData; calling animateReticulesOnPlatePhoto()");
         animateReticulesOnPlatePhoto();
-        Meteor.setTimeout(function(){Session.set("reticulesDone",true);}, 3000);
+        // Meteor.setTimeout(function(){Session.set("reticulesDone",true);}, 3000);
       }
     }
   })

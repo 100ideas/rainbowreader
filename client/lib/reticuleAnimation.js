@@ -73,6 +73,9 @@ changeBackgroundImg = function (img) {
 // WorkstationSessions.find().observe() callback
 animateReticulesOnPlatePhoto = function animatePetriDish() {
 
+  Session.set("reticulesDone",false); // https://github.com/mbostock/d3/wiki/Transitions#each
+  console.log("start of animateReticulesOnPlatePhoto(), Session.reticulesDone? " + Session.get("reticulesDone"));
+
   var colonySelector = d3.select('#bg-photo-container svg').selectAll('circle')
     .data(WorkstationSessions.findOne().colonyData)
     .enter();
@@ -119,6 +122,8 @@ function drawReticle(selector) {
   reticleLine(selector,  reticleInside, 0,  reticleOutside, 0);
   reticleLine(selector, -reticleInside, 0, -reticleOutside, 0);
 
+  var tracker = {howMany: selector[0].length, soFar: 1};
+
   // draw the circle part of the reticle
   selector
     .append('circle')
@@ -130,11 +135,19 @@ function drawReticle(selector) {
     .attr('cy', function(d) {return d.Y})
     .transition()
     .duration(reticleAnimDuration)
-    .delay(function(d,i) {return i * 100})
+    .delay(function(d,i) {return i * 100})   
     .attr('r', function(d) { return (d.Radius * reticleRadiusMultiplier)})
     .attr('cx', function(d) {return d.X})
     .attr('cy', function(d) {return d.Y})
-
+    .each('end', function(d) {
+      tracker.soFar++;
+      if (tracker.soFar > tracker.howMany) {
+        // console.log("d3 end of animation? soFar: " + tracker.soFar + " howMany: " + tracker.howMany);
+        Session.set("reticulesDone",true)
+        console.log("animateReticulesOnPlatePhoto() finished, Session.reticulesDone? " + Session.get("reticulesDone"));
+      }
+      // console.log("d: " + d + "soFar: " + tracker.soFar + " howMany: " + tracker.howMany);
+    })
 }
 
 

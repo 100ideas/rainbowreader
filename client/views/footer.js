@@ -66,7 +66,7 @@ Template.adminStatus.rendered = function () {
     removeElement: function (node) {
       var $node = $(node);
       console.log("adminStatus uihooks removeElement: node:" + node );
-      debugger;
+      // debugger;
       $node.velocity("transition.bounceRightOut", {
         // duration: ,
         // easing: ,

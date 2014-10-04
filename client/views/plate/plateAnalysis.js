@@ -31,28 +31,6 @@ Template.plateAnalysis.colorCount = function(){
 
 }
 
-Template.plateAnalysis.plateBarcode = function(){
-
-  var currentDoc = getSessionDocument();
-
-  if (currentDoc.hasOwnProperty("plateBarcode"))
-  {
-    return currentDoc.plateBarcode;
-  }
-  else return "no plate number detected";
-}
-
-
-Template.plateAnalysis.userBarcode = function(){
-
-  var currentDoc = getSessionDocument();
-
-  if (currentDoc.hasOwnProperty("userBarcode"))
-  {
-    return currentDoc.userBarcode;
-  }
-  else return "no user number detected";
-}
 
 Template.plateAnalysis.displayTime = function(){
 
@@ -93,4 +71,24 @@ Template.plateAnalysis.totalColonies = function(){
   }
 
   else return "eColor & visualizations not found";
+}
+
+
+// statsListAnimation = function (){
+//   $("#plate-stats-list-group").velocity("transition.slideDownBigIn", {
+//     duration: 2000,
+//     stagger: 200,
+//     drag: true
+//   });
+// }
+
+Template.plateAnalysis.statsListAnimation = function (){
+  if (Session.get("reticulesDone")) {
+    Meteor.setTimeout(function (){
+      $("#plate-stats-list-group").velocity("transition.slideDownBigIn", {
+        duration: 2000,
+        stagger: 200,
+        drag: true
+      });
+  }, 500)}
 }
