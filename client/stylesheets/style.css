@@ -26,10 +26,17 @@ h1.jumbo { font-size: 140px;}
   border-color: #d6e9c6;
 }
 
+
 /* div.plate-analysis ul.list-group.stats */
 /* inherits from .panel above */
 #plate-stats-list-group{
   display:none;
+}
+
+.colony-ball{
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
 }
 
 #colonyspectrum {

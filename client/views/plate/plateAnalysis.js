@@ -74,20 +74,17 @@ Template.plateAnalysis.totalColonies = function(){
 }
 
 
-// statsListAnimation = function (){
-//   $("#plate-stats-list-group").velocity("transition.slideDownBigIn", {
-//     duration: 2000,
-//     stagger: 200,
-//     drag: true
-//   });
-// }
+// ("#plate-stats-list-group li").velocity("transition.perspectiveDownIn", {
+//         duration: 1000,
+//         stagger: 400,
+//         drag: true})
 
 Template.plateAnalysis.statsListAnimation = function (){
   if (Session.get("reticulesDone")) {
     Meteor.setTimeout(function (){
-      $("#plate-stats-list-group").velocity("transition.slideDownBigIn", {
-        duration: 2000,
-        stagger: 200,
+      $("#plate-stats-list-group ul").velocity("transition.perspectiveDownIn", {
+        duration: 1000,
+        stagger: 400,
         drag: true
       });
   }, 500)}

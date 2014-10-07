@@ -41,7 +41,7 @@ Template.rareColorCard.totalColonies = function(){
   return getSessionDocument().coloniesCountAtThisTime;
 }
 
-var hueToHsl = function(hue) {return "hsl(" + hue + ",50%,50%)";}
+// var hueToHsl = function(hue) {return "hsl(" + hue + ",50%,50%)";}
 
 Template.rareColorCard.idName = function(colorName){
 
@@ -51,7 +51,7 @@ Template.rareColorCard.idName = function(colorName){
 
 
 
-Template.plateRareColors.drawCircle = function(hue, saturation, colorName){
+Template.plateRareColors.drawCircle2 = function(hue, saturation, colorName){
 
   Meteor.setTimeout(function(){ //making sure previous template has loaded (waiting for the race condition.)
 
@@ -75,3 +75,27 @@ Template.plateRareColors.drawCircle = function(hue, saturation, colorName){
 
    },10);
 }
+
+Template.plateRareColors.drawCircle = function(Rmean, Gmean, Bmean, colorName){
+  Meteor.setTimeout(function(){ //making sure previous template has loaded (waiting for the race condition.)
+    var id = colorName.replace(/\s+/g, '');
+
+    var color = d3.rgb(Rmean, Gmean, Bmean);
+
+    // TODO dynamically set size of .colony-ball to fit in user window (or just pick big vs small preset)
+    var circleStyles = {
+      "background-color": color.toString(),
+      "box-shadow":
+        "-5px 5px 30px rgba(" + color.r + "," + color.g + "," + color.b + "," + "0.5)," +
+        "50px -50px 50px rgba(0, 0, 0, .2) inset"
+    };
+    
+    $("#" + id).css(circleStyles);
+
+   },10);
+}
+
+
+
+
+
