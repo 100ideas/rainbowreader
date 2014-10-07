@@ -1,28 +1,16 @@
 <template name="plateRareColors">
 
 
-<div class="col-sm-4">
+<div class="col-sm-8" id="rare-colors">
 
-  <div class="panel panel-default plate-analysis">
-    <div class="panel-heading">
-      <h2 class="panel-title">You've found rare colors!</h2>
-    </div>
-    <div class="panel-body">
-      <p class="text-justify">Panel Body</p>
-    </div>
     <ul class="list-group" id="rare-colors-list-group">
-    
     {{#each listRareColors}}
       <li class="list-group-item">
         {{> rareColorCard}}
         {{drawCircle Rmean Gmean Bmean ColorName}}
       </li>
     {{/each}}
-
   </ul>
-</div>
-
-
   <button type="button" class="btn btn-warning btn-lg" id="rareColorsButton">Onward</button>
 </div>
 
@@ -32,9 +20,7 @@
 <template name="rareColorCard">
 
   <div id="{{idName ColorName}}" class="colony-ball"></div> 
-
-  <p>{{ColorName}}</p>
-
-  <p>Seen {{NumberOfColoniesThisColor}} times out of {{totalColonies}} colonies total.</p>
+    <h2>{{ColorName}}</h2>
+    <!-- TODO <p>Only found {{NumberOfColoniesThisColor}} times!</p> -->
 
 </template>

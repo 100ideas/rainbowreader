@@ -92,6 +92,12 @@ Template.plateRareColors.drawCircle = function(Rmean, Gmean, Bmean, colorName){
     
     $("#" + id).css(circleStyles);
 
+    var h2Styles = {
+      color: "rgb(" + color.r + "," + color.g + "," + color.b + ")"
+    }
+
+    $("#" + id + "+ h2").css(h2Styles);
+
    },10);
 }
 
