@@ -1,3 +1,18 @@
+
+Quickstart
+==========
+
+make sure both machines are on tech-studio wifi.
+
+**start ecolor first** 
+1. open terminal app
+2. type `./start.sh`  + enter
+
+**start rainbowreader** 
+1. open terminal app
+2. type `meteor`  + enter
+
+
 On the OSX Mac Mini (ecolor)
 =============================
 
