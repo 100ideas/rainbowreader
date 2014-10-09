@@ -1,34 +1,30 @@
 #Rainbow Reader
 
-Rainbow Reader is software that photographs and analyzes petri dishes containing visible bacterial colonies.  It is powered by Meteor and Node.js, supplying a user interface in web browser.  It connects by USB to a Motorola DS457 barcode scanner and gphoto-compatible camera.
+Rainbow Reader is software that photographs and analyzes petri dishes containing visible bacterial colonies using the open-source colony counting software [OpenCFU](https://github.com/qgeissmann/OpenCFU). It is powered by Meteor and Node.js, supplying a user interface in web browser.  It connects by USB to a Motorola DS457 barcode scanner and gphoto2-compatible camera. It also optionally sends data to [ecolor](https://github.com/intron/ecolor), a sister meteor app that presents live visualizations of the aggregated measurements.
 
-##TODO list
+Both apps were developed for a prototype biotech exhibit at [The Tech Museum of Innovation](http://www.thetech.org/) in San Jose.
 
-Linux:
-- reliable device file name for scanner
-- permissions for scanner
-- driver for scanner
+Participants at the exhibit transform lab bacteria with a pool of ~900 different plasmids, each containing a red, green, and blueish reporter under individual control of a randomly selected promoter-rbs from a set of 9 spanning ~2.5 orders of expression power. Each of the 900 plasmids should theoretically drive a unique expression ratio of the three reporter genes, causing each colony to appear with a unique hue, similar to the operation of an RGB LED. Which combinations will fail? Which colors won't we see? This software and the participation of visitors at the Tech Museum is designed to find that out.
 
-Web:
-- clear up funkiness of collection entry as workstationSession
-- how does reading station know address of visualization server?
+More information about the biological side of this project will be available at http://2014.igem.org/Team:The_Tech_Museum after Oct 30 2014.
 
-Deployment:
-- see server/lib/settings.js to set environment-specific options
-- need to refactor paths in code into Meteor.settings.pathName
-- using absolute paths, it's ugly
-  - but getting help from *process.env* [environment variables](http://www.meteorpedia.com/read/Environment_Variables) like PWD
-
-Requirements:
-- gphoto2 (and init script for Canon EOS Rebel?)
-- barcode scanner
+## Requirements:
+- meteor
+- gphoto2
+- barcode scanner (currently only working in linux)
 - opencfu no-gui
 
-Debug: 
-- set the associated filepath to *false* in "settings.js to disable opencfu, barcode scanner, and gphoto calls
-- check out [server-eval meteorite package](http://stackoverflow.com/questions/11034941/meteor-debug-on-server-side) and [crx chrome extension](https://github.com/gandev/meteor-server-console/releases) for accessing the server console
+
+## Usage
+- install requirements, buy camera & usb scanner
+- clone repo
+- update `server/lib/settings.js` to disable opencfu, barcode scanner, and gphoto calls as needed
+- set `$METEOR_ENV` as desired
+- start meteor (it will need to be restarted after initializing npm meteor package)
+- read [the instruction manual](https://github.com/intron/rainbowreader/blob/master/RainbowReader_Instruction_Manual.txt);
 
 ## General Meteor tips
+- debugging: check out [server-eval meteorite package](http://stackoverflow.com/questions/11034941/meteor-debug-on-server-side) and [crx chrome extension](https://github.com/gandev/meteor-server-console/releases) for accessing the server console
 - [Project file structure suggested in meteor faq](https://github.com/oortcloud/unofficial-meteor-faq#where-should-i-put-my-files)
 ```bash
 lib/                       # <- any common code for client/server.
