@@ -1,28 +1,32 @@
 <template name="plateInstructions">
+<div class="container plate-views">
+  <div class="row">
 
-<div class="col-md-4 col-md-offset-2">
+  <div class="col-md-4">
 
-  <div class="panel panel-default plate">
-    <div class="panel-heading">
-      <h2 class="panel-title">Take a picture of your plate</h2>
-    </div>
-<!--     <div class="panel-body">
-      <p class="text-justify"></p>
-    </div> -->
+    <div class="panel panel-default plate">
+      <div class="panel-heading">
+        <h2 class="panel-title">Take a picture of your plate</h2>
+      </div>
+  <!--     <div class="panel-body">
+        <p class="text-justify"></p>
+      </div> -->
 
-    <ul class="list-group">
-<!--       <li class="list-group-item {{barcodeSuccess.user}}">your barcode: {{getSessionDocument.userBarcode}}</li>
-      <li class="list-group-item {{barcodeSuccess.plate}}">plate barcode: {{getSessionDocument.plateBarcode}}</li> -->
-      <li class="list-group-item">1. Remove the lid</li>
-      <li class="list-group-item">2. Open the clear cover on the UV box</li>
-      <li class="list-group-item">3. Place the plate UPSIDE DOWN in the center of the UV box</li>
-      <li class="list-group-item">4. Close the clear cover</li>
-    </ul>
+      <ul class="list-group">
+  <!--       <li class="list-group-item {{barcodeSuccess.user}}">your barcode: {{getSessionDocument.userBarcode}}</li>
+        <li class="list-group-item {{barcodeSuccess.plate}}">plate barcode: {{getSessionDocument.plateBarcode}}</li> -->
+        <li class="list-group-item">1. Remove the lid</li>
+        <li class="list-group-item">2. Open the clear cover on the UV box</li>
+        <li class="list-group-item">3. Place the plate UPSIDE DOWN in the center of the UV box</li>
+        <li class="list-group-item">4. Close the clear cover</li>
+      </ul>
+
+    </div>  
+
+      <button type="button" class="btn btn-warning btn-fat">take photo <i class="fa fa-camera-retro"></i></button>
+
+  </div>
 
   </div>  
-
-    <button type="button" class="btn btn-warning btn-fat">take photo <i class="fa fa-camera-retro"></i></button>
-
 </div>
-
 </template>

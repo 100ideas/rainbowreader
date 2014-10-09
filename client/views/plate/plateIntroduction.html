@@ -1,32 +1,36 @@
 <template name="plateIntroduction">
+<div class="container plate-views">
+  <div class="row">
 
-  <div class="col-md-4 col-md-offset-2">
+    <div class="col-md-4">
 
-    <div class="panel panel-default plate">
-      <div class="panel-heading">
-        <h2 class="panel-title">Pick a plate and scan its barcode to begin...</h2>
-      </div>
-      <div class="panel-body">
-        <p class="text-justify">We need YOU to be a scientist on our team. Help us find more bacteria colors! </p>
-      </div>
+      <div class="panel panel-default plate">
+        <div class="panel-heading">
+          <h2 class="panel-title">Pick a plate and scan its barcode to begin...</h2>
+        </div>
+        <div class="panel-body">
+          <p class="text-justify">We need YOU to be a scientist on our team. Help us find more bacteria colors! </p>
+        </div>
 
-      <ul class="list-group">
-        <li class="list-group-item {{barcodeSuccess.user}}">your barcode: {{getSessionDocument.userBarcode}}</li>
-        <li class="list-group-item {{barcodeSuccess.plate}} ">plate barcode: {{getSessionDocument.plateBarcode}}</li>
-      </ul>
+        <ul class="list-group">
+          <li class="list-group-item {{barcodeSuccess.user}}">your barcode: {{getSessionDocument.userBarcode}}</li>
+          <li class="list-group-item {{barcodeSuccess.plate}} ">plate barcode: {{getSessionDocument.plateBarcode}}</li>
+        </ul>
 
-    </div>  
+      </div>  
 
-    <button class="btn btn-warning btn-fat">Let's get started!</button>
+      <button class="btn btn-warning btn-fat">Let's get started!</button>
+
+    </div>
+
+    <div class="col-md-4">
+
+      <h3 class="text-justify lead">These plates have bacteria growing on them.</h3> 
+
+      <p class="text-justify lead">DNA with color genes for <strong style="color:red;">RED</strong>, <strong style="color:blue;">BLUE</strong> and <strong style="color:yellow;">YELLOW</strong> proteins was put into them. As the bacteria grew, they made different amounts of each color protein. Like mixing different colors of paint, we can get many colors of BACTERIA!</p>
+
+    </div>
 
   </div>
-
-  <div class="col-md-4">
-
-    <h3 class="text-justify lead">These plates have bacteria growing on them.</h3> 
-
-    <p class="text-justify lead">DNA with color genes for <strong style="color:red;">RED</strong>, <strong style="color:blue;">BLUE</strong> and <strong style="color:yellow;">YELLOW</strong> proteins was put into them. As the bacteria grew, they made different amounts of each color protein. Like mixing different colors of paint, we can get many colors of BACTERIA!</p>
-
-  </div>
-
+</div>
 </template>

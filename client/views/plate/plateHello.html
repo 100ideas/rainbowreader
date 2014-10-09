@@ -1,34 +1,39 @@
 <template name="plateHello">
+<div class="container plate-views">
+  <div class="row">
 
-<div class="col-md-4">
+    <div class="col-md-4">
 
-  <H1>Join Our Team!</H1>
-  <!-- TODO fullscreen video demonstrating each step on relevant pages-->
+      <H1>Join Our Team!</H1>
+      <!-- TODO fullscreen video demonstrating each step on relevant pages-->
 
-  <p class="text-justify lead">Help find colored bacteria!</p>
+      <p class="text-justify lead">Help find colored bacteria!</p>
 
-<!--   {{#if notMuseum}}
-    <button type="button" class="btn btn-warning btn-fat">fake barcode scan <i class="fa fa-barcode fa"></i></button>
-  {{/if}} -->
+    <!--   {{#if notMuseum}}
+        <button type="button" class="btn btn-warning btn-fat">fake barcode scan <i class="fa fa-barcode fa"></i></button>
+      {{/if}} -->
 
 
-<div class="panel panel-default techtag">
-  <div class="panel-heading">
-    <h2 class="panel-title">Scan your Tech Tag to begin...</h2>
-  </div>
-<!--   <div class="panel-body">  
-  </div> -->
-  <ul class="list-group">
-    <li class="list-group-item {{barcodeSuccess.user}}">your barcode: {{userBarcode}}</li>
-    <li class="list-group-item"></li>
-  </ul>  
+    <div class="panel panel-default techtag">
+      <div class="panel-heading">
+        <h2 class="panel-title">Scan your Tech Tag to begin...</h2>
+      </div>
+    <!--   <div class="panel-body">  
+      </div> -->
+      <ul class="list-group">
+        <li class="list-group-item {{barcodeSuccess.user}}">your barcode: {{userBarcode}}</li>
+        <li class="list-group-item"></li>
+      </ul>  
+    </div>
+
+
+    </div>
+
+    <div class="col-md-8">
+      <h1 class="jumbo">GENES BACTERIA COLORS</h1>
+    </div>
+
+
+  </div> 
 </div>
-
-
-</div>
-
-<div class="col-md-8">
-  <h1 class="jumbo">GENES BACTERIA COLORS</h1>
-</div>
-
 </template>

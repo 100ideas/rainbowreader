@@ -40,6 +40,13 @@ h1.jumbo { font-size: 140px;}
 #rare-colors .rareColorCard{
   background: transparent;
   border: none;
+  position: relative;
+  font-size: 1em;
+  margin-bottom: 20px;
+}
+
+@media only screen and (max-width: 767px) {
+  #rare-colors{ max-width: 83.33333333%%; font-size: .75em !important;}
 }
 
 #rare-colors .colony-ball{
@@ -47,16 +54,13 @@ h1.jumbo { font-size: 140px;}
   padding-bottom:20%;  
   height: 0;
   border-radius: 50%;
-  display: inline-block;
-}
-
-@media only screen and (max-width: 767px) {
-  #rare-colors{ max-width: 83.33333333%%;}
-  #rare-colors h1 { font-size: 2em !important;}
+  float: left;
 }
 
 #rare-colors .colony-ball-label{
-  display: inline-block;
+  position: absolute;
+  margin-left: 20%;
+  width: 100%;
 }
 
 #rare-colors .colony-ball-label h1 {
@@ -66,12 +70,15 @@ h1.jumbo { font-size: 140px;}
   font-style: italic;
   font-size: 4em;
   text-shadow: 1px 1px 15px rgba(0, 0, 0, 0.9);
-  margin-left: 20px;
-  maring-bottom: 50px;
+  margin:0 0 0 0.5em;
+  white-space:nowrap;
 }
 
-#rare-colors .colony-ball-label p {
-  margin-left: 40px;
+#rare-colors .colony-ball-label h3 {
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+  font-size: 1.5em;
+  font-weight: 300;
+  margin: 0.5em 0 0 3em;
 }
 
 #colonyspectrum {

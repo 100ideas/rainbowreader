@@ -1,16 +1,10 @@
 <template name="plate">
 
-<div class="container plate-views">
-  <div class="row">
-
-      {{#each routes}}
-          {{#if this.state}}
-            {{> UI.dynamic template=this.view}}
-          {{/if}}
-      {{/each}}
-    
-  </div>
-</div>
+  {{#each routes}}
+      {{#if this.state}}
+        {{> UI.dynamic template=this.view}}
+      {{/if}}
+  {{/each}}
 
 </template>
 
