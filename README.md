@@ -1,6 +1,8 @@
 #Rainbow Reader
 
-Rainbow Reader is software that photographs and analyzes petri dishes containing visible bacterial colonies using the open-source colony counting software [OpenCFU](https://github.com/qgeissmann/OpenCFU). It is powered by Meteor and Node.js, supplying a user interface in web browser.  It connects by USB to a Motorola DS457 barcode scanner and gphoto2-compatible camera. It also optionally sends data to [ecolor](https://github.com/intron/ecolor), a sister meteor app that presents live visualizations of the aggregated measurements.
+Rainbow Reader is a [meteor](http://meteor.com) application that photographs and analyzes petri dishes containing visible bacterial colonies using [OpenCFU](https://github.com/qgeissmann/OpenCFU), [gphoto2](http://gphoto.org/), and an optional barcode scanner for sample tracking.
+
+It is powered by Meteor and Node.js, supplying a user interface in web browser.  It connects by USB to a Motorola DS457 barcode scanner and gphoto2-compatible camera. It also optionally sends data to [ecolor](https://github.com/intron/ecolor), a sister meteor app that presents live visualizations of the aggregated measurements.
 
 Both apps were developed for a prototype biotech exhibit at [The Tech Museum of Innovation](http://www.thetech.org/) in San Jose.
 
@@ -9,10 +11,10 @@ Participants at the exhibit transform lab bacteria with a pool of ~900 different
 More information about the biological side of this project will be available at http://2014.igem.org/Team:The_Tech_Museum after Oct 30 2014.
 
 ## Requirements:
-- meteor
-- gphoto2
+- meteor 
+- gphoto2 [homebrew](https://github.com/Homebrew/homebrew/blob/master/Library/Formula/gphoto2.rb)
 - barcode scanner (currently only working in linux)
-- opencfu no-gui
+- opencfu no-gui [homebrew](https://github.com/qgeissmann/homebrew-gtkquartz/blob/master/opencfu.rb)
 
 
 ## Usage
