@@ -51,7 +51,7 @@ egg shell	#fffcc4
 eggplant purple	#430541	
 powder pink	#ffb2d0	
 reddish grey	#997570	
-baby shit brown	#ad900d	
+baby poop brown	#ad900d	
 liliac	#c48efd	
 stormy blue	#507b9c	
 ugly brown	#7d7103	
@@ -200,7 +200,7 @@ light greenish blue	#63f7b4
 mud green	#606602	
 pinky	#fc86aa	
 red wine	#8c0034	
-shit green	#758000	
+poop green	#758000	
 tan brown	#ab7e4c	
 darkblue	#030764	
 rosa	#fe86a4	
@@ -283,7 +283,7 @@ blue/grey	#758da3
 hot magenta	#f504c9	
 greyblue	#77a1b5	
 purpley	#8756e4	
-baby shit green	#889717	
+baby poop green	#889717	
 brownish pink	#c27e79	
 dark aquamarine	#017371	
 diarrhea	#9f8303	
@@ -561,7 +561,7 @@ silver	#c5c9c7
 purply blue	#661aee	
 purpleish blue	#6140ef	
 hospital green	#9be5aa	
-shit brown	#7b5804	
+poop brown	#7b5804	
 mid blue	#276ab3	
 amber	#feb308	
 easter green	#8cfd7e	
@@ -595,7 +595,7 @@ barbie pink	#fe46a5
 bubblegum pink	#fe83cc	
 pea soup green	#94a617	
 dark mustard	#a88905	
-shit	#7f5f00	
+poop	#7f5f00	
 medium purple	#9e43a2	
 very dark green	#062e03	
 dirt	#8a6e45	
