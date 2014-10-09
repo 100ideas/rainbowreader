@@ -37,29 +37,12 @@ h1.jumbo { font-size: 140px;}
   /*margin-left:-20px;*/
 } 
 
-#rare-colors ul.list-group li{
+#rare-colors .rareColorCard{
   background: transparent;
   border: none;
 }
 
-#rare-colors ul.list-group li h2 {
-  display: inline-block;
-  color: white;
-  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
-  font-weight: 300;
-  font-style: italic;
-  font-size: 4em;
-  line-height: 100%;
-  margin: 0 0 0 .25em;
-  vertical-align: 100%;
-  text-shadow: 1px 1px 15px rgba(0, 0, 0, 0.9);
-}
-
-#rare-colors ul.list-group li p {
-  display: inline; 
-}
-
-.colony-ball{
+#rare-colors .colony-ball{
   width: 20%;
   padding-bottom:20%;  
   height: 0;
@@ -67,6 +50,29 @@ h1.jumbo { font-size: 140px;}
   display: inline-block;
 }
 
+@media only screen and (max-width: 767px) {
+  #rare-colors{ max-width: 83.33333333%%;}
+  #rare-colors h1 { font-size: 2em !important;}
+}
+
+#rare-colors .colony-ball-label{
+  display: inline-block;
+}
+
+#rare-colors .colony-ball-label h1 {
+  color: white;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+  font-weight: 300;
+  font-style: italic;
+  font-size: 4em;
+  text-shadow: 1px 1px 15px rgba(0, 0, 0, 0.9);
+  margin-left: 20px;
+  maring-bottom: 50px;
+}
+
+#rare-colors .colony-ball-label p {
+  margin-left: 40px;
+}
 
 #colonyspectrum {
   padding-top: 60px;

@@ -12,7 +12,7 @@ Template.plateRareColors.listRareColors = function(){
 
 Template.plateRareColors.events({
   'click #rareColorsButton': function() {
-    var transitionTime = 2000;
+    var transitionTime = Meteor.settings.public.reticuleDuration || 2000;
     Meteor.call('insertExperiment')
     Meteor.setTimeout(function() {
       $('#bg-photo-container').addClass('blurred') 
@@ -28,8 +28,8 @@ Template.plateRareColors.events({
       .attr('y2', '-1000')
 
     // reload the page after a short time 
-    var refreshTimeout = Meteor.settings.public.refreshTimeout || 8000;
-    Meteor.setTimeout(function() { location.reload() }, refreshTimeout)
+    var restartAfterWallUpdate = Meteor.settings.public.restartAfterWallUpdate || 8000;
+    Meteor.setTimeout(function() { location.reload() }, restartAfterWallUpdate)
   }
 })
 
@@ -96,12 +96,10 @@ Template.plateRareColors.drawCircle = function(Rmean, Gmean, Bmean, colorName){
       color: "rgb(" + color.r + "," + color.g + "," + color.b + ")"
     }
 
-    $("#" + id + "+ h2").css(h2Styles);
+    $("#" + id + "+ div h1").css(h2Styles);
 
    },10);
 }
-
-
 
 
 

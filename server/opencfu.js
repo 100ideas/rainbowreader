@@ -46,6 +46,7 @@ runOpenCFU = function(filename, callback) {
         console.log( "\tOpenCFU finished executing, calling csv module to parse stdout..." );
         csv().from.string(stdout, {comment: '#'}).to.array( function(data) {
           var colonyJSON = json_from_csv(data);
+          console.log(JSON.stringify(colonyJSON));
           callback(colonyJSON);        
         });
       }
@@ -54,10 +55,8 @@ runOpenCFU = function(filename, callback) {
   } else {
     console.log("server/opencfu.js: settings.opencfu is " + Meteor.settings.opencfuPath
               + "\n\tusing dummy colonyData.json file at " + fakeColonyDataFile);
-      setTimeout(function() { // simulate processing and give image a chance to load
-        var colonyData = fs.readFileSync(fakeColonyDataFile).toString();
-        callback(JSON.parse(colonyData));
-      }, 1000);
+    var colonyData = fs.readFileSync(fakeColonyDataFile).toString();
+    callback(JSON.parse(colonyData))
   }
 
 }

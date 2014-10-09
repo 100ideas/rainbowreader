@@ -27,7 +27,7 @@ var settings = {
     public: {
       "photoWidth":             4272,   // camera default is 4272x2848
       "photoHeight":            2848,   // small.jpg is 2100x1400
-      "refreshTimeout":         15000    // how long in ms before restarting after plateShowWallUpdate
+      "restartAfterWallUpdate": 15000    // how long in ms before restarting after plateShowWallUpdate
     }
   }
 }
@@ -39,12 +39,14 @@ var settings = {
 settings.development_osx = lodash.merge( {}, settings.museum, {
   "gphoto2":                false,
   "scannerPath":            false,
+  "opencfuPath":            false,  
   "platePhotosPath":        process.env.PWD + '/public/photos/',
   "fakeColonyDataFile":     process.env.PWD + '/test/colonyData.json',
   "fakeColonyPhotoFile":    process.env.PWD + '/public/photos/small.jpg', // necessary cause opencfu gets confused     
   public: { 
     "photoWidth":           2100, 
-    "photoHeight":          1400 
+    "photoHeight":          1400,
+    "reticuleDuration":     1
   }
 });
 

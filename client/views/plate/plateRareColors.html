@@ -1,16 +1,12 @@
 <template name="plateRareColors">
 
-
-<div class="col-sm-8" id="rare-colors">
-
-    <ul class="list-group" id="rare-colors-list-group">
-    {{#each listRareColors}}
-      <li class="list-group-item">
-        {{> rareColorCard}}
-        {{drawCircle Rmean Gmean Bmean ColorName}}
-      </li>
-    {{/each}}
-  </ul>
+<div class="col-sm-10" id="rare-colors">
+  {{#each listRareColors}}
+    <div class="rareColorCard">
+      {{> rareColorCard}}
+      {{drawCircle Rmean Gmean Bmean ColorName}}
+    </div>
+  {{/each}}
   <button type="button" class="btn btn-warning btn-lg" id="rareColorsButton">Onward</button>
 </div>
 
@@ -18,9 +14,9 @@
 
 
 <template name="rareColorCard">
-
   <div id="{{idName ColorName}}" class="colony-ball"></div> 
-    <h2>{{ColorName}}</h2>
-    <!-- TODO <p>Only found {{NumberOfColoniesThisColor}} times!</p> -->
-
+  <div class="colony-ball-label">
+    <h1>{{ColorName}}</h1>
+    <p>Only found {{NumberOfColoniesThisColor}} times!</p>
+  </div>
 </template>

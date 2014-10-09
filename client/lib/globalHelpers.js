@@ -67,6 +67,10 @@ fakePlateBarcode = function () {
   WorkstationSessions.update(workstationSession, {$set: {plateBarcode: fakeBarcode}});
 }
 
+
+////////////////////////////////////////////////////////////////////////////////
+// console helper functions
+
 // writes names of all templates to the log
 logTemplates = function () {
   var userTemplates = new Array();
@@ -85,4 +89,13 @@ logTemplates = function () {
   userTemplates.forEach(function(t){console.log("\t" + t.viewName)})
   console.log("system templates:")
   systemTemplates.forEach(function(t){console.log("\t" + t.viewName)})
+}
+
+rarecols = function () { 
+  return JSON.stringify(getSessionDocument(), function (key, value) { 
+    if (key === "colonyData") { 
+      return value.slice(0,3); 
+    } 
+    return value;
+  }, 2)
 }

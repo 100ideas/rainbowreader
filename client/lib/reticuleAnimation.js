@@ -74,26 +74,26 @@ changeBackgroundImg = function (img) {
 animateReticulesOnPlatePhoto = function animatePetriDish() {
 
   Session.set("reticulesDone",false); // https://github.com/mbostock/d3/wiki/Transitions#each
-  console.log("start of animateReticulesOnPlatePhoto(), Session.reticulesDone? " + Session.get("reticulesDone"));
+  var duration = Meteor.settings.public.reticuleDuration;
 
   var colonySelector = d3.select('#bg-photo-container svg').selectAll('circle')
     .data(WorkstationSessions.findOne().colonyData)
     .enter();
 
-  drawReticle(colonySelector);
+  drawReticle(colonySelector, duration);
 }
 
-function drawReticle(selector) {
+function drawReticle(selector, duration) {
   var reticleWidth = '1px';
   var reticleRadiusMultiplier = 1.7; // how much bigger the reticle is than the colony
   var reticleInsideFraction = 0.4;   // portion of the reticle radius that the lines extend inside the reticle
   var reticleOutsideFraction = 0.5;  // portion of the reticle radius that the lines extend ouside the reticle
-  var reticleAnimDuration = 3000;    // reticle animation length
+  var reticleAnimDuration = duration || 3000;    // reticle animation length, default 3000
   var reticleInitialMultiplier = 2000;
 
   
   // time in ms between successive reticle animations
-  var delay = 100
+  var delay = duration || 100
 
   // partial computations
   var reticleInside = (1 - reticleInsideFraction) * reticleRadiusMultiplier;
@@ -111,7 +111,7 @@ function drawReticle(selector) {
       .attr("y2", function(d) {return d.Y + y2 * d.Radius * reticleInitialMultiplier})
       .transition()
       .duration(reticleAnimDuration  *  0.75)
-      .delay(function(d,i) {return i * 100})
+      .delay(function(d,i) {return i * delay})
       .attr("x1", function(d) {return d.X + x1 * d.Radius})
       .attr("y1", function(d) {return d.Y + y1 * d.Radius})
       .attr("x2", function(d) {return d.X + x2 * d.Radius})
@@ -135,7 +135,7 @@ function drawReticle(selector) {
     .attr('cy', function(d) {return d.Y})
     .transition()
     .duration(reticleAnimDuration)
-    .delay(function(d,i) {return i * 100})   
+    .delay(function(d,i) {return i * delay})   
     .attr('r', function(d) { return (d.Radius * reticleRadiusMultiplier)})
     .attr('cx', function(d) {return d.X})
     .attr('cy', function(d) {return d.Y})

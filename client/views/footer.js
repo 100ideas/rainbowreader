@@ -29,7 +29,6 @@ deletePlateBarcode = function () {
   } else {
     Meteor.call('createWorkstationSession', function(error, result) {
       workstationSession = result;
-      console.log("deletePlateBarcode(): " + error );
     });
   }
 }
@@ -37,7 +36,6 @@ deletePlateBarcode = function () {
 Template.adminStatus.helpers({
   thisArray: function() {
     var ws = WorkstationSessions.findOne(workstationSession);
-    console.log("adminStatus workstationSession: " + workstationSession);
     // if (!ws) return "";
     // ws.hasOwnProperty("plateBarcode") ? ws.plateBarcode : "";
     // need to return a cursor for reactivity?
@@ -46,10 +44,7 @@ Template.adminStatus.helpers({
 })
 
 Template.adminStatus.rendered = function () {
-  
   this.animation_helper = this.firstNode;
-  console.log("this.find('#admin-status-container'): " + this.animation_helper.id );
- 
   this.animation_helper._uihooks = {
     insertElement: function (node, next) {
       var $node = $(node);

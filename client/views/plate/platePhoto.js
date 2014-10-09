@@ -1,5 +1,4 @@
 Template.platePhoto.created = function () {
-  console.log("plate.js: Template.platePhoto created... ")
 }
 
 Template.platePhoto.rendered = function () {
