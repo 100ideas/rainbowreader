@@ -1,29 +1,15 @@
+<!-- included by platePhoto -->
 <template name="plateAnalysis">
 
-  <div class="panel panel-default plate-analysis">
-    <div class="panel-heading">
-      <h2 class="panel-title">Your Plate's Results</h2>
-    </div>
-<!--     <div class="panel-body">
-      <p class="text-justify"></p>
-    </div> -->
+<div class="page-header">
+  <h1>Plate Analysis <small>{{displayTime}}</small></h1>
+</div>
 
-    <ul class="list-group">
-      <li class="list-group-item {{barcodeSuccess.user}}">your barcode: {{getSessionDocument.userBarcode}}</li>
-      <li class="list-group-item {{barcodeSuccess.plate}}">plate barcode: {{getSessionDocument.plateBarcode}}</li>
-    </ul>
-
-    <ul class="list-group stats" id="plate-stats-list-group">
-      <li class="list-group-item">Started On: {{displayTime}}</li>
-      <li class="list-group-item">Colonies counted: {{colonyCount}}</li>
-      <li class="list-group-item">Total colonies for the entire exhibit: {{totalColonies}}</li>
-      <li class="list-group-item">Unique colors counted: {{colorCount}}</li>
-    </ul>    
-
-    {{statsListAnimation}}
-
-  </div>  
-
-<button type="button" class="btn btn-warning btn-fat">Rare Colors Detected!</button>
+<ul class="list-group stats" id="plate-stats-list-group">
+  <li class="list-group-item"><h2>Colonies detected: <strong>{{colonyCount}}</strong></h2></li>
+  <li class="list-group-item"><h2>Unique colors: <strong>{{colorCount}}</strong></h2></li>
+  <li class="list-group-item"><h3>With your help, we've measured <strong>{{totalColonies}}</strong> colonies and disovered <strong>{{colorCounts.uniqueColors}}</strong> unique colors so far!</h3></li>
+  <li><button type="button" class="btn btn-warning btn-fat">Rare Colors Detected!</button></li>
+</ul>    
 
 </template>
