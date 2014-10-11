@@ -2,8 +2,6 @@
 
 Rainbow Reader is a [meteor](http://meteor.com) application that photographs and analyzes petri dishes containing visible bacterial colonies using [OpenCFU](https://github.com/qgeissmann/OpenCFU), [gphoto2](http://gphoto.org/), and an optional barcode scanner for sample tracking.
 
-![dsc03671](https://cloud.githubusercontent.com/assets/57006/4585584/b2479622-5008-11e4-89cd-b93ee4d0055e.JPG)
-
 It is powered by Meteor and Node.js, supplying a user interface in web browser.  It connects by USB to a Motorola DS457 barcode scanner and gphoto2-compatible camera. It also optionally sends data to [ecolor](https://github.com/intron/ecolor), a sister meteor app that presents live visualizations of the aggregated measurements.
 
 Both apps were developed for a prototype biotech exhibit at [The Tech Museum of Innovation](http://www.thetech.org/) in San Jose.
