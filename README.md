@@ -11,11 +11,11 @@ Participants at the exhibit transform lab bacteria with a pool of ~900 different
 More information about the biological side of this project will be available at http://2014.igem.org/Team:The_Tech_Museum after Oct 30 2014.
 
 ## Requirements:
-- meteor 
+- [meteor.js](http://meteor.com)
+- barcode scanner, we used [Motorola DS457](http://www.motorolasolutions.com/US-EN/Business+Product+and+Services/Bar+Code+Scanning/Fixed+Mount+Scanners/DS457_US-EN) [vendor software](https://portal.motorolasolutions.com/Support/US-EN/Resolution?solutionId=5265&productDetailGUID=210e4a4651a30410VgnVCM10000081c7b10aRCRD&detailChannelGUID=e5576e203763e310VgnVCM1000000389bd0aRCRD) (currently only working in linux)
 - gphoto2 [homebrew](https://github.com/Homebrew/homebrew/blob/master/Library/Formula/gphoto2.rb)
-- barcode scanner (currently only working in linux)
+- gphoto2-compatible camera, we used a Canon Eos Rebel T3 AKA 1100d, [~$500 new w/ kit](http://www.amazon.com/Canon-Rebel-Digital-18-55mm-Movie/dp/B004J3Y9U6/) + [AC power adaptor](http://www.amazon.com/Kapaxen-ACK-E10-Adapter-Digital-Camera/dp/B0057J3ZQK)
 - opencfu no-gui [homebrew](https://github.com/qgeissmann/homebrew-gtkquartz/blob/master/opencfu.rb)
-
 
 ## Usage
 - install requirements, buy camera & usb scanner
