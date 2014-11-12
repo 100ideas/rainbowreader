@@ -21,6 +21,7 @@ More information about the biological side of this project will be available at 
 - install requirements, buy camera & usb scanner
 - clone repo
 - update `server/lib/settings.js` to disable opencfu, barcode scanner, and gphoto calls as needed
+- create a writable folder to store photos to, and set this location in `server/lib/settings.js`
 - set `$METEOR_ENV` as desired
 - start meteor (it will need to be restarted after initializing npm meteor package)
 - read [the instruction manual](https://github.com/intron/rainbowreader/blob/master/RainbowReader_Instruction_Manual.txt);
@@ -56,3 +57,6 @@ public/                    # <- static files, such as images, that are served di
 
 tests/                     # <- unit test files (won't be loaded on client or server)
 ```
+
+## Architecture (in progress)
+Rainbow Reader stores photos locally to disk in a location set in the server settings file.  A meteor hook hosts the contents of this folder at the URL /photos.
