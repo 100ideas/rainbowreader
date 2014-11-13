@@ -1,6 +1,7 @@
 Template.plateRareColors.events({
   'click #rareColorsButton': function() {
-    var transitionTime = Meteor.settings.public.reticuleDuration || 2000;
+    var transitionTime = Meteor.settings.public.reticuleDuration || 2000
+    console.log('inserting Experiment in db')
     Meteor.call('insertExperiment')
     Meteor.setTimeout(function() {
       $('#bg-photo-container').addClass('blurred') 

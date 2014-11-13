@@ -2,7 +2,10 @@
 Meteor.startup(function () {
 
   // don't need static server if we're not on museum ubuntu box
-  if (Meteor.settings.public.environment === 'museum') StaticServer.add('/photos', '/photos/');
+  if (Meteor.settings.public.environment === 'museum') {
+    var localPhotosPath = Meteor.settings.public.platePhotosPath || '/photos/';
+    StaticServer.add('/photos', localPhotosPath);
+  }
 
   // initialize barcode scanner
   // and write barcodes to workstationSession
@@ -43,7 +46,7 @@ Meteor.methods({
     // copy all the fields into a record in Experiments (used by the visualization)
     var record = WorkstationSessions.findOne(workstationSession);
     Experiments.insert(record);
-
+    console.log('new experiment inserted into db');
 
   },
   takeAndAnalyzePhoto: function(plateBarcode) {

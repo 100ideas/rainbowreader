@@ -1,3 +1,6 @@
+// DEPRECATED FILE: picture and colonyData uploading has been replaced by writing to mongodb
+// This code may be useful in future if we upload data to a separate external server.
+
 var request = Meteor.npmRequire('request');
 var Stream = Meteor.npmRequire('stream');
 var fs = Meteor.npmRequire('fs');
