@@ -31,6 +31,7 @@ listenForBarcodes = function(callback) {
       if (error) {
         console.log("\tshit went down in barcodeDeviceListener...");
         console.log("\terror: " + error);
+        return;
       }
       console.log('\tbarcode scanner device file opened');
     

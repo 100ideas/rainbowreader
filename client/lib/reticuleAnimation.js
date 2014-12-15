@@ -143,8 +143,8 @@ function drawReticle(selector, duration) {
       tracker.soFar++;
       if (tracker.soFar > tracker.howMany) {
         // console.log("d3 end of animation? soFar: " + tracker.soFar + " howMany: " + tracker.howMany);
-        Session.set("reticulesDone",true)
-        console.log("animateReticulesOnPlatePhoto() finished, Session.reticulesDone? " + Session.get("reticulesDone"));
+        if (uiGetNextState() == 'reticlesDone') uiAdvanceState();
+        console.log("animateReticulesOnPlatePhoto() finished");
       }
       // console.log("d: " + d + "soFar: " + tracker.soFar + " howMany: " + tracker.howMany);
     })

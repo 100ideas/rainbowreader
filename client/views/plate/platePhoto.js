@@ -4,7 +4,7 @@ Template.platePhoto.created = function () {
 Template.platePhoto.rendered = function () {
 
   // reset reticuleToggle
-  Session.set("reticulesDone",false);
+  //Session.set("reticulesDone",false);
 
   // trigger background umage update when photo us available
   var photoURL = getSessionDocument().photoURL

@@ -39,7 +39,7 @@ Template.adminStatus.helpers({
     // if (!ws) return "";
     // ws.hasOwnProperty("plateBarcode") ? ws.plateBarcode : "";
     // need to return a cursor for reactivity?
-    return [WorkstationSessions.findOne(workstationSession).plateBarcode];
+    return [''];//[WorkstationSessions.findOne(workstationSession).plateBarcode];
   },
 })
 

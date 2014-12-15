@@ -1,3 +1,10 @@
+
+// takes barcode and determines whether it's plateBarcode or userBarcode
+function determineBarcodeType(barcode) {
+  if (barcode[0] == '9') return 'userBarcode';
+  return 'plateBarcode';
+}
+
 // code to run on server at startup
 Meteor.startup(function () {
 
@@ -21,6 +28,10 @@ Meteor.startup(function () {
         var field = {};
         field[name] = barcode;
         WorkstationSessions.update(workstationSession, {$set: field});
+        
+        // signal browser that user ticket barcode has been received
+        // TODO in future, we may wait for plate barcode as well
+        if (uiGetState() === 'introduction') uiAdvanceState();
       }
       catch(ex) {
         console.log('exception updating workstationSession: ' + ex);
@@ -35,6 +46,8 @@ Meteor.methods({
     console.log('server/main.js createNewWorkStationSession\n\told workstationSession: ' + workstationSession);
     WorkstationSessions.remove({});   //clear previous session documents
     workstationSession = WorkstationSessions.insert({dateCreated: Date.now()});
+    uiResetState(); // probably unnecessary; can just create session doc with first state, and use null to indicate 'loading'
+    uiAdvanceState();
     console.log('\tnew workstationSession: ' + workstationSession);
     return workstationSession;
   },
@@ -70,6 +83,7 @@ Meteor.methods({
 
         console.log("\tset WorkstationSession photoURL: " + photoURL);
         WorkstationSessions.update(workstationSession, {$set: {photoURL: photoURL}});
+        uiAdvanceState();
 
         runOpenCFU(photoPath, Meteor.bindEnvironment(
           function(colonyData) {
@@ -77,6 +91,7 @@ Meteor.methods({
             //WorkstationSessions.update(workstationSession, {$set: {colonyData: colonyData}});
             console.log("\tOpenCFU found " + colonyData.length + " colonies")
             analyzeColonies(colonyData);
+            uiAdvanceState();
           }
         ));
 
@@ -85,8 +100,3 @@ Meteor.methods({
   }
 });
 
-// takes barcode and determines whether it's plateBarcode or userBarcode
-function determineBarcodeType(barcode) {
-  if (barcode[0] == '9') return 'userBarcode';
-  return 'plateBarcode';
-}

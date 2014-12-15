@@ -33,23 +33,25 @@ Template.plate.routes = function () {
 
 Template.plateHello.events({
   'click button': function () {
-    Session.set("helloButtonClicked",true)
+    //Session.set("helloButtonClicked",true)
     fakeUserBarcode();
-   }
+    uiAdvanceState();
+  }
 });
 
 Template.plateIntroduction.events({
   'click button': function () {
     console.log('plateIntroduction button clicked');
-    Session.set("introductionButtonClicked",true);
-
+    //Session.set("introductionButtonClicked",true);
+    uiAdvanceState();
   }
 });
 
 Template.plateInstructions.events({
   'click button': function () {
     console.log('plateInstructions: taking photo');
-    Session.set("instructionsButtonClicked",true);
+    //Session.set("instructionsButtonClicked",true);
+    uiAdvanceState();
     Meteor.call('takeAndAnalyzePhoto', getSessionDocument().plateBarcode);
   }
 });
@@ -58,7 +60,8 @@ Template.plateAnalysis.events({
   'click button': function() {
     var rareColors = getSessionDocument().colonyData.slice(0,3).map(function(d) {return d.ColorName});
     // console.log(rareColors);
-    Session.set("analysisButtonClicked",true);
+    //Session.set("analysisButtonClicked",true);
+    uiAdvanceState();
     d3.select('#bg-photo-container svg').selectAll('circle')
       .transition()
       .style('stroke', function(d) {
@@ -75,6 +78,7 @@ Template.plateAnalysis.events({
 
 Template.plateRareColors.events({
   'click button': function() {
-    Session.set("rareColorsButtonClicked",true);
+    //Session.set("rareColorsButtonClicked",true);
+    uiAdvanceState();
   }
 });

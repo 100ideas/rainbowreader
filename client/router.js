@@ -1,3 +1,17 @@
+// template functions for determining what state we're in
+// see main.js in root for states
+
+// returns the current state as a string
+Template.plate.uiGetState = function() {
+    return uiGetState();
+}
+
+// move to next state; you may want to check that you're in a specific state before calling this
+Template.plate.uiAdvanceState = function() {
+    return uiAdvanceState();
+}
+
+/*
 ///////////////////////////////////////////////////////////////////////////////
 // STATE MACHINE / WORKFLOW template functions
 // These are evaluated by the html to see what we should be showing when.
@@ -84,3 +98,4 @@ Template.plate.showPlateWallUpdate = function () {
   //return timer - doc.dateCreated > 1000; // check to see if colorname is set
   return (Session.get("rareColorsButtonClicked"));
 }
+*/

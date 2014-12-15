@@ -26,9 +26,10 @@ Template.registerHelper('getSessionDocument', function() {
 });
 
 Template.registerHelper('barcodeSuccess', function() {
-  var r = {};
-  r.user = getSessionDocument().userBarcode ? "success" : "";
-  r.plate = getSessionDocument().plateBarcode ? "success" : "";
+  var r = {user: '', plate: ''};
+  var doc = getSessionDocument();
+  if (doc && doc.userBarcode) r.user = "success";
+  if (doc && doc.plateBarcode) r.plate = "success";
   return r;
 });
 

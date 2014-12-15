@@ -18,8 +18,8 @@
 
 var settings = {
   museum: {
-    "gphoto2":                true,
-    "opencfuPath":            'opencfu',
+    "gphoto2":                false,
+    "opencfuPath":            undefined,
     "scannerPath":            '/dev/usbscanner',
     "platePhotosPath":        '/photos/',
     "fakeColonyDataFile":     '/code/rainbowreader/test/colonyData.json',
