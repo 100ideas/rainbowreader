@@ -53,6 +53,10 @@ Meteor.methods({
     takePhoto(plateBarcode, Meteor.bindEnvironment(
 
       function(photoPath) {
+        /*if(!photoPath) {
+          messageBox("Error taking photo.");
+          return;
+        }*/
 
         console.log("server/main.js: takeAndAnalyzePhoto");
 
