@@ -84,6 +84,8 @@ animateReticulesOnPlatePhoto = function animatePetriDish() {
 }
 
 function drawReticle(selector, duration) {
+  var reticleColor = 'yellow';
+
   var reticleWidth = '1px';
   var reticleRadiusMultiplier = 1.7; // how much bigger the reticle is than the colony
   var reticleInsideFraction = 0.4;   // portion of the reticle radius that the lines extend inside the reticle
@@ -103,7 +105,7 @@ function drawReticle(selector, duration) {
   function reticleLine(selector, x1, y1, x2, y2) {
     selector
       .append("line")
-      .style('stroke', 'cyan')
+      .style('stroke', reticleColor)
       .style('stroke-width', reticleWidth)
       .attr("x1", function(d) {return d.X + x1 * d.Radius * reticleInitialMultiplier})
       .attr("y1", function(d) {return d.Y + y1 * d.Radius * reticleInitialMultiplier})
@@ -128,7 +130,7 @@ function drawReticle(selector, duration) {
   selector
     .append('circle')
     .style('fill', 'none')
-    .style('stroke', 'cyan')
+    .style('stroke', reticleColor)
     .style('stroke-width', reticleWidth)
     .attr('r', 0)//function(d) {return (d.Radius * reticleRadiusMultiplier)})
     .attr('cx', function(d) {return d.X})

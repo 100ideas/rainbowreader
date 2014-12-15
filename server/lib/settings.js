@@ -22,8 +22,8 @@ var settings = {
     "opencfuPath":            'opencfu',
     "scannerPath":            '/dev/usbscanner',
     "platePhotosPath":        '/photos/',
-    "fakeColonyDataFile":     '/code/rainbowreader/test/colonyData.json',
-    "fakeColonyPhotoFile":    'public/photos/small.jpg',
+    "fakeColonyDataFile":     process.env.PWD + '/test/colonyData.json',
+    "fakeColonyPhotoFile":    process.env.PWD + '/public/photos/small.jpg',
     public: {
       "photoWidth":             4272,   // camera default is 4272x2848
       "photoHeight":            2848,   // small.jpg is 2100x1400
