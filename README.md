@@ -6,21 +6,24 @@ It is powered by Meteor and Node.js, supplying a user interface in web browser. 
 
 Both apps were developed for a prototype biotech exhibit at [The Tech Museum of Innovation](http://www.thetech.org/) in San Jose.
 
+![](http://2014.igem.org/wiki/images/9/9a/PROJECT_SoftwareDetails3_-_RR_screenshot1.png)
+
 Participants at the exhibit transform lab bacteria with a pool of ~900 different plasmids, each containing a red, green, and blueish reporter under individual control of a randomly selected promoter-rbs from a set of 9 spanning ~2.5 orders of expression power. Each of the 900 plasmids should theoretically drive a unique expression ratio of the three reporter genes, causing each colony to appear with a unique hue, similar to the operation of an RGB LED. Which combinations will fail? Which colors won't we see? This software and the participation of visitors at the Tech Museum is designed to find that out.
 
 More information about the biological side of this project will be available at http://2014.igem.org/Team:The_Tech_Museum after Oct 30 2014.
 
 ## Requirements:
-- meteor 
+- [meteor.js](http://meteor.com)
+- barcode scanner, we used [Motorola DS457](http://www.motorolasolutions.com/US-EN/Business+Product+and+Services/Bar+Code+Scanning/Fixed+Mount+Scanners/DS457_US-EN) [vendor software](https://portal.motorolasolutions.com/Support/US-EN/Resolution?solutionId=5265&productDetailGUID=210e4a4651a30410VgnVCM10000081c7b10aRCRD&detailChannelGUID=e5576e203763e310VgnVCM1000000389bd0aRCRD) (currently only working in linux)
 - gphoto2 [homebrew](https://github.com/Homebrew/homebrew/blob/master/Library/Formula/gphoto2.rb)
-- barcode scanner (currently only working in linux)
+- gphoto2-compatible camera, we used a Canon Eos Rebel T3 AKA 1100d, [~$500 new w/ kit](http://www.amazon.com/Canon-Rebel-Digital-18-55mm-Movie/dp/B004J3Y9U6/) + [AC power adaptor](http://www.amazon.com/Kapaxen-ACK-E10-Adapter-Digital-Camera/dp/B0057J3ZQK)
 - opencfu no-gui [homebrew](https://github.com/qgeissmann/homebrew-gtkquartz/blob/master/opencfu.rb)
-
 
 ## Usage
 - install requirements, buy camera & usb scanner
 - clone repo
 - update `server/lib/settings.js` to disable opencfu, barcode scanner, and gphoto calls as needed
+- create a writable folder to store photos to, and set this location in `server/lib/settings.js`
 - set `$METEOR_ENV` as desired
 - start meteor (it will need to be restarted after initializing npm meteor package)
 - read [the instruction manual](https://github.com/intron/rainbowreader/blob/master/RainbowReader_Instruction_Manual.txt);
@@ -56,3 +59,6 @@ public/                    # <- static files, such as images, that are served di
 
 tests/                     # <- unit test files (won't be loaded on client or server)
 ```
+
+## Architecture (in progress)
+Rainbow Reader stores photos locally to disk in a location set in the server settings file.  A meteor hook hosts the contents of this folder at the URL /photos.

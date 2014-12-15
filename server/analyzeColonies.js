@@ -4,31 +4,30 @@ analyzeColonies = function (colonyData) {
   // findRarestColor: compare current colonies to all in db and pick rarest
   //                  update colonydata.rarestColorIndex with array indices
 
-  // TODO: retrieve colonyData from db query instead of it being passed in,
+  // TODO: perhaps retrieve colonyData from db query instead of it being passed in,
   // in case some other process has updated the db before us 
   
   console.log("server/analyzeColones: ");
+  var lastColorName = "null";
 
   // assign each colony a color name
   colonyData.forEach(function(colony, index) {
     var rgb = [colony.Rmean, colony.Gmean, colony.Bmean];
     var name = getNameForColor(rgb);
     colony.ColorName = name;
+    lastColorName = name;
     //console.log('index ' + index + ' setting: ' + field);
     //var field = '"colonyData.' + index + '.ColorName"';
     //WorkstationSessions.update(workstationSession, {$set: {field: name}});
   });
 
+  console.log("\tset color names; last one was: " + lastColorName);
   calculateColorRarity(colonyData);
 
   // Updating the color on colonyData one at a time triggers observeChanges every time.
   // So insert modified data in one update... (and hope some one else isn't trying to modifying data at the same time).
   WorkstationSessions.update(workstationSession, {$set: {colonyData: colonyData}});
-  console.log("\tset color names; last one was: " +  WorkstationSessions.findOne(workstationSession).colonyData.pop().ColorName);
-
-//  // copy all the fields into a record in Experiments (used by the visualization)
-//  var record = WorkstationSessions.findOne(workstationSession);
-//  Experiments.insert(record);
+  console.log('updated db with colony data');
 }
 
 // This function takes and modifies an array of colonyData.

@@ -36,6 +36,11 @@ var settings = {
 // make a deep copy of settings.museum then replace properties as desired.
 // these are good defaults for a dev box, but notice opencfu is defined above.
 
+settings.museum_no_ecolor = lodash.merge( {}, settings.museum, {
+  // settings to override go here
+  //"opencfuPath":            false
+}); 
+
 settings.development_osx = lodash.merge( {}, settings.museum, {
   "gphoto2":                false,
   "scannerPath":            false,
