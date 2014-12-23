@@ -5,6 +5,18 @@ Template.plate.created = function () {
 Template.plate.rendered = function () {
   console.log("plate.js: Template.plate rendered... ");
   createBackgroundSVG();
+
+  WorkstationSessions.find().observe({
+    changed: function(newDocument, oldDocument) {
+      if (newDocument.photoError && !oldDocument.photoError) {
+        alert("There was a problem taking your photo.  Try again, or ask for help.");
+        
+        WorkstationSessions.update(workstationSession, {$unset: {photoError: ''}});
+        console.log("error taking photo: going back a step");
+        Session.set("instructionsButtonClicked", false);
+      }
+    }
+  })
 }
 
 Template.plate.routes = function () {

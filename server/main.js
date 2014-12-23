@@ -50,13 +50,16 @@ Meteor.methods({
 
   },
   takeAndAnalyzePhoto: function(plateBarcode) {
-    takePhoto(plateBarcode, Meteor.bindEnvironment(
+    // takePhoto will return a bool indicating success
+    // return its result to the caller in the browser in case the camera fails
+    return takePhoto(plateBarcode, Meteor.bindEnvironment(
 
       function(photoPath) {
-        /*if(!photoPath) {
-          messageBox("Error taking photo.");
+        if(!photoPath) {
+          console.log("Error taking photo.");
+          WorkstationSessions.update(workstationSession, {$set: {photoError: true}});
           return;
-        }*/
+        }
 
         console.log("server/main.js: takeAndAnalyzePhoto");
 

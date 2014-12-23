@@ -21,7 +21,7 @@ var platePhotosPath = Meteor.settings.platePhotosPath;
 
 // run gphoto2 and save photo to disk
 // create filename with timestamp and plateBarcode
-// callback takes filename of saved photo
+// callback takes filename of saved photo, or null if there was an error
 takePhoto = function(plateBarcode, callback) {
   var filename = platePhotosPath + Date.now().toString() + '_' + plateBarcode + '.jpg';
   var cmdline = "gphoto2 --capture-image-and-download --filename=" + filename;
@@ -35,6 +35,7 @@ takePhoto = function(plateBarcode, callback) {
         if (error) console.log("error: " + error);
         if (stdout) console.log("stdout: " + stdout);
         if (stderr) console.log("stderr: " + stderr);
+        filename = null;
       }
       callback(filename);
     }));
