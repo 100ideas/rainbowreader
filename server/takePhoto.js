@@ -30,7 +30,7 @@ takePhoto = function(plateBarcode, callback) {
   if (Meteor.settings.gphoto2) {
     console.log("takePhoto.js: capturing photo with gphoto2 command\n\t" + cmdline);
     var child = exec(cmdline, Meteor.bindEnvironment( function (error, stdout, stderr) {
-      if (error) {
+      if (error || stderr) {
         console.log("shit went down in the gphoto2...");
         if (error) console.log("error: " + error);
         if (stdout) console.log("stdout: " + stdout);
