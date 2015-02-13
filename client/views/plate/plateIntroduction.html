@@ -1,22 +1,26 @@
 <template name="plateIntroduction">
-<div class="container plate-views">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="page-header">
-        <h1>Pick a plate and scan its barcode to begin...</h1>
+  <div class="container plate-views">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="page-header">
+          <h1>To begin... pick a plate of rainbow colored <strong style="color:magenta;">B</strong><strong style="color:red;">A</strong><strong style="color:orange;">C</strong><strong style="color:yellow;">T</strong><strong style="color:green;">E</strong><strong style="color:teal;">R</strong><strong style="color:blue;">I</strong><strong style="color:purple;">A</strong>!</h1>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-8" id="plateIntroductionText">
+        <!--       <li class="list-group-item {{barcodeSuccess.user}}">your barcode: {{getSessionDocument.userBarcode}}</li>
+        <li class="list-group-item {{barcodeSuccess.plate}}">plate barcode: {{getSessionDocument.plateBarcode}}</li> -->
+        <h1 class="text-justify lead">1. Scan plate barcode.</h1>
+        <h1 class="text-justify lead">2. Remove plate lid. Set it down.</h1>
+        <h1 class="text-justify lead">3. Flip plate over. Put it <u><strong>UPSIDE DOWN</strong></u> in the tray.</h1>
+        <h1 class="text-justify lead">4. Slide tray into the viewing station.</h1>
+        <h1 class="text-justify lead">5. Look at your bacteria <strong style="color:yellow">GLOW!!</strong></h1><br/>
+        <button class="btn btn-warning btn-fat">How does it work?</button>
+      </div>
+      <div class="col-md-4">
+        <img src="" class="img-responsive">
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-6" id="plateIntroductionText">
-      <h1 class="text-justify lead">These plates have bacteria growing on them.</h1> 
-      <p class="text-justify">We've put DNA with color genes for <strong style="color:red;">RED</strong>, <strong style="color:blue;">BLUE</strong> and <strong style="color:yellow;">YELLOW</strong> proteins into them. As the bacteria grew, they made different amounts of each color protein. Like mixing different colors of paint, we can get many colors of BACTERIA!</p>
-      <h1 class="text-justify lead">We need <strong>your help</strong> to measure all the colors.</h1> 
-      <button class="btn btn-warning btn-fat">Let's get started!</button>
-    </div>
-    <div class="col-md-6">
-      <img src="images/genetic_diagram.png" class="img-responsive">
-    </div>
-  </div>
-</div>
 </template>

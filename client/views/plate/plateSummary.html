@@ -1,41 +1,41 @@
 <template name="plateSummary">
 
-<div class="row">
+  <div class="row">
 
-   <div class="col-sm-4 col-sm-offset-1">
-    {{#if showPlatePhoto}}
+    <div class="col-sm-4 col-sm-offset-1">
+      {{#if showPlatePhoto}}
       {{> platePhoto}}
-    {{/if}}
-   </div>
+      {{/if}}
+    </div>
 
-   <div class="col-sm-4 col-sm-offset-2">
-    {{#if showPlateAnalysis}}  
+    <div class="col-sm-4 col-sm-offset-2">
+      {{#if showPlateAnalysis}}
       {{> plateAnalysis}}
-    {{else}}
+      {{else}}
       no colonyData to analyze.
-    {{/if}}
-   </div>
+      {{/if}}
+    </div>
 
-</div>
+  </div>
 
-{{#if showPlateAnalysis}}  
+  {{#if showPlateAnalysis}}
   {{> plateColonySpectrum}}
-{{/if}}
+  {{/if}}
 
-<div class="row">
+  <div class="row">
 
-   <div class="col-sm-4 col-sm-offset-1">
-    {{#if showPlateRareColors}}
+    <div class="col-sm-4 col-sm-offset-1">
+      {{#if showPlateRareColors}}
       {{> plateRareColors}}
-    {{/if}}
-   </div>
+      {{/if}}
+    </div>
 
-   <div class="col-sm-4 col-sm-offset-2"> 
-    {{#if showPlateWallUpdate}}
+    <div class="col-sm-4 col-sm-offset-2">
+      {{#if showPlateWallUpdate}}
       {{> plateWallUpdate}}
-    {{/if}}    
-   </div>
+      {{/if}}
+    </div>
 
-</div>
+  </div>
 
 </template>

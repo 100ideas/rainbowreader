@@ -1,21 +1,23 @@
 <template name="plateInstructions">
-<div class="container plate-views" id="plateInstructions">
-  <div class="row">
-    <div class="col-md-8">
-      <div class="page-header">
-        <h1>Take a picture of your plate<br/></h1>
-      </div>
+  <div class="container plate-views" id="plateInstructions">
+    <div class="row">
 
-      <ul class="list-group">
-  <!--       <li class="list-group-item {{barcodeSuccess.user}}">your barcode: {{getSessionDocument.userBarcode}}</li>
-        <li class="list-group-item {{barcodeSuccess.plate}}">plate barcode: {{getSessionDocument.plateBarcode}}</li> -->
-        <li class="list-group-item">1. Remove the lid</li>
-        <li class="list-group-item">2. Open the clear cover on the UV box</li>
-        <li class="list-group-item">3. Place the plate UPSIDE DOWN in the center of the UV box</li>
-        <li class="list-group-item">4. Close the clear cover</li>
-      </ul>
-      <button type="button" class="btn btn-warning btn-fat">take photo <i class="fa fa-camera-retro"></i></button>
-    </div>  
+      <div class="col-md-6">
+        <img src="images/genetic_diagram.png" class="img-responsive">
+        <div class="page-header">
+          <h1 class="text-center">DNA with genes for making <strong style="color:red;">RED</strong>, <strong style="color:blue;">BLUE</strong>, and <strong style="color:yellow;">YELLOW</strong> proteins was put into the bacteria.</h1><br/>
+          <h1 class="text-center">Mixing different amounts of these color proteins makes many <strong style="color:magenta;">B</strong><strong style="color:red;">A</strong><strong style="color:orange;">C</strong><strong style="color:yellow;">T</strong><strong style="color:green;">E</strong><strong style="color:teal;">R</strong><strong style="color:blue;">I</strong><strong style="color:purple;">A</strong> colors!</h1>
+        </div>
+      </div>
+      <div class="col-md-1">
+      </div>
+      <div class="col-md-5">
+        <div class="page-header">
+          <h1>We need <strong>YOUR</strong> help to find new bacteria colors!</h1>
+        </div><br/>
+        <h1>  1. Cover viewing station with black cloth</h1><br/>
+        <button type="button" class="btn btn-warning btn-fat">Take Photo! <i class="fa fa-camera-retro"></i></button>
+      </div>
+    </div>
   </div>
-</div>
 </template>

@@ -1,15 +1,19 @@
 <!-- included by platePhoto -->
 <template name="plateAnalysis">
 
-<div class="page-header">
-  <h1>Plate Analysis <small>{{displayTime}}</small></h1>
-</div>
+  <div class="col-md-10">
+    <div class="page-header">
+      <h1>Your Plate Analysis <br/> <small>{{displayTime}}</small></h1>
+    </div>
+  </div>
 
-<ul class="list-group stats" id="plate-stats-list-group">
-  <li class="list-group-item"><h2>Colonies detected: <strong>{{colonyCount}}</strong></h2></li>
-  <li class="list-group-item"><h2>Unique colors: <strong>{{colorCount}}</strong></h2></li>
-  <li class="list-group-item"><h3>With your help, we've measured <strong>{{totalColonies}}</strong> colonies and disovered <strong>{{colorCounts.uniqueColors}}</strong> unique colors so far!</h3></li>
-  <li><button type="button" class="btn btn-warning btn-fat">Rare Colors Detected!</button></li>
-</ul>    
+  <div class="col-md-10">
+    <ul class="list-group stats" id="plate-stats-list-group">
+      <li class="list-group-item"><h2>Bacteria colonies found: <strong style="color:yellow">{{colonyCount}}</strong></h2></li>
+      <li class="list-group-item"><h2>Unique colors: <strong style="color:yellow">{{colorCount}}</strong></h2></li><br/><br/><br/>
+      <li class="list-group-item"><h3>So far, a total of <strong>{{totalColonies}}</strong> colonies have been measured and <strong>{{colorCounts.uniqueColors}}</strong> unique colors discovered!</h3></li>
+      <li><button type="button" class="btn btn-warning btn-fat">Show my rare colors!</button></li>
+    </ul>
+  </div>
 
 </template>

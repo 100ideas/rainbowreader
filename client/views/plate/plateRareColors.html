@@ -1,33 +1,33 @@
 <template name="plateRareColors">
-<div class="container plate-views">
-  <div class="row">
-    <div class="col-md-8" id="rare-colors">
-      {{> rareColorCard}}
-      {{animateIn}}
+  <div class="container plate-views">
+    <div class="row">
+      <div class="col-md-8" id="rare-colors">
+        {{> rareColorCard}}
+        {{animateIn}}
+      </div>
     </div>
+
+    <div class="row">
+      <div class="col-md-5">
+        <button type="button" class="btn btn-warning btn-fat rareColorCard" id="rareColorsButton">Add my data to the group's...</button>
+      </div>
+    </div>
+
   </div>
-
-  <div class="row">
-    <div class="col-md-6">
-      <button type="button" class="btn btn-warning btn-fat rareColorCard" id="rareColorsButton">Onward</button>
-    </div>  
-  </div>  
-
-</div>
 </template>
 
 
 <template name="rareColorCard">
   {{#each listRareColors}}
   <div class="rareColorCard clearfix">
-    <div id="{{idName ColorName}}" class="colony-ball"></div> 
-      <div class="colony-ball-label">
-        <h1>{{ColorName}}</h1>
-        <h3>Only found {{NumberOfColoniesThisColor}} times!</h3>
-      </div>          
-      {{drawCircle Rmean Gmean Bmean ColorName}}
+    <div id="{{idName ColorName}}" class="colony-ball"></div>
+    <div class="colony-ball-label">
+      <h1>{{ColorName}}</h1>
+      <h3>Only found {{NumberOfColoniesThisColor}} times!</h3>
+    </div>
+    {{drawCircle Rmean Gmean Bmean ColorName}}
   </div>
-{{/each}}
+  {{/each}}
 
-  
+
 </template>
