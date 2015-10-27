@@ -104,6 +104,20 @@ if (!process.env.METEOR_SETTINGS) {
 
   Meteor.settings = settings[environment];
   Meteor.settings.public.environment = environment;  // nice to know later on
+  Meteor.settings.public.status = [
+    {"name": "plate camera", "disabled": !Meteor.settings.gphoto2, "msg": "can't find gphoto2, plate imaging disabled. Using demo picture " + Meteor.settings.fakeColonyPhotoFile},
+    {"name": "barcode scanner", "disabled": !Meteor.settings.scannerPath, "msg": "can't connect to barcode scanner, ticket and plate barcode scanning disabled"},
+    {"name": "openCFU", "disabled": !Meteor.settings.opencfuPath, "msg": "can't find openCFU binary, computer vision disabled. using demo data " + Meteor.settings.fakeColonyData},
+  ];
+
+
+  // 
+  // ["gphoto2", "scannerPath", "opencfuPath"].forEach(function(mod){
+  //   Meteor.settings.public.modules.push({
+  //     "name": mod,
+  //     "disabled": !Meteor.settings[mod]
+  //   });
+  // });
 
   // hacky trick
   if (Meteor.settings && Meteor.settings.public) {

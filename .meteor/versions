@@ -40,6 +40,7 @@ mongo@1.0.8
 npm-container@1.0.0
 observe-sequence@1.0.3
 ordered-dict@1.0.1
+pcel:toastr@1.0.1
 percolate:velocityjs@1.0.0
 random@1.0.1
 reactive-dict@1.0.4

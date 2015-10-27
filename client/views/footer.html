@@ -7,24 +7,24 @@
 
         <div id="admin-bar">
           <button type="button" class="btn btn-sm btn-primary" id="admin-button"><i class="fa fa-lg fa-wrench"></i></button>
-           
+
             <div id="admin-buttons">
               <button type="button" class="btn btn-sm btn-danger" id="restart">restart</button>
               <div class="btn-group">
                 <button type="button" class="btn btn-sm btn-primary" id="userbc">user <i class="fa fa-lg fa-barcode"></i></button>
                 <button type="button" class="btn btn-sm btn-primary" id="platebc">plate <i class="fa fa-lg fa-barcode"></i></button>
-                <button type="button" class="btn btn-sm btn-warning" id="deletebc"><i class="fa fa-lg fa-trash-o"></i></button>   
-              </div>           
+                <button type="button" class="btn btn-sm btn-warning" id="deletebc"><i class="fa fa-lg fa-trash-o"></i></button>
+              </div>
               <button type="button" class="btn btn-sm btn-primary" id="nobg">disable bg</button>
-              <button type="button" class="btn btn-sm btn-warning" id="bill">bill me</button>   
+              <button type="button" class="btn btn-sm btn-warning" id="bill">bill me</button>
             </div>
 
           </div>
-        </div>  
+        </div>
 
         <div class="col-sm-2 col-sm-offset-2" id="admin-status-container">
-        {{> adminStatus}}
-        </div> 
+        <!-- {{> adminStatus}} -->
+        </div>
 
     </div>
   </div>
@@ -36,11 +36,12 @@
 
   <div class="pull-right" id="admin-status">
     {{#each thisArray}}
+    <!-- {{#each Session.get.adminArray}} -->
       <span class="barcode-status">
         <i class="fa fa-child fa"></i> {{this}}
-      </span> 
+      </span>
     {{/each}}
-    </div>   
+    </div>
 
 <!--   <i class="fa fa-child fa-2x"></i>
   <i class="fa fa-flask fa-2x"></i>
@@ -50,6 +51,4 @@
   <i class="fa fa-barcode fa-2x"></i>
   <i class="fa fa-spinner fa-spin fa-2x"></i>   -->
 
-</template> 
-
-
+</template>

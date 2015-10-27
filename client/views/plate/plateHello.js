@@ -3,9 +3,13 @@
 Template.plateHello.notMuseum = function(){
   return Meteor.settings.public.environment != 'museum';
 }
-Template.plateHello.helpers({
-  userBarcode: function () {
-    var ws = WorkstationSessions.findOne(workstationSession);
-    return ws.userBarcode;
-  }
-});
+
+Template.plateHello.rendered = function() {
+  Meteor.settings.public.status.forEach(function(m,i){
+    if(m.disabled){
+      Meteor.setTimeout(function(){
+        toastr.error(m.msg, m.name, {"timeOut": "10000"});
+      }, 500 * (i+1))
+    }
+  })
+}

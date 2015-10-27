@@ -10,7 +10,7 @@ Template.plate.rendered = function () {
     changed: function(newDocument, oldDocument) {
       if (newDocument.photoError && !oldDocument.photoError) {
         alert("There was a problem taking your photo.  Try again, or ask for help.");
-        
+
         WorkstationSessions.update(workstationSession, {$unset: {photoError: ''}});
         console.log("error taking photo: going back a step");
         Session.set("instructionsButtonClicked", false);
@@ -44,9 +44,9 @@ Template.plate.routes = function () {
 // EVENT HANDLERS
 
 Template.plateHello.events({
-  'click button': function () {
+  'click #startbutton': function () {
     Session.set("helloButtonClicked",true)
-    fakeUserBarcode();
+    generateFakeBarcodes();
    }
 });
 

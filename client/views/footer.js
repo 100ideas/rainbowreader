@@ -10,13 +10,13 @@ Template.footer.events({
    },
    'click #deletebc': function () {
     deletePlateBarcode();
-   },   
+   },
    'click #restart': function () {
     location.reload();
-   },      
+   },
    'click #nobg': function () {
     $("#nobg").text(changeBackgroundImg());
-   },     
+   },
   'click #bill': function () {
     $("#bill").text(changeBackgroundImg('bill'));
    }
@@ -35,11 +35,14 @@ deletePlateBarcode = function () {
 
 Template.adminStatus.helpers({
   thisArray: function() {
-    var ws = WorkstationSessions.findOne(workstationSession);
-    // if (!ws) return "";
-    // ws.hasOwnProperty("plateBarcode") ? ws.plateBarcode : "";
+    var ws = WorkstationSessions.findOne(workstationSession) || {};
     // need to return a cursor for reactivity?
-    return [WorkstationSessions.findOne(workstationSession).plateBarcode];
+    // return [WorkstationSessions.findOne(workstationSession).plateBarcode];
+    return [
+      ws.plateBarcode || 'plate_barcode_missing',
+      ws.userBarcode  || 'user_barcode_missing'
+    ];
+    return Session.get.adminStatusArray;
   },
 })
 
@@ -69,7 +72,7 @@ Template.adminStatus.rendered = function () {
           $node.remove();
           $node = null;
         }
-      });      
+      });
     }
   };
 

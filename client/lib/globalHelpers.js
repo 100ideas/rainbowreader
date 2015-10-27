@@ -1,3 +1,11 @@
+// configure toasts
+// https://github.com/pcel/meteor-toastr
+toastr.options = {
+  "positionClass": "toast-bottom-right",
+  "timeOut": "5000",
+  "closeButton": true,
+}
+
 // Global function for retrieving state.
 // There should only be one document in this collection.
 // used to be in client/main.js - mac
@@ -34,10 +42,13 @@ Template.registerHelper('barcodeSuccess', function() {
 
 // generates and inserts two random barcodes into current workstationSession
 generateFakeBarcodes = function () {
-  var fakeBarcode = 'D' + Date.now();
+  var u = 'U' + Date.now().toString().slice(0,6);
+  var p = 'P' + Date.now().toString().slice(7,13);
   console.log("generating fake barcodes for workstationSession: " + workstationSession);
-  console.log("\tuserBarcode: " + fakeBarcode + " plateBarcode: " + fakeBarcode);
-  WorkstationSessions.update(workstationSession, {$set: {userBarcode: fakeBarcode, plateBarcode: fakeBarcode}});
+  console.log("\tuserBarcode: " + u + " plateBarcode: " + p);
+  toastr.info(p, "Generated fake plate barcode");
+  toastr.info(u, "Generated fake user barcode");
+  WorkstationSessions.update(workstationSession, {$set: {userBarcode: u, plateBarcode: p}});
 }
 
 // generates and inserts either a random user or plate barcode into current workstationSession
@@ -91,11 +102,11 @@ logTemplates = function () {
   systemTemplates.forEach(function(t){console.log("\t" + t.viewName)})
 }
 
-rarecols = function () { 
-  return JSON.stringify(getSessionDocument(), function (key, value) { 
-    if (key === "colonyData") { 
-      return value.slice(0,3); 
-    } 
+rarecols = function () {
+  return JSON.stringify(getSessionDocument(), function (key, value) {
+    if (key === "colonyData") {
+      return value.slice(0,3);
+    }
     return value;
   }, 2)
 }
