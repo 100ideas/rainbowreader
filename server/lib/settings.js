@@ -1,8 +1,8 @@
 //////////////////////////////////////////////////////////////////////////////
-//// settings.js 
+//// settings.js
 ////
 //// Add custom settings for your environment below, then select them when
-//// meteor boots by setting $METEOR_ENV in your environment. Or just put 
+//// meteor boots by setting $METEOR_ENV in your environment. Or just put
 //// ALL of the settings in $METEOR_SETTINGS (doesn't inherit from defaults).
 ////
 //// inspiration: https://gist.github.com/ritikm/6999942
@@ -19,15 +19,16 @@
 var settings = {
   museum: {
     "gphoto2":                true,
-    "opencfuPath":            'opencfu',
-    "scannerPath":            '/dev/usbscanner',
-    "platePhotosPath":        '/photos/',
-    "fakeColonyDataFile":     process.env.PWD + '/test/colonyData.json',
-    "fakeColonyPhotoFile":    process.env.PWD + '/public/photos/small.jpg',
+    "opencfuPath":            'opencfu',           // make sure its in the PATH
+    "scannerPath":            '/dev/usbscanner',   // HID-mode scanner device path
+    "platePhotosPath":        '/photos/',          // ABSOLUTE URL for gphoto & opencfu
+    "fakeColonyPhotoFile":    '/photos/small.jpg', // meteor hosts everything in 'public/' at '/' from the clients perspective
+    "fakeColonyData":         'colonyData.json',   // private/ - only server can read using Assets api https://dweldon.silvrback.com/get-text
     public: {
-      "photoWidth":             4272,   // camera default is 4272x2848
-      "photoHeight":            2848,   // small.jpg is 2100x1400
-      "restartAfterWallUpdate": 15000    // how long in ms before restarting after plateShowWallUpdate
+      "photoWidth":             4272,              // camera default is 4272x2848
+      "photoHeight":            2848,              // small.jpg is 2100x1400
+      "reticuleDuration":       2000,              // how long is the entire reticule animation? defaults to 2 sec
+      "restartAfterWallUpdate": 15000,             // how long in ms before restarting the app after plateShowWallUpdate? defaults to 8 sec
     }
   }
 }
@@ -39,39 +40,46 @@ var settings = {
 settings.museum_no_ecolor = lodash.merge( {}, settings.museum, {
   // settings to override go here
   //"opencfuPath":            false
-}); 
+});
 
 settings.development_osx = lodash.merge( {}, settings.museum, {
   "gphoto2":                false,
   "scannerPath":            false,
-  "opencfuPath":            false,  
+  "opencfuPath":            false,
   "platePhotosPath":        process.env.PWD + '/public/photos/',
-  "fakeColonyDataFile":     process.env.PWD + '/test/colonyData.json',
-  "fakeColonyPhotoFile":    process.env.PWD + '/public/photos/small.jpg', // necessary cause opencfu gets confused     
-  public: { 
-    "photoWidth":           2100, 
+  public: {
+    "photoWidth":           2100,
     "photoHeight":          1400,
-    "reticuleDuration":     1
+    "reticuleDuration":     25,
+    "restartAfterWallUpdate": 3000,
   }
 });
 
-settings.development_nagle = lodash.merge( {}, settings.development_osx, {
-  // settings to override go here
-  "opencfuPath":            false
-}); 
-
-settings.alex = lodash.merge( {}, settings.development_nagle, {
-  // settings to override go here
-});
-
-// NOTE does NOT inherit from other settings, is just empty
+// NOTE does NOT inherit from other settings
 settings.production = {
-  public: {},
+  "gphoto2":                false,
+  "scannerPath":            false,
+  "opencfuPath":            false,
+  "platePhotosPath":        '/photos/',
+  "fakeColonyData":         'colonyData.json',
+  "fakeColonyPhotoFile":    '/photos/small.jpg',
+  public: {
+    "photoWidth":           2100,
+    "photoHeight":          1400,
+  },
   private: {}
 }
 
 //////////////////////////////////////////////////////////////////////////////
 // get the environment variable, pick the right config object, s
+
+console.log("settings.js: current $NODE_ENV: " + process.env.NODE_ENV);
+
+if (process.env.NODE_ENV === 'production') {
+  console.log("settings.js: detected $NODE_ENV=" + process.env.NODE_ENV);
+  console.log("\t\t + assuming production environment (meteor.com hosting?)\n\t\t$METEOR_ENV set to \'production\'");
+  process.env.METEOR_ENV = 'production';
+}
 
 if (process.env.METEOR_ENV) {
   environment = process.env.METEOR_ENV;
@@ -86,15 +94,15 @@ if (process.env.METEOR_ENV) {
 
 //////////////////////////////////////////////////////////////////////////////
 // server can access Meteor.settings
-// 
-// client can access 
+//
+// client can access
 //   - Meteor.settings.public (passed automatically to client)
 //   - __meteor_runtime_config__.PUBLIC_SETTINGS (set below, passed automatically to client)
 
 if (!process.env.METEOR_SETTINGS) {
   console.log("settings.js: $METEOR_SETTINGS not detected, using *" + environment + "* defined in server/lib/settings.js");
 
-  Meteor.settings = settings[environment]; 
+  Meteor.settings = settings[environment];
   Meteor.settings.public.environment = environment;  // nice to know later on
 
   // hacky trick

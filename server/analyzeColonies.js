@@ -5,8 +5,8 @@ analyzeColonies = function (colonyData) {
   //                  update colonydata.rarestColorIndex with array indices
 
   // TODO: perhaps retrieve colonyData from db query instead of it being passed in,
-  // in case some other process has updated the db before us 
-  
+  // in case some other process has updated the db before us
+
   console.log("server/analyzeColones: ");
   var lastColorName = "null";
 
@@ -27,7 +27,7 @@ analyzeColonies = function (colonyData) {
   // Updating the color on colonyData one at a time triggers observeChanges every time.
   // So insert modified data in one update... (and hope some one else isn't trying to modifying data at the same time).
   WorkstationSessions.update(workstationSession, {$set: {colonyData: colonyData}});
-  console.log('updated db with colony data');
+  console.log('\tupdated db with colony data');
 }
 
 // This function takes and modifies an array of colonyData.
@@ -56,7 +56,7 @@ function calculateColorRarity(colonyData) {
     else
       colorNamesMap[colony.ColorName]++;
   });
-  
+
   // Calculate the fraction of all colonies which are each color.
   // This includes the current colonyData, so each should have a defined count.
   colonyData.forEach(function(colony) {
@@ -64,7 +64,7 @@ function calculateColorRarity(colonyData) {
     colony.NumberOfColoniesThisColor = count;
     colony.Rarity = count / countAllColonies;
   });
-  
+
   // sort ascending by count
   colonyData.sort(function(a, b) {
     return a.Rarity - b.Rarity;
@@ -86,4 +86,3 @@ function calculateColorRarity(colonyData) {
   var set = {$set: {rareColorIndices:rareColorIndices, coloniesCountAtThisTime:countAllColonies}};
   WorkstationSessions.update(workstationSession, set);
 }
-

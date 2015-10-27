@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////////////
 // Methods to set up, add, and animate background photo of plate.
-// 
+//
 
 function hslaify(d) {
   return "hsla(" + d.Hue + ",50%,50%,1)";
@@ -12,22 +12,22 @@ createBackgroundSVG = function () {
   console.log("reticuleAnimation.js:\n\tcreating background svg");
 
   // set dimensions of full size photos here (small.jpg is 2100x1400)
-  var photoWidth = Meteor.settings.public.photoWidth;
-  var photoHeight = Meteor.settings.public.photoHeight;
+  var photoWidth = Meteor.settings.public.photoWidth || 2100;
+  var photoHeight = Meteor.settings.public.photoHeight || 1400;
 
   var svg = d3.select('#bg-photo-container').insert('svg', ':first-child')
     .attr("width", "100%")
     .attr("height", "100%" )
-    .attr("viewBox", "0 0 " + photoWidth + " " + photoHeight)     
-    .attr("preserveAspectRatio", "xMinYMid slice") 
+    .attr("viewBox", "0 0 " + photoWidth + " " + photoHeight)
+    .attr("preserveAspectRatio", "xMinYMid slice")
       .append("svg:image")
       .attr("id", "bg-photo")
-      .attr("xlink:href", 'photos/bg_no_plate.jpg')
+      .attr("xlink:href", '/photos/bg_no_plate.jpg')
       .attr("width", photoWidth)
       .attr("height", photoHeight);
 
   // http://www.tnoda.com/blog/2013-12-07
-  // keep our svg background responsive        
+  // keep our svg background responsive
   // $(window).resize(function() {
   //   d3.select('svg')
   //     .attr("width", $(window).width() )
@@ -38,7 +38,7 @@ createBackgroundSVG = function () {
 // called in platePhoto.js: Template.platePhoto.rendered() inside
 // WorkstationSessions.find().observe() callback TODO not always triggered?
 changeBackgroundImg = function (img) {
-  
+
   if (!img) {
     if ($('#bg-photo').attr("href") === undefined) {
       img = 'photos/bg_no_plate.jpg'
@@ -55,16 +55,16 @@ changeBackgroundImg = function (img) {
   if (img === 'bill') {
     if ($('#bg-photo').attr("href") === "http://www.fillmurray.com/1250/700") {
       img = 'photos/bg_no_plate.jpg'
-      d3.select('#bg-photo').attr("xlink:href", img);        
+      d3.select('#bg-photo').attr("xlink:href", img);
       return 'bill me';
     } else {
       img = "http://www.fillmurray.com/1250/700";
-      d3.select('#bg-photo').attr("xlink:href", img);  
+      d3.select('#bg-photo').attr("xlink:href", img);
       return 'unbill me';
     }
   }
   console.log("switching background image to:" + img);
-  d3.select('#bg-photo').attr("xlink:href", img);  
+  d3.select('#bg-photo').attr("xlink:href", img);
 }
 
 
@@ -93,7 +93,7 @@ function drawReticle(selector, duration) {
   var reticleAnimDuration = duration || 3000;    // reticle animation length, default 3000
   var reticleInitialMultiplier = 2000;
 
-  
+
   // time in ms between successive reticle animations
   var delay = duration || 100
 
@@ -137,7 +137,7 @@ function drawReticle(selector, duration) {
     .attr('cy', function(d) {return d.Y})
     .transition()
     .duration(reticleAnimDuration)
-    .delay(function(d,i) {return i * delay})   
+    .delay(function(d,i) {return i * delay})
     .attr('r', function(d) { return (d.Radius * reticleRadiusMultiplier)})
     .attr('cx', function(d) {return d.X})
     .attr('cy', function(d) {return d.Y})

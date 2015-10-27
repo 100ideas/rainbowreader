@@ -35,7 +35,7 @@ Meteor.startup(function () {
 Meteor.methods({
   createWorkstationSession: function() {
     // create a single mongo document to hold state between server and client
-    console.log('server/main.js createNewWorkStationSession\n\told workstationSession: ' + workstationSession);
+    console.log('server/main.js:');
     WorkstationSessions.remove({});   //clear previous session documents
     workstationSession = WorkstationSessions.insert({dateCreated: Date.now()});
     console.log('\tnew workstationSession: ' + workstationSession);
@@ -46,7 +46,7 @@ Meteor.methods({
     // copy all the fields into a record in Experiments (used by the visualization)
     var record = WorkstationSessions.findOne(workstationSession);
     Experiments.insert(record);
-    console.log('new experiment inserted into db');
+    console.log('server/main.js:\n\tnew experiment inserted into db');
 
   },
   takeAndAnalyzePhoto: function(plateBarcode) {
@@ -55,27 +55,19 @@ Meteor.methods({
     return takePhoto(plateBarcode, Meteor.bindEnvironment(
 
       function(photoPath) {
+        console.log("server/main.js:takeAndAnalyzePhoto");
         if(!photoPath) {
-          console.log("Error taking photo.");
+          console.log("\tError taking photo.");
           WorkstationSessions.update(workstationSession, {$set: {photoError: true}});
           return;
         }
-
-        console.log("server/main.js: takeAndAnalyzePhoto");
 
         // assume we have mapped file system /photos to http /photos
         var photoURL = photoPath;
         // if not, parse the path specified in settings.js file
         if (! (Meteor.settings.environment === 'museum')) {
           photoURL = Meteor.settings.fakeColonyPhotoFile;
-          // convert '~/rainbowreadevelopment_osxder/public/photos/photo1.jpg'
-          // to 'photos/photo1.jpg'
-          var ixPhotos = photoPath.indexOf('photos/');
-          if (ixPhotos === -1) {
-            console.log('\terror parsing photo path into URL: ' + photoPath);
-            return;
-          }
-          var photoURL = photoPath.slice(ixPhotos);
+          console.log("\t$METEOR_ENV is not \'museum\'");
         }
 
         console.log("\tset WorkstationSession photoURL: " + photoURL);

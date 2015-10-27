@@ -13,9 +13,6 @@ var csv = Meteor.npmRequire('csv');
 
 // TODO wrap lines in debug
 var fs = Meteor.npmRequire('fs');
-// in case exec fails, JSON containing results of sample calculation
-var fakeColonyDataFile = Meteor.settings.fakeColonyDataFile;
-
 
 // runs OpenCFU on local image file
 // callback is passed single JSON array
@@ -47,16 +44,15 @@ runOpenCFU = function(filename, callback) {
         csv().from.string(stdout, {comment: '#'}).to.array( function(data) {
           var colonyJSON = json_from_csv(data);
           console.log(JSON.stringify(colonyJSON));
-          callback(colonyJSON);        
+          callback(colonyJSON);
         });
       }
     }));
 
   } else {
     console.log("server/opencfu.js: settings.opencfu is " + Meteor.settings.opencfuPath
-              + "\n\tusing dummy colonyData.json file at " + fakeColonyDataFile);
-    var colonyData = fs.readFileSync(fakeColonyDataFile).toString();
-    callback(JSON.parse(colonyData))
+              + "\n\tusing dummy " + Meteor.settings.fakeColonyData);
+    callback(JSON.parse(Assets.getText(Meteor.settings.fakeColonyData)));
   }
 
 }

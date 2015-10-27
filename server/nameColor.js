@@ -38,7 +38,7 @@ function toRGB(hexstr) {
 // square root is monotonic, so you can compare distances without taking the square root
 function sqdistance(array1, array2) {
   if (array1.length > array2.length) return 0;
-  
+
   var sum = 0;
   for (var i = 0; i < array1.length; i++) {
     var d = array1[i] - array2[i];
@@ -83,7 +83,7 @@ function constructColorSpace() {
     sector.push(color);
   });
 
-  console.log('Done reading ' + colors.length + ' colors.');
+  console.log('server/nameColor.js:\n\tDone reading ' + colors.length + ' colors.');
   //console.log(colorSpace[numSectors-1][0][0]);
   //testFindingColors();
 }
@@ -92,7 +92,7 @@ function constructColorSpace() {
 // read color names and RGB values from file
 var lines = Assets.getText(colorsFilename).split('\n');
 lines.forEach(function(line) {
-  if (line) { 
+  if (line) {
     var tokens = line.split('\t');
     var rgbstr = tokens[1].replace('#', '');
     var rgb = toRGB(rgbstr);
@@ -177,5 +177,3 @@ getNameForColor = function(rgb) {
   if (colorEntry && colorEntry.name) return colorEntry.name;
   return "NO COLOR NAME";
 }
-
-

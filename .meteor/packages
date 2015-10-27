@@ -7,10 +7,11 @@ standard-app-packages
 insecure
 d3
 mizzao:bootstrap-3
-mrt:server-eval
 meteorhacks:npm
 npm-container
 williamledoux:static-server
 stevezhu:lodash
 chrismbeckett:fontawesome4
 percolate:velocityjs
+gandev:server-eval
+

@@ -23,7 +23,7 @@ var barcodeScannerPresent = !!scannerPath; //casting to bool; scannerpath is eit
 
 // TODO figure out a way to close the scanner device file
 listenForBarcodes = function(callback) {
-  console.log("barcodeDeviceListener:"); 
+  console.log("server/barcodeDeviceListener.js:");
 
   if (barcodeScannerPresent) {
 
@@ -33,10 +33,10 @@ listenForBarcodes = function(callback) {
         console.log("\terror: " + error);
       }
       console.log('\tbarcode scanner device file opened');
-    
+
       var bufferSize = 64;
       var buffer = Buffer(bufferSize);
-    
+
       function startRead() {
         fs.read(fd, buffer, 0, bufferSize, null, Meteor.bindEnvironment(function(error, bytesRead) {
           if (error) {
@@ -55,27 +55,26 @@ listenForBarcodes = function(callback) {
       }
 
       startRead();
-    
+
     }));
 
   } else {
     var fakeBarcode = 'BARCODE_SCANNER_MISSING';
     console.log("\tbarcodeScannerPresent?: " + barcodeScannerPresent);
-    console.log("\tworkstationSession: " + workstationSession);
-    console.log("\tsetting fake barcodes: userBarcode: " + fakeBarcode + " plateBarcode: " + fakeBarcode);
+    console.log("\tsetting fake barcodes: \n\t\tuserBarcode: " + fakeBarcode + "\n\t\tplateBarcode: " + fakeBarcode);
     WorkstationSessions.update(workstationSession, {$set: {userBarcode: fakeBarcode, plateBarcode: fakeBarcode}});
   }
 
   // Experimental code for closing the file
   /*var shouldClose = false;
-   
+
   return function() {
-    shouldClose = true; 
+    shouldClose = true;
     console.log('shouldClose callback called.');
   });*/
 }
-  
-  
+
+
 // converts raw scanner output to ASCII string
 function parseBarcodeSNAPI(buffer) {
   try {
@@ -109,7 +108,7 @@ var maxBarcodeChars = 20;
 var bufferSize = 16 * maxBarcodeChars;
 
 function decodeBarcodeKeyboardEmulation(buffer) {
-  
+
 }
 
 function decodeHID(type, c) {
@@ -127,7 +126,7 @@ function decodeHID(type, c) {
 }
 
 
- 
+
 function startRead() {
     // read from the device "file"
     fs.read(fd, buffer, 0, bufferSize, null, function(erroror, bytesRead) {
@@ -138,7 +137,7 @@ function startRead() {
       // barcode starts at byte 6
       console.log(buffer[6]);
       for(var i = 6; i < bytesRead; i++) console.log(buffer[i]);
-      var i = 0; 
+      var i = 0;
       var type = buffer[i];
       var c = buffer[i+2];
       barcode += decodeHID(type, c);
