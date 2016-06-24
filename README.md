@@ -4,7 +4,7 @@ Rainbow Reader is a [meteor](http://meteor.com) application that photographs and
 
 It is powered by Meteor and Node.js, supplying a user interface in web browser.  It connects by USB to a Motorola DS457 barcode scanner and gphoto2-compatible camera. It also optionally sends data to [ecolor](https://github.com/intron/ecolor), a sister meteor app that presents live visualizations of the aggregated measurements.
 
-Both apps were developed for a prototype biotech exhibit at [The Tech Museum of Innovation](http://www.thetech.org/) in San Jose.
+Both apps were developed for the "e.Pixels" prototype biotech exhibit at [The Tech Museum of Innovation](http://www.thetech.org/) in San Jose.
 
 ![](https://github.com/100ideas/rainbowreader/raw/master/public/images/PROJECT_SoftwareDetails3_-_RR_screenshot1.png)
 
