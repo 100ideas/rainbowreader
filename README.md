@@ -10,7 +10,7 @@ Both apps were developed for the "e.Pixels" prototype biotech exhibit at [The Te
 
 It is now a permanent installation in The Tech's "BioDesign Studio".
 
-![](https://github.com/100ideas/rainbowreader/raw/master/public/images/PROJECT_SoftwareDetails3_-_RR_screenshot1.png)
+<a href="https://www.youtube.com/watch?v=maO46uavuBQ"><img src="https://github.com/100ideas/rainbowreader/raw/master/public/images/PROJECT_SoftwareDetails3_-_RR_screenshot1.png"></a>
 
 Participants at the exhibit transform lab bacteria with a pool of ~900 different plasmids, each containing a red, green, and blueish reporter under individual control of a randomly selected promoter-rbs from a set of 9 spanning ~2.5 orders of expression power. Each of the 900 plasmids should theoretically drive a unique expression ratio of the three reporter genes, causing each colony to appear with a unique hue, similar to the operation of an RGB LED. Which combinations will fail? Which colors won't we see? This software and the participation of visitors at the Tech Museum is designed to find that out.
 
